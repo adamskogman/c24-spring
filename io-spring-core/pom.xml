@@ -16,6 +16,11 @@
 			<artifactId>spring-oxm</artifactId>
 			<version>${spring.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>biz.c24.io</groupId>
+			<artifactId>c24-io-api</artifactId>
+			<version>${c24.api.version}</version>
+		</dependency>
 	</dependencies>
 
 	<build>

@@ -9,6 +9,7 @@
 
 	<modules>
 		<module>io-spring-core</module>
+		<module>io-spring-integration</module>
 	</modules>
 
 	<developers>
@@ -35,5 +36,23 @@
 	<properties>
 		<spring.version>3.0.4.RELEASE</spring.version>
 		<spring.integration.version>2.0.3.RELEASE</spring.integration.version>
+		<c24.api.version>4.0.0-SNAPSHOT</c24.api.version>
 	</properties>
+	
+	<dependencies>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.8.2</version>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+	
+	<repositories>
+		<repository>
+			<id>c24-nexus</id>
+			<name>C24 Nexus</name>
+			<url>http://repo.c24io.net:8081/nexus/content/groups/public</url>
+		</repository>
+	</repositories>
 </project>
