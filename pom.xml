@@ -1,0 +1,39 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>biz.c24.io.spring</groupId>
+	<artifactId>io-spring</artifactId>
+	<version>0.0.1.BUILD-SNAPSHOT</version>
+	<packaging>pom</packaging>
+	<name>C24 Spring Support</name>
+
+	<modules>
+		<module>io-spring-core</module>
+	</modules>
+
+	<developers>
+		<developer>
+			<name>Adam Skogman</name>
+			<organization>SpringSource - a division of VMware</organization>
+			<email>askogman(at)vmware.com</email>
+			<organizationUrl>http://www.springsource.com</organizationUrl>
+			<roles>
+				<role>Project lead</role>
+			</roles>
+		</developer>
+		<developer>
+			<name>Oliver Gierke</name>
+			<organization>SpringSource - a division of VMware</organization>
+			<email>ogierke(at)vmware.com</email>
+			<organizationUrl>http://www.springsource.com</organizationUrl>
+			<roles>
+				<role>Developer</role>
+			</roles>
+		</developer>
+	</developers>
+	
+	<properties>
+		<spring.version>3.0.4.RELEASE</spring.version>
+		<spring.integration.version>2.0.3.RELEASE</spring.integration.version>
+	</properties>
+</project>
