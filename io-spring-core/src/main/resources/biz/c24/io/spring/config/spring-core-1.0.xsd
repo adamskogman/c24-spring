@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns="http://www.c24.biz/schema/spring-core" 
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:tool="http://www.springframework.org/schema/tool"
+	targetNamespace="http://www.c24.biz/schema/spring-core"
+	elementFormDefault="qualified">
+
+	<xsd:import namespace="http://www.springframework.org/schema/tool" />
+
+	<xsd:element name="marshaller">
+		<xsd:annotation>
+			<xsd:appinfo>
+				<tool:exports type="biz.c24.io.spring.oxm.C24Marshaller" />
+			</xsd:appinfo>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:attribute name="id" type="xsd:string" />
+			<xsd:attribute name="element-type" type="classType" use="required" />
+		</xsd:complexType>
+	</xsd:element>
+
+	<xsd:element name="http-message-converter">
+		<xsd:annotation>
+			<xsd:appinfo>
+				<tool:annotation>
+					<tool:exports type="biz.c24.io.spring.http.C24HttpMessageConverter" />
+				</tool:annotation>
+			</xsd:appinfo>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:attribute name="id" type="xsd:string" />
+			<xsd:attribute name="format" type="dataFormat" use="required" />
+		</xsd:complexType>
+	</xsd:element>
+	
+	<xsd:simpleType name="dataFormat">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="XML" />
+			<xsd:enumeration value="TEXT" />
+		</xsd:restriction>
+	</xsd:simpleType>
+	
+	<xsd:simpleType name="classType">
+		<xsd:annotation>
+			<xsd:appinfo>
+				<tool:annotation kind="direct">
+					<tool:expected-type type="java.lang.Class"/>
+				</tool:annotation>
+			</xsd:appinfo>
+		</xsd:annotation>
+		<xsd:union memberTypes="xsd:string"/>
+	</xsd:simpleType>
+</xsd:schema>
