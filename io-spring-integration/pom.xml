@@ -29,5 +29,11 @@
 			<version>${c24.version}</version>
 		</dependency>
 
+		<dependency>
+			<artifactId>io-spring-core</artifactId>
+			<groupId>biz.c24.io.spring</groupId>
+			<version>${parent.version}</version>
+		</dependency>
+
 	</dependencies>
 </project>
