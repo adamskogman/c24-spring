@@ -23,8 +23,17 @@ import biz.c24.io.spring.util.C24Model;
 import biz.c24.io.spring.util.C24Utils;
 
 /**
+ * Unmarshals a raw input to a Complex object.
  * 
- * 
+ * Goes through the following steps:
+ * <ol>
+ * <li>Turn the incoming payload into an InputStream or Reader</li>
+ * <li>Using the SourceFactory, turn the IS/reader into a Source. Plain or XML
+ * factories are available.
+ * <li>Read from the Source using the root element of the Model.
+ * <li>Unpack the complext object if it's a document root, i.e. let C24
+ * determine the Complex Object and we just pick then one it parsed to
+ * </ol>
  * 
  * @author askogman
  * 
