@@ -44,7 +44,6 @@ class BeanDefinitionUtils {
 	public static AbstractBeanDefinition getSourcedBeanDefinition(BeanDefinitionBuilder builder, Object source) {
 
 		Assert.notNull(builder);
-		Assert.notNull(source);
 
 		AbstractBeanDefinition definition = builder.getBeanDefinition();
 		definition.setSource(source);
