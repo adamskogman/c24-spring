@@ -36,7 +36,7 @@
 	</dependencies>
 
 	<build>
-		<plugins>			
+		<plugins>		
 			<plugin>
 				<artifactId>maven-antrun-plugin</artifactId>
 				<version>1.6</version>
@@ -50,7 +50,6 @@
 							<target>
 								<taskdef name="deploy" classname="com.iona.artix.ds.ant.DeployTask" />
 								<deploy file="src/test/resources/SampleModel.dod" 
-								        adshome="${ads.home}"
 								        todir="target/generated-test-classes/model"
 								        deployenvironment="false"
 								        generatemainmethods="false" />
