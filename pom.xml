@@ -37,7 +37,6 @@
 		<spring.version>3.0.4.RELEASE</spring.version>
 		<spring.integration.version>2.0.3.RELEASE</spring.integration.version>
 		<c24.version>4.0.0-SNAPSHOT</c24.version>
-		<artix.version>3.10.0</artix.version>
 	</properties>
 	
 	<dependencies>

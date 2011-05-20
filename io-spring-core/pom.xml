@@ -60,14 +60,14 @@
 				</executions>
 				<dependencies>
 					<dependency>
-						<groupId>com.iona.artix.ds</groupId>
-						<artifactId>artix-ds-api</artifactId>
-						<version>${artix.version}</version>
+						<groupId>biz.c24.io</groupId>
+						<artifactId>c24-io-api</artifactId>
+						<version>${c24.version}</version>
 					</dependency>
 					<dependency>
-						<groupId>com.iona.artix.ds</groupId>
-						<artifactId>artix-ds-designer</artifactId>
-						<version>${artix.version}</version>
+						<groupId>biz.c24.io</groupId>
+						<artifactId>c24-io-studio</artifactId>
+						<version>${c24.version}</version>
 					</dependency>
 					<dependency>
 						<groupId>log4j</groupId>
