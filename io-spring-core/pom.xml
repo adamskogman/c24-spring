@@ -38,54 +38,6 @@
 
 	<build>
 		<plugins>		
-			<!--Required for Test doing Deployment -->
-			<!--
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-dependency-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>copy-runtime</id>
-                        <phase>process-sources</phase>
-                        <goals>
-                            <goal>copy</goal>
-                        </goals>
-                        <configuration>
-                            <outputDirectory>${project.build.directory}/lib</outputDirectory>
-                            <overWriteSnapshots>true</overWriteSnapshots>
-                            <artifactItems>
-                                <artifactItem>
-                                    <groupId>${pom.groupId}</groupId>
-                                    <artifactId>c24-io-api</artifactId>
-                                    <version>${io-api.version}</version>
-                                </artifactItem>
-                                <artifactItem>
-                                    <groupId>dom4j</groupId>
-                                    <artifactId>dom4j</artifactId>
-                                    <version>${dom4j.version}</version>
-                                </artifactItem>
-                                <artifactItem>
-                                    <groupId>log4j</groupId>
-                                    <artifactId>log4j</artifactId>
-                                    <version>${log4j.version}</version>
-                                </artifactItem>
-                                <artifactItem>
-                                    <groupId>xerces</groupId>
-                                    <artifactId>xercesImpl</artifactId>
-                                    <version>${xerces.version}</version>
-                                </artifactItem>
-                                <artifactItem>
-                                    <groupId>xml-apis</groupId>
-                                    <artifactId>xml-apis</artifactId>
-                                    <version>${xml-api.version}</version>
-                                </artifactItem>
-                            </artifactItems>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-            -->
-
 			<plugin>
 				<artifactId>maven-antrun-plugin</artifactId>
 				<version>1.6</version>
