@@ -18,5 +18,6 @@ class C24NamespaceHandler extends NamespaceHandlerSupport {
 	public void init() {
 		registerBeanDefinitionParser("marshaller", new C24MarshallerBeanDefinitionParser());
 		registerBeanDefinitionParser("http-message-converter", new C24HttpMessageConverterBeanDefinitionParser());
+		registerBeanDefinitionParser("model", new C24ModelBeanDefinitionParser());
 	}
 }

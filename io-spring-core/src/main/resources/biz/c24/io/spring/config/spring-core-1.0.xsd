@@ -14,8 +14,7 @@
 			</xsd:appinfo>
 		</xsd:annotation>
 		<xsd:complexType>
-			<xsd:attribute name="id" type="xsd:string" />
-			<xsd:attribute name="element-type" type="classType" use="required" />
+			<xsd:attributeGroup ref="id-and-model-ref" />
 		</xsd:complexType>
 	</xsd:element>
 
@@ -28,8 +27,41 @@
 			</xsd:appinfo>
 		</xsd:annotation>
 		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="format" maxOccurs="unbounded">
+					<xsd:complexType>
+						<xsd:attribute name="type" use="required" type="dataFormat" />
+						<xsd:attribute name="content-type" type="xsd:string" />
+					</xsd:complexType>
+				</xsd:element>
+			</xsd:sequence>
+			<xsd:attributeGroup ref="id-and-model-ref" />
+		</xsd:complexType>
+	</xsd:element>
+	
+	<xsd:attributeGroup name="id-and-model-ref">
+		<xsd:attribute name="id" type="xsd:string" />
+		<xsd:attribute name="model-ref" type="xsd:string">
+			<xsd:annotation>
+				<xsd:appinfo>
+					<tool:annotation kind="ref">
+						<tool:expected-type type="biz.c24.io.spring.util.C24Model" />
+					</tool:annotation>
+				</xsd:appinfo>
+			</xsd:annotation>
+		</xsd:attribute>
+	</xsd:attributeGroup>
+	
+	<xsd:element name="model">
+		<xsd:annotation>
+			<xsd:appinfo>
+				<tool:exports type="biz.c24.io.spring.util.C24Model" />
+			</xsd:appinfo>
+		</xsd:annotation>
+		<xsd:complexType>
 			<xsd:attribute name="id" type="xsd:string" />
-			<xsd:attribute name="format" type="dataFormat" use="required" />
+			<xsd:attribute name="base-package" type="packageType" />
+			<xsd:attribute name="base-element" type="classType" />
 		</xsd:complexType>
 	</xsd:element>
 	
@@ -45,6 +77,17 @@
 			<xsd:appinfo>
 				<tool:annotation kind="direct">
 					<tool:expected-type type="java.lang.Class"/>
+				</tool:annotation>
+			</xsd:appinfo>
+		</xsd:annotation>
+		<xsd:union memberTypes="xsd:string"/>
+	</xsd:simpleType>
+	
+	<xsd:simpleType name="packageType">
+		<xsd:annotation>
+			<xsd:appinfo>
+				<tool:annotation kind="direct">
+					<tool:expected-type type="java.lang.Package"/>
 				</tool:annotation>
 			</xsd:appinfo>
 		</xsd:annotation>

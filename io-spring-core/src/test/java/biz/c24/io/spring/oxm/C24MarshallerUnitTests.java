@@ -17,8 +17,8 @@ import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.oxm.XmlMappingException;
 import org.springframework.xml.transform.StringSource;
 
-import biz.c24.io.api.data.Element;
 import biz.c24.io.spring.model.TestConstants;
+import biz.c24.io.spring.util.C24Model;
 
 /**
  * 
@@ -30,23 +30,23 @@ public class C24MarshallerUnitTests {
 	@Mock
 	Source source;
 
-	Element element = new CustomerElement();
+	C24Model model = new C24Model(new CustomerElement());
 
 	@Test
 	public void supportsSubclassesOfComplexDataObject() {
-		C24Marshaller marshaller = new C24Marshaller(element);
+		C24Marshaller marshaller = new C24Marshaller(model);
 		assertThat(marshaller.supports(CustomerLocal.class), is(true));
 	}
 
 	@Test(expected = IllegalArgumentException.class)
 	public void rejectsNonStreamSourceImplementationsForUnmarshalling() throws XmlMappingException, IOException {
-		new C24Marshaller(element).unmarshal(source);
+		new C24Marshaller(model).unmarshal(source);
 	}
 
 	@Test
 	public void convertsInputIntoASampleClass() throws XmlMappingException, IOException {
 		StringSource source = new StringSource(TestConstants.SAMPLE_XML);
-		Object result = new C24Marshaller(element).unmarshal(source);
+		Object result = new C24Marshaller(model).unmarshal(source);
 		assertTrue(result instanceof CustomerLocal);
 	}
 }

@@ -5,6 +5,12 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.c24.biz/schema/spring-core http://www.c24.biz/schema/spring-core-1.0.xsd">
 	
-	<c24:http-message-converter id="xml" format="XML" />
+	
+	<c24:http-message-converter id="xml">
+		<c24:format type="TEXT" />
+		<c24:format type="XML" content-type="application/vnd.foo+xml" />
+	</c24:http-message-converter>
+	
+	<c24:model base-package="nonamespace" />
 
 </beans>

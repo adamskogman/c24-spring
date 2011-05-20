@@ -41,10 +41,10 @@ public class C24Marshaller implements Marshaller, Unmarshaller {
 	 * 
 	 * @param metamodelElement
 	 */
-	public C24Marshaller(Element metamodelElement) {
+	public C24Marshaller(C24Model model) {
 
-		Assert.notNull(metamodelElement);
-		this.model = new C24Model(metamodelElement);
+		Assert.notNull(model);
+		this.model = model;
 	}
 
 	/*

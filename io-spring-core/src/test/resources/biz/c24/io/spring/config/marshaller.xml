@@ -5,6 +5,8 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.c24.biz/schema/spring-core http://www.c24.biz/schema/spring-core-1.0.xsd">
 
-	<c24:marshaller id="c24marshaller" element-type="nonamespace.CustomerElement" />
+	<c24:marshaller id="c24marshaller" />
+
+	<c24:model base-package="nonamespace" />
 
 </beans>

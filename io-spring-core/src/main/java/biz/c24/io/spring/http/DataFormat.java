@@ -10,26 +10,60 @@ import org.springframework.http.MediaType;
  * 
  * @author Oliver Gierke
  */
-public enum DataFormat {
+public class DataFormat {
 
-	XML {
-		@Override
-		public List<MediaType> getDefaultMediaTypes() {
-			return Arrays.asList(MediaType.APPLICATION_XML);
+	private final Type type;
+	private final List<MediaType> mediaTypes;
+
+	public DataFormat(Type type) {
+		this(type, type.getDefaultMediaTypes());
+	}
+
+	public DataFormat(Type type, List<MediaType> mediaTypes) {
+		this.type = type;
+		this.mediaTypes = mediaTypes.isEmpty() ? type.getDefaultMediaTypes() : mediaTypes;
+	}
+
+	public List<MediaType> getMediaTypes() {
+		return mediaTypes;
+	}
+
+	public Type getType() {
+		return type;
+	}
+
+	public boolean supports(MediaType mediaType) {
+
+		for (MediaType type : mediaTypes) {
+			if (type.isCompatibleWith(mediaType)) {
+				return true;
+			}
 		}
-	},
 
-	TEXT {
-		@Override
-		public List<MediaType> getDefaultMediaTypes() {
-			return Arrays.asList(MediaType.TEXT_PLAIN);
-		}
-	};
+		return false;
+	}
 
-	/**
-	 * Returns the {@link MediaType}s the {@link DataFormat} supports by default.
-	 * 
-	 * @return
-	 */
-	abstract List<MediaType> getDefaultMediaTypes();
+	public static enum Type {
+
+		XML {
+			@Override
+			public List<MediaType> getDefaultMediaTypes() {
+				return Arrays.asList(MediaType.APPLICATION_XML);
+			}
+		},
+
+		TEXT {
+			@Override
+			public List<MediaType> getDefaultMediaTypes() {
+				return Arrays.asList(MediaType.TEXT_PLAIN);
+			}
+		};
+
+		/**
+		 * Returns the {@link MediaType}s the {@link DataFormat} supports by default.
+		 * 
+		 * @return
+		 */
+		abstract List<MediaType> getDefaultMediaTypes();
+	}
 }
