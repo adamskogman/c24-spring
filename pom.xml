@@ -93,4 +93,12 @@
 			<url>http://repo.c24io.net:8081/nexus/content/groups/public</url>
 		</repository>
 	</repositories>
+	
+	<pluginRepositories>
+		<pluginRepository>
+			<id>c24-nexus</id>
+			<name>C24 Nexus</name>
+			<url>http://repo.c24io.net:8081/nexus/content/groups/public</url>
+		</pluginRepository>
+	</pluginRepositories>
 </project>
