@@ -51,7 +51,7 @@
 							<target>
 								<taskdef name="deploy" classname="com.iona.artix.ds.ant.DeployTask" />
 								<deploy file="src/test/resources/SampleModel.dod" 
-								        adshome="/Applications/C24 Integration Objects 3.10.app"
+								        adshome="${ads.home}"
 								        todir="target/generated-test-classes/model"
 								        deployenvironment="false"
 								        generatemainmethods="false" />								    
