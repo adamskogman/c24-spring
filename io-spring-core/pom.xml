@@ -49,7 +49,7 @@
 						</goals>
 						<configuration>
 							<target>
-								<taskdef name="deploy" classname="com.iona.artix.ds.ant.DeployTask" />
+								<taskdef name="deploy" classname="biz.c24.io.ant.DeployTask" />
 								<deploy file="src/test/resources/SampleModel.dod" 
 								        todir="target/generated-test-classes/model"
 								        deployenvironment="false"
