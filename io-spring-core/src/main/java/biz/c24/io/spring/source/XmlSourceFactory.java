@@ -19,17 +19,17 @@ public class XmlSourceFactory implements SourceFactory {
 
 	private String encoding;
 
-	private boolean validationEnabled;
-	private boolean schemaValidationEnabled;
-	private boolean schemaFullCheckingEnabled;
-	private boolean dynamicValidationEnabled;
-	private boolean externalGeneralEntities = true;
-	private boolean externalParameterEntities = true;
-	private boolean warnOnDuplicateAttDef;
-	private boolean warnOnUndeclaredElemDef;
-	private boolean continueAfterFatalError;
-	private boolean loadDTDGrammer = true;
-	private boolean loadExternalDTD = true;
+	private Boolean validationEnabled;
+	private Boolean schemaValidationEnabled;
+	private Boolean schemaFullCheckingEnabled;
+	private Boolean dynamicValidationEnabled;
+	private Boolean externalGeneralEntities;
+	private Boolean externalParameterEntities;
+	private Boolean warnOnDuplicateAttDef;
+	private Boolean warnOnUndeclaredElemDef;
+	private Boolean continueAfterFatalError;
+	private Boolean loadDTDGrammer;
+	private Boolean loadExternalDTD;
 
 	/**
 	 * 
@@ -52,21 +52,63 @@ public class XmlSourceFactory implements SourceFactory {
 		return source;
 	}
 
-	protected void configureSource(XMLSource source) {
-		source.setContinueAfterFatalError(continueAfterFatalError);
-		source.setDynamicValidationEnabled(dynamicValidationEnabled);
-		source.setExternalGeneralEntities(externalGeneralEntities);
-		source.setExternalParameterEntities(externalParameterEntities);
-		source.setLoadDTDGrammer(loadDTDGrammer);
-		source.setLoadExternalDTD(loadExternalDTD);
-		source.setSchemaFullCheckingEnabled(schemaFullCheckingEnabled);
-		source.setSchemaValidationEnabled(schemaValidationEnabled);
-		source.setValidationEnabled(validationEnabled);
-		source.setWarnOnDuplicateAttDef(warnOnDuplicateAttDef);
-		source.setWarnOnUndeclaredElemDef(warnOnUndeclaredElemDef);
+	/**
+	 * Configure the source
+	 * 
+	 * @param source
+	 */
+	final protected void configureSource(XMLSource source) {
+
+		// Only set the property if a value has been provided to one of the
+		// setters. If not, let the underlying Source retain the default.
+
+		if (continueAfterFatalError != null)
+			source.setContinueAfterFatalError(continueAfterFatalError);
+
+		if (dynamicValidationEnabled != null)
+			source.setDynamicValidationEnabled(dynamicValidationEnabled);
+
+		if (externalGeneralEntities != null)
+			source.setExternalGeneralEntities(externalGeneralEntities);
+
+		if (externalParameterEntities != null)
+			source.setExternalParameterEntities(externalParameterEntities);
+
+		if (loadDTDGrammer != null)
+			source.setLoadDTDGrammer(loadDTDGrammer);
+
+		if (loadExternalDTD != null)
+			source.setLoadExternalDTD(loadExternalDTD);
+
+		if (schemaFullCheckingEnabled != null)
+			source.setSchemaFullCheckingEnabled(schemaFullCheckingEnabled);
+
+		if (schemaValidationEnabled != null)
+			source.setSchemaValidationEnabled(schemaValidationEnabled);
+
+		if (validationEnabled != null)
+			source.setValidationEnabled(validationEnabled);
+
+		if (warnOnDuplicateAttDef != null)
+			source.setWarnOnDuplicateAttDef(warnOnDuplicateAttDef);
+
+		if (warnOnUndeclaredElemDef != null)
+			source.setWarnOnUndeclaredElemDef(warnOnUndeclaredElemDef);
 
 		if (encoding != null)
 			source.setEncoding(encoding);
+
+		doConfigure(source);
+
+	}
+
+	/**
+	 * Override this method to provide custom config.
+	 * 
+	 * @param source
+	 */
+	protected void doConfigure(XMLSource source) {
+
 	}
 
 	/*
@@ -83,6 +125,102 @@ public class XmlSourceFactory implements SourceFactory {
 
 		return source;
 
+	}
+
+	public String getEncoding() {
+		return encoding;
+	}
+
+	public void setEncoding(String encoding) {
+		this.encoding = encoding;
+	}
+
+	public Boolean getValidationEnabled() {
+		return validationEnabled;
+	}
+
+	public void setValidationEnabled(Boolean validationEnabled) {
+		this.validationEnabled = validationEnabled;
+	}
+
+	public Boolean getSchemaValidationEnabled() {
+		return schemaValidationEnabled;
+	}
+
+	public void setSchemaValidationEnabled(Boolean schemaValidationEnabled) {
+		this.schemaValidationEnabled = schemaValidationEnabled;
+	}
+
+	public Boolean getSchemaFullCheckingEnabled() {
+		return schemaFullCheckingEnabled;
+	}
+
+	public void setSchemaFullCheckingEnabled(Boolean schemaFullCheckingEnabled) {
+		this.schemaFullCheckingEnabled = schemaFullCheckingEnabled;
+	}
+
+	public Boolean getDynamicValidationEnabled() {
+		return dynamicValidationEnabled;
+	}
+
+	public void setDynamicValidationEnabled(Boolean dynamicValidationEnabled) {
+		this.dynamicValidationEnabled = dynamicValidationEnabled;
+	}
+
+	public Boolean getExternalGeneralEntities() {
+		return externalGeneralEntities;
+	}
+
+	public void setExternalGeneralEntities(Boolean externalGeneralEntities) {
+		this.externalGeneralEntities = externalGeneralEntities;
+	}
+
+	public Boolean getExternalParameterEntities() {
+		return externalParameterEntities;
+	}
+
+	public void setExternalParameterEntities(Boolean externalParameterEntities) {
+		this.externalParameterEntities = externalParameterEntities;
+	}
+
+	public Boolean getWarnOnDuplicateAttDef() {
+		return warnOnDuplicateAttDef;
+	}
+
+	public void setWarnOnDuplicateAttDef(Boolean warnOnDuplicateAttDef) {
+		this.warnOnDuplicateAttDef = warnOnDuplicateAttDef;
+	}
+
+	public Boolean getWarnOnUndeclaredElemDef() {
+		return warnOnUndeclaredElemDef;
+	}
+
+	public void setWarnOnUndeclaredElemDef(Boolean warnOnUndeclaredElemDef) {
+		this.warnOnUndeclaredElemDef = warnOnUndeclaredElemDef;
+	}
+
+	public Boolean getContinueAfterFatalError() {
+		return continueAfterFatalError;
+	}
+
+	public void setContinueAfterFatalError(Boolean continueAfterFatalError) {
+		this.continueAfterFatalError = continueAfterFatalError;
+	}
+
+	public Boolean getLoadDTDGrammer() {
+		return loadDTDGrammer;
+	}
+
+	public void setLoadDTDGrammer(Boolean loadDTDGrammer) {
+		this.loadDTDGrammer = loadDTDGrammer;
+	}
+
+	public Boolean getLoadExternalDTD() {
+		return loadExternalDTD;
+	}
+
+	public void setLoadExternalDTD(Boolean loadExternalDTD) {
+		this.loadExternalDTD = loadExternalDTD;
 	}
 
 }
