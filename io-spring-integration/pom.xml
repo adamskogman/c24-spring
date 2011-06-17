@@ -3,6 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>io-spring-integration</artifactId>
 	<name>C24 Spring Integration support</name>
+	<description></description>
 
 	<parent>
 		<artifactId>io-spring</artifactId>
@@ -35,5 +36,121 @@
 			<version>${parent.version}</version>
 		</dependency>
 
+		<dependency>
+			<groupId>org.hamcrest</groupId>
+			<artifactId>hamcrest-all</artifactId>
+			<version>1.1</version>
+			<scope>test</scope>
+		</dependency>
+
+
 	</dependencies>
+
+	<build>
+		<plugins>		
+			<plugin>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<version>1.6</version>
+				<executions>
+					<execution>
+						<phase>generate-test-sources</phase>
+						<goals>
+							<goal>run</goal>
+						</goals>
+						<configuration>
+							<target>
+								<taskdef name="deploy" classname="biz.c24.io.ant.DeployTask" />
+								<deploy file="src/test/resources/SampleModel.dod" 
+								        todir="target/generated-test-classes/model"
+								        deployenvironment="false"
+								        generatemainmethods="false" />								    
+								<deploy file="src/test/resources/Input.dod" 
+								        todir="target/generated-test-classes/model"
+								        deployenvironment="false"
+								        generatemainmethods="false" />								    
+								<deploy file="src/test/resources/Output.dod" 
+								        todir="target/generated-test-classes/model"
+								        deployenvironment="false"
+								        generatemainmethods="false" />								    
+								<deploy file="src/test/resources/Example.tfd" 
+								        todir="target/generated-test-classes/model"
+								        deployenvironment="false"
+								        generatemainmethods="false" />								    
+							</target>
+						</configuration>
+					</execution>
+				</executions>
+				
+				<dependencies>
+					<dependency>
+						<groupId>biz.c24.io</groupId>
+						<artifactId>c24-io-api</artifactId>
+						<version>${c24.version}</version>
+					</dependency>
+					<dependency>
+						<groupId>biz.c24.io</groupId>
+						<artifactId>c24-io-studio</artifactId>
+						<version>${c24.version}</version>
+					</dependency>					
+					<dependency>
+						<groupId>log4j</groupId>
+						<artifactId>log4j</artifactId>
+						<version>1.2.16</version>
+					</dependency>
+					<dependency>
+						<groupId>commons-collections</groupId>
+						<artifactId>commons-collections</artifactId>
+						<version>3.2.1</version>
+					</dependency>
+					<dependency>
+						<groupId>commons-lang</groupId>
+						<artifactId>commons-lang</artifactId>
+						<version>2.6</version>
+					</dependency>
+					<dependency>
+						<groupId>oro</groupId>
+						<artifactId>oro</artifactId>
+						<version>2.0.8</version>
+					</dependency>
+					<dependency>
+					    <groupId>jakarta-regexp</groupId>
+					    <artifactId>jakarta-regexp</artifactId>
+					    <version>1.4</version>
+					</dependency>
+					<dependency>
+					    <groupId>xerces</groupId>
+					    <artifactId>xercesImpl</artifactId>
+					    <version>2.9.1</version>
+					</dependency>
+					<dependency>
+						<groupId>commons-io</groupId>
+						<artifactId>commons-io</artifactId>
+						<version>1.4</version>
+					</dependency>						
+				</dependencies>
+			
+			</plugin>
+			
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>build-helper-maven-plugin</artifactId>
+				<version>1.5</version>
+				<executions>
+					<execution>
+						<id>add-source</id>
+						<phase>generate-test-sources</phase>
+						<goals>
+							<goal>add-test-source</goal>
+						</goals>
+						<configuration>
+							<sources>
+								<source>target/generated-test-classes/model</source>
+							</sources>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+
 </project>

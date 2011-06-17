@@ -3,9 +3,10 @@
  */
 package biz.c24.io.spring.integration.transformer;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.io.Reader;
 import java.io.StringReader;
@@ -38,7 +39,7 @@ import biz.c24.io.spring.util.C24Utils;
  * @author askogman
  * 
  */
-public class C24UnmarshallingTransformer extends
+public class IoUnmarshallingTransformer extends
 		AbstractPayloadTransformer<Object, Object> {
 
 	private final C24Model model;
@@ -46,7 +47,7 @@ public class C24UnmarshallingTransformer extends
 
 	protected final Log logger = LogFactory.getLog(getClass());
 
-	public C24UnmarshallingTransformer(C24Model model,
+	public IoUnmarshallingTransformer(C24Model model,
 			SourceFactory sourceFactory) {
 		super();
 
@@ -68,20 +69,26 @@ public class C24UnmarshallingTransformer extends
 
 	}
 
-	private Source getSourceFor(Object payload) throws Exception {
+	Source getSourceFor(Object payload) throws Exception {
 		Source source;
-		if (payload instanceof InputStream) {
-			source = sourceFactory.getSource((InputStream) payload);
-		} else if (payload instanceof Reader) {
+
+		// Things that can be turned into a Reader
+		if (payload instanceof Reader) {
 			source = sourceFactory.getSource((Reader) payload);
 		} else if (payload instanceof String) {
 			source = sourceFactory
 					.getSource(new StringReader((String) payload));
+		}
+		// Things that can be turned into an input stream
+		else if (payload instanceof InputStream) {
+			source = sourceFactory.getSource((InputStream) payload);
+		} else if (payload instanceof byte[]) {
+			source = sourceFactory.getSource(new ByteArrayInputStream(
+					(byte[]) payload));
 		} else if (payload instanceof File) {
 			File file = (File) payload;
 			source = sourceFactory.getSource(new FileInputStream(file));
-		} // TODO More conversions?
-		else {
+		} else {
 			throw new MessagingException(
 					"failed to transform message, payload not assignable from java.io.InputStream/Reader and no conversion possible");
 		}

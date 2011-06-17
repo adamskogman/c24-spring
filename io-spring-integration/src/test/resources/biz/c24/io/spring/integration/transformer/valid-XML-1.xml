@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Employees xmlns="http://www.c24.biz/io/examples/models/basic">
+	<Employee>
+		<Salutation>Mr</Salutation>
+		<FirstName>Andy</FirstName>
+		<LastName>Acheson</LastName>
+		<JobTitle>Software Developer</JobTitle>
+	</Employee>
+	<Employee>
+		<Salutation>Mr</Salutation>
+		<FirstName>Joe</FirstName>
+		<LastName>Bloggs</LastName>
+		<JobTitle>Security Guard</JobTitle>
+	</Employee>
+	<Employee>
+		<Salutation>Mr</Salutation>
+		<FirstName>Greg</FirstName>
+		<LastName>Gatsby</LastName>
+		<JobTitle>Managing Director</JobTitle>
+	</Employee>
+</Employees>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<dataModel targetNamespace="http://www.progress.com/ads/examples/models/basic" hibernateIDGeneratorMethodDefault="native" encrypted="false" encoding="UTF-8" elementFormDefault="Qualified" attributeFormDefault="Unqualified" IOversion="3.1.0" version="0.0.1" name="Output.dod">
+    <type>
+        <complexType specifyStructure="true" specialisation="Generic complex" processAsBatch="false" excludeFromDatabase="false" contentModel="Sequence" abstract="false" name="Email">
+            <facet facetType="delimiter">
+                <value>Postfix|false|20</value>
+            </facet>
+            <facet facetType="format_type">
+                <value>Delimited</value>
+            </facet>
+            <element identifier="true" typeRef="FirstNameInitial" min="1" max="1" name="FirstNameInitial"/>
+            <element identifier="true" typeRef="Surname" min="1" max="1" name="Surname"/>
+            <element identifier="true" typeRef="DomainName" min="1" max="1" name="DomainName"/>
+        </complexType>
+    </type>
+    <element identifier="true" typeRef="Email" min="1" max="1" name="Email"/>
+    <type>
+        <atomicSimpleType baseType="#string" name="FirstNameInitial"/>
+    </type>
+    <type>
+        <atomicSimpleType baseType="#string" name="Surname"/>
+    </type>
+    <type>
+        <atomicSimpleType baseType="#string" name="DomainName"/>
+    </type>
+    <type>
+        <complexType specifyStructure="true" specialisation="Generic complex" processAsBatch="false" excludeFromDatabase="false" contentModel="Sequence" abstract="false" name="Emails">
+            <facet facetType="terminator">
+                <value></value>
+            </facet>
+            <facet facetType="delimiter">
+                <value>Postfix|false|0d0a</value>
+            </facet>
+            <facet facetType="format_type">
+                <value>Delimited</value>
+            </facet>
+            <element identifier="true" ref="Email" min="1" max="-1" name="Email"/>
+        </complexType>
+    </type>
+    <element identifier="true" typeRef="Emails" min="1" max="1" name="Emails"/>
+    <namespace uri="http://www.progress.com/ads/examples/models/basic" prefix=""/>
+</dataModel>

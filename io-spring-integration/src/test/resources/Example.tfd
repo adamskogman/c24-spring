@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<transform version="0.0.3" validateOutputs="false" validateInputs="false" targetNamespace="http://www.progress.com/ads/examples/transforms/basic" readOnly="false" processingOrder="Outputs" encrypted="false" IOversion="3.1.0" name="Example.tfd">
+    <input typeRef="#Document Root" required="false" path="" modelRef="Input.dod" endID="0"/>
+    <localTransformRef refId="22" y="62" x="268" id="23"/>
+    <contextPath input="true" endID="0" contextRef="Employees/Employee" id="24"/>
+    <contextPath input="false" endID="0" contextRef="Emails/Email" id="25"/>
+    <translation outputPort="0" outputID="23" inputPort="0" inputID="24"/>
+    <translation outputPort="0" outputID="25" inputPort="0" inputID="23"/>
+    <nextId>31</nextId>
+    <output typeRef="#Document Root" required="false" path="" modelRef="Output.dod" endID="0"/>
+    <localTransform id="22">
+        <transform version="0.0.3" validateOutputs="false" validateInputs="false" targetNamespace="http://www.progress.com/ads/examples/transforms/basic" readOnly="false" processingOrder="Outputs" encrypted="false" IOversion="3.1.0" name="EmployeeToEmail">
+            <input typeRef="Employee" required="false" path="" modelRef="Input.dod" endID="0"/>
+            <constant constant="@company.com" id="1"/>
+            <transformMethod name="SUBSTRING" y="132" x="228" id="5"/>
+            <constant constant="0" id="7"/>
+            <constant constant="1" id="8"/>
+            <transformMethod name="CONCAT" y="141" x="381" id="10"/>
+            <constant constant="." id="11"/>
+            <contextPath input="false" endID="0" contextRef="DomainName" id="2"/>
+            <contextPath input="false" endID="0" contextRef="Surname" id="4"/>
+            <contextPath input="true" endID="0" contextRef="FirstName" id="6"/>
+            <contextPath input="false" endID="0" contextRef="FirstNameInitial" id="9"/>
+            <contextPath input="true" endID="0" contextRef="LastName" id="3"/>
+            <translation outputPort="1" outputID="5" inputPort="0" inputID="7"/>
+            <translation outputPort="2" outputID="5" inputPort="0" inputID="8"/>
+            <translation outputPort="0" outputID="10" inputPort="0" inputID="5"/>
+            <translation outputPort="1" outputID="10" inputPort="0" inputID="11"/>
+            <translation outputPort="0" outputID="2" inputPort="0" inputID="1"/>
+            <translation outputPort="0" outputID="5" inputPort="0" inputID="6"/>
+            <translation outputPort="0" outputID="9" inputPort="0" inputID="10"/>
+            <translation outputPort="0" outputID="4" inputPort="0" inputID="3"/>
+            <nextId>0</nextId>
+            <output typeRef="Email" required="false" path="" modelRef="Output.dod" endID="0"/>
+        </transform>
+    </localTransform>
+</transform>

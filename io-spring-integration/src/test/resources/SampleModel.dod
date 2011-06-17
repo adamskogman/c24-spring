@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<dataModel hibernateIDGeneratorMethodDefault="native" encrypted="false" encoding="UTF-8" elementFormDefault="Qualified" attributeFormDefault="Unqualified" IOversion="3.1.0" version="0.0.2" name="SampleModel.dod">
+    <element identifier="false" min="1" max="1" name="Customer">
+        <type>
+            <complexType specifyStructure="true" specialisation="Generic complex" processAsBatch="false" excludeFromDatabase="false" contentModel="Sequence" abstract="false" name="Customer">
+                <attribute typeRef="#string" min="0" max="1" name="Firstname"/>
+            </complexType>
+        </type>
+    </element>
+    <element identifier="false" min="1" max="1" name="Account">
+        <type>
+            <complexType specifyStructure="true" specialisation="Generic complex" processAsBatch="false" excludeFromDatabase="false" contentModel="Sequence" abstract="false" name="Account">
+                <attribute typeRef="#string" min="0" max="1" name="AccountNumber"/>
+            </complexType>
+        </type>
+    </element>
+</dataModel>

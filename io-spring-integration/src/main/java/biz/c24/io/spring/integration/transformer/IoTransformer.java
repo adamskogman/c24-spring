@@ -10,7 +10,6 @@ import org.springframework.integration.Message;
 import org.springframework.integration.transformer.AbstractTransformer;
 import org.springframework.util.Assert;
 
-import biz.c24.io.api.data.ComplexDataObject;
 import biz.c24.io.api.transform.Transform;
 
 /**
@@ -19,7 +18,7 @@ import biz.c24.io.api.transform.Transform;
  * @author askogman
  * 
  */
-public class C24IoTransformer extends AbstractTransformer implements
+public class IoTransformer extends AbstractTransformer implements
 		InitializingBean {
 
 	private final Log logger = LogFactory.getLog(this.getClass());
@@ -43,7 +42,7 @@ public class C24IoTransformer extends AbstractTransformer implements
 	/**
 	 * 
 	 */
-	public C24IoTransformer() {
+	public IoTransformer() {
 	}
 
 	/**
@@ -57,7 +56,8 @@ public class C24IoTransformer extends AbstractTransformer implements
 	protected Object doTransform(Message<?> message) throws Exception {
 
 		Transform transform = buildTransform(message);
-
+		
+		// TODO Support list or array as input
 		Object payload = message.getPayload();
 
 		Object[][] results = transform

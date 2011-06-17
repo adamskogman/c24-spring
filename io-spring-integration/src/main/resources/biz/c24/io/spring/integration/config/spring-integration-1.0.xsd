@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns="http://www.c24.biz/schema/spring-integration"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:tool="http://www.springframework.org/schema/tool"
+	xmlns:integration="http://www.springframework.org/schema/integration"
+	xmlns:core="http://www.c24.biz/schema/spring-core" targetNamespace="http://www.c24.biz/schema/spring-integration"
+	elementFormDefault="qualified" attributeFormDefault="unqualified">
+
+	<xsd:import namespace="http://www.springframework.org/schema/beans" />
+	<xsd:import namespace="http://www.springframework.org/schema/tool" />
+	<xsd:import namespace="http://www.springframework.org/schema/integration"
+		schemaLocation="http://www.springframework.org/schema/integration/spring-integration-2.0.xsd" />
+	<xsd:import namespace="http://www.c24.biz/schema/spring-core" />
+
+	<xsd:annotation>
+		<xsd:documentation>
+			Defines the configuration elements for C24 IO's
+			Spring Integration support.
+		</xsd:documentation>
+	</xsd:annotation>
+
+	<!-- TODO <xsd:element name="marshalling-transformer"> -->
+
+	<xsd:element name="unmarshalling-transformer">
+		<xsd:complexType>
+			<xsd:annotation>
+				<xsd:documentation>
+					Defines an C24 IO unmarshalling transformer, i.e.
+					a C24 IO Parser.
+				</xsd:documentation>
+			</xsd:annotation>
+			<xsd:complexContent>
+				<xsd:extension base="inputOutputEndpoint">
+					<xsd:attribute name="model" type="xsd:string">
+						<xsd:annotation>
+							<xsd:appinfo>
+								<tool:annotation kind="ref">
+									<tool:expected-type type="biz.c24.io.spring.util.C24Model" />
+								</tool:annotation>
+							</xsd:appinfo>
+						</xsd:annotation>
+					</xsd:attribute>
+					<xsd:attribute name="source-factory" type="xsd:string">
+						<xsd:annotation>
+							<xsd:appinfo>
+								<tool:annotation kind="ref">
+									<tool:expected-type type="biz.c24.io.spring.source.SourceFactory" />
+								</tool:annotation>
+							</xsd:appinfo>
+						</xsd:annotation>
+					</xsd:attribute>
+				</xsd:extension>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+
+	<xsd:element name="transformer">
+		<xsd:complexType>
+			<xsd:annotation>
+				<xsd:documentation>
+					Defines a C24 IO transformer.
+				</xsd:documentation>
+			</xsd:annotation>
+			<xsd:complexContent>
+				<xsd:extension base="inputOutputEndpoint">
+					<xsd:attribute name="transform-class" type="classType" />
+				</xsd:extension>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+
+	<xsd:element name="xpath-transformer">
+		<xsd:complexType>
+			<xsd:annotation>
+				<xsd:documentation>
+					Defines an XPath transformer. Only accepts
+					ComplexObject as the payload type.
+				</xsd:documentation>
+			</xsd:annotation>
+			<xsd:complexContent>
+				<xsd:extension base="inputOutputEndpoint">
+					<xsd:attribute name="xpath-statement" type="xsd:string">
+						<xsd:annotation>
+							<xsd:documentation>
+								The XPath statement string to be evaluated
+								against the input
+								Message's payload.
+								Either this or
+								'xpath-statement-ref' must be provided, but not both.
+							</xsd:documentation>
+						</xsd:annotation>
+					</xsd:attribute>
+					<xsd:attribute name="xpath-statement-ref" type="xsd:string">
+						<xsd:annotation>
+							<xsd:documentation>
+								Reference to the XPathStatement instance to
+								be
+								evaluated against the
+								input Message's payload.
+								Either this or
+								'xpath-expression' must be provided, but not both.
+							</xsd:documentation>
+							<xsd:appinfo>
+								<tool:annotation kind="ref">
+									<tool:expected-type type="biz.c24.io.api.data.XPathStatement" />
+								</tool:annotation>
+							</xsd:appinfo>
+						</xsd:annotation>
+					</xsd:attribute>
+					<xsd:attribute name="evaluation-type" default="OBJECT_RESULT">
+						<xsd:annotation>
+							<xsd:documentation>
+								The result type expected from the XPath
+								evaluation. This will be
+								the payload type of the output Message.
+							</xsd:documentation>
+						</xsd:annotation>
+						<xsd:simpleType>
+							<xsd:restriction base="xsd:string">
+								<xsd:enumeration value="BOOLEAN_RESULT" />
+								<xsd:enumeration value="STRING_RESULT" />
+								<xsd:enumeration value="NUMBER_RESULT" />
+								<xsd:enumeration value="OBJECT_RESULT" />
+								<xsd:enumeration value="LIST_RESULT" />
+							</xsd:restriction>
+						</xsd:simpleType>
+					</xsd:attribute>
+				</xsd:extension>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+
+	<!-- TODO <xsd:element name="xpath-header-enricher"> -->
+
+
+	<xsd:complexType name="xpathHeaderType">
+		<xsd:annotation>
+			<xsd:documentation>
+				Defines an XPath expression to be configured
+				within an
+				&lt;xpath-header-enricher/&gt; element.
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:attribute name="name" type="xsd:string" use="required">
+			<xsd:annotation>
+				<xsd:documentation>
+					The name of the header to be enriched.
+				</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+		<xsd:attribute name="xpath-expression">
+			<xsd:annotation>
+				<xsd:documentation>
+					The XPath Expression as a String. Either this or
+					'xpath-expression-ref' must be provided, but not both.
+				</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+		<xsd:attribute name="xpath-expression-ref">
+			<xsd:annotation>
+				<xsd:documentation>
+					The XPath Expression reference. Either this or
+					'xpath-expression' must
+					be provided, but not both.
+				</xsd:documentation>
+				<xsd:appinfo>
+					<tool:annotation kind="ref">
+						<tool:expected-type
+							type="org.springframework.xml.xpath.XPathExpression" />
+					</tool:annotation>
+				</xsd:appinfo>
+			</xsd:annotation>
+		</xsd:attribute>
+		<xsd:attribute name="evaluation-type" default="STRING_RESULT">
+			<xsd:annotation>
+				<xsd:documentation>
+					The result type expected from the XPath
+					evaluation. This will be the
+					type of the header value.
+				</xsd:documentation>
+			</xsd:annotation>
+			<xsd:simpleType>
+				<xsd:restriction base="xsd:string">
+					<xsd:enumeration value="BOOLEAN_RESULT" />
+					<xsd:enumeration value="STRING_RESULT" />
+					<xsd:enumeration value="NUMBER_RESULT" />
+					<xsd:enumeration value="NODE_RESULT" />
+					<xsd:enumeration value="NODE_LIST_RESULT" />
+				</xsd:restriction>
+			</xsd:simpleType>
+		</xsd:attribute>
+		<xsd:attribute name="overwrite">
+			<xsd:annotation>
+				<xsd:documentation>
+					Boolean value to indicate whether this header
+					value should overwrite an
+					existing header value
+					for the same name if
+					already present on the input Message.
+				</xsd:documentation>
+			</xsd:annotation>
+			<xsd:simpleType>
+				<xsd:union memberTypes="xsd:boolean xsd:string" />
+			</xsd:simpleType>
+		</xsd:attribute>
+	</xsd:complexType>
+
+	<!-- TODO <xsd:element name="xpath-selector"> -->
+
+
+	<!-- TODO <xsd:element name="validating-filter"> -->
+
+	<xsd:complexType name="inputOutputEndpoint">
+		<xsd:sequence>
+			<xsd:element ref="integration:poller" minOccurs="0"
+				maxOccurs="1" />
+		</xsd:sequence>
+		<xsd:attribute name="id" type="xsd:ID" />
+		<xsd:attribute name="input-channel" type="xsd:string">
+			<xsd:annotation>
+				<xsd:appinfo>
+					<tool:annotation kind="ref">
+						<tool:expected-type
+							type="org.springframework.integration.core.MessageChannel" />
+					</tool:annotation>
+				</xsd:appinfo>
+			</xsd:annotation>
+		</xsd:attribute>
+		<xsd:attribute name="output-channel" type="xsd:string">
+			<xsd:annotation>
+				<xsd:appinfo>
+					<tool:annotation kind="ref">
+						<tool:expected-type
+							type="org.springframework.integration.core.MessageChannel" />
+					</tool:annotation>
+				</xsd:appinfo>
+			</xsd:annotation>
+		</xsd:attribute>
+	</xsd:complexType>
+
+	<xsd:complexType name="paramType">
+		<xsd:attribute name="name" type="xsd:string" use="required" />
+		<xsd:attribute name="expression" type="xsd:string" use="optional" />
+		<xsd:attribute name="value" type="xsd:string" use="optional" />
+	</xsd:complexType>
+
+	<xsd:simpleType name="classType">
+		<xsd:annotation>
+			<xsd:appinfo>
+				<tool:annotation kind="direct">
+					<tool:expected-type type="java.lang.Class" />
+				</tool:annotation>
+			</xsd:appinfo>
+		</xsd:annotation>
+		<xsd:union memberTypes="xsd:string" />
+	</xsd:simpleType>
+
+	<xsd:simpleType name="packageType">
+		<xsd:annotation>
+			<xsd:appinfo>
+				<tool:annotation kind="direct">
+					<tool:expected-type type="java.lang.Package" />
+				</tool:annotation>
+			</xsd:appinfo>
+		</xsd:annotation>
+		<xsd:union memberTypes="xsd:string" />
+	</xsd:simpleType>
+
+</xsd:schema>
