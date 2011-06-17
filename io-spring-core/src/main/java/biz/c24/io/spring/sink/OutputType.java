@@ -19,9 +19,6 @@ package biz.c24.io.spring.sink;
 import java.io.ByteArrayOutputStream;
 import java.io.StringWriter;
 
-import org.springframework.xml.xpath.XPathExpression;
-import org.w3c.dom.Node;
-
 import biz.c24.io.api.presentation.Sink;
 
 /**
