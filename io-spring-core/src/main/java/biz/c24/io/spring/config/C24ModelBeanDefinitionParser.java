@@ -31,7 +31,7 @@ import biz.c24.io.spring.util.C24Model;
  */
 public class C24ModelBeanDefinitionParser extends AbstractBeanDefinitionParser {
 
-	static final String DEFAULT_BEAN_NAME = "_c24model";
+	public static final String DEFAULT_BEAN_NAME = "_c24model";
 
 	/*
 	 * (non-Javadoc)
