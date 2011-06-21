@@ -128,4 +128,12 @@ public class IoTransformer extends AbstractTransformer implements
 		}
 
 	}
+
+	public boolean isAlwaysReturnArray() {
+		return alwaysReturnArray;
+	}
+
+	public void setAlwaysReturnArray(boolean alwaysReturnArray) {
+		this.alwaysReturnArray = alwaysReturnArray;
+	}
 }

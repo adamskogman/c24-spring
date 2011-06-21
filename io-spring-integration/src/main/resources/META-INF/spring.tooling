@@ -1,0 +1,3 @@
+# Tooling related information for the C24 namespace
+http\://www.c24.biz/schema/spring-integration@name=C24 IO Spring Integration Namespace
+http\://www.c24.biz/schema/spring-integration@prefix=int-c24

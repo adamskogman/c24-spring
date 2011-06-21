@@ -19,7 +19,46 @@
 		</xsd:documentation>
 	</xsd:annotation>
 
-	<!-- TODO <xsd:element name="marshalling-transformer"> -->
+	<xsd:element name="marshalling-transformer">
+		<xsd:complexType>
+			<xsd:annotation>
+				<xsd:documentation>
+					Defines an C24 IO marshalling transformer, i.e.
+					a
+					C24 IO Sink.
+				</xsd:documentation>
+			</xsd:annotation>
+			<xsd:complexContent>
+				<xsd:extension base="inputOutputEndpoint">
+					<xsd:attribute name="sink-factory" type="xsd:string"
+						use="required">
+						<xsd:annotation>
+							<xsd:appinfo>
+								<tool:annotation kind="ref">
+									<tool:expected-type type="biz.c24.io.spring.sink.SinkFactory" />
+								</tool:annotation>
+							</xsd:appinfo>
+						</xsd:annotation>
+					</xsd:attribute>
+					<xsd:attribute name="output-type" use="required">
+						<xsd:annotation>
+							<xsd:documentation>
+								The result type expected from the marshaller.
+								This will be the
+								payload type of the output Message.
+							</xsd:documentation>
+						</xsd:annotation>
+						<xsd:simpleType>
+							<xsd:restriction base="xsd:string">
+								<xsd:enumeration value="BYTE_ARRAY" />
+								<xsd:enumeration value="STRING" />
+							</xsd:restriction>
+						</xsd:simpleType>
+					</xsd:attribute>
+				</xsd:extension>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
 
 	<xsd:element name="unmarshalling-transformer">
 		<xsd:complexType>
@@ -31,7 +70,7 @@
 			</xsd:annotation>
 			<xsd:complexContent>
 				<xsd:extension base="inputOutputEndpoint">
-					<xsd:attribute name="model" type="xsd:string">
+					<xsd:attribute name="model-ref" type="xsd:string">
 						<xsd:annotation>
 							<xsd:appinfo>
 								<tool:annotation kind="ref">
@@ -40,7 +79,8 @@
 							</xsd:appinfo>
 						</xsd:annotation>
 					</xsd:attribute>
-					<xsd:attribute name="source-factory" type="xsd:string">
+					<xsd:attribute name="source-factory" type="xsd:string"
+						use="required">
 						<xsd:annotation>
 							<xsd:appinfo>
 								<tool:annotation kind="ref">
@@ -63,7 +103,10 @@
 			</xsd:annotation>
 			<xsd:complexContent>
 				<xsd:extension base="inputOutputEndpoint">
-					<xsd:attribute name="transform-class" type="classType" />
+					<xsd:attribute name="transform-class" type="classType"
+						use="required" />
+					<xsd:attribute name="always-return-array" type="xsd:boolean"
+						default="false" />
 				</xsd:extension>
 			</xsd:complexContent>
 		</xsd:complexType>

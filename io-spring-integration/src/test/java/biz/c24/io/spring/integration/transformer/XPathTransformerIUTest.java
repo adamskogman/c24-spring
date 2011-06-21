@@ -23,8 +23,8 @@ public class XPathTransformerIUTest {
 	@Test
 	public void canTransformToListOfString() throws Exception {
 
-		XPathTransformer transformer = new XPathTransformer("//FirstName",
-				XPathEvaluationType.LIST_RESULT);
+		XPathTransformer transformer = new XPathTransformer("//FirstName");
+		transformer.setEvaluationType(XPathEvaluationType.LIST_RESULT);
 
 		Message<?> message = MessageBuilder.withPayload(loadObject()).build();
 
@@ -40,8 +40,8 @@ public class XPathTransformerIUTest {
 	@Test
 	public void canTransformToListOfEmployee() throws Exception {
 
-		XPathTransformer transformer = new XPathTransformer("//Employee",
-				XPathEvaluationType.LIST_RESULT);
+		XPathTransformer transformer = new XPathTransformer("//Employee");
+		transformer.setEvaluationType(XPathEvaluationType.LIST_RESULT);
 
 		Message<?> message = MessageBuilder.withPayload(loadObject()).build();
 
@@ -57,18 +57,18 @@ public class XPathTransformerIUTest {
 	@Test
 	public void canTransformToString() throws Exception {
 
-		XPathTransformer transformer = new XPathTransformer("//Employee[1]/FirstName",
-				XPathEvaluationType.STRING_RESULT);
+		XPathTransformer transformer = new XPathTransformer(
+				"//Employee[1]/FirstName");
+		transformer.setEvaluationType(XPathEvaluationType.STRING_RESULT);
 
 		Message<?> message = MessageBuilder.withPayload(loadObject()).build();
 
 		Message<?> outputMessage = transformer.transform(message);
 
 		assertThat(outputMessage.getPayload(), notNullValue());
-		assertThat((String)outputMessage.getPayload(), is("Andy"));
+		assertThat((String) outputMessage.getPayload(), is("Andy"));
 	}
 
-	
 	ComplexDataObject loadObject() throws Exception {
 
 		ClassPathResource resource = new ClassPathResource("valid-1.txt",

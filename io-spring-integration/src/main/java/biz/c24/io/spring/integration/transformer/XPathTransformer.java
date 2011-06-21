@@ -21,25 +21,18 @@ public class XPathTransformer extends
 		AbstractPayloadTransformer<ComplexDataObject, Object> {
 
 	volatile XPathStatement statement;
-	volatile XPathEvaluationType evaluationType;
+	volatile XPathEvaluationType evaluationType = XPathEvaluationType.OBJECT_RESULT;
 
-	public XPathTransformer(String statement, XPathEvaluationType evaluationType) {
+	public XPathTransformer(String statement) {
 		Assert.notNull(statement, "The XPath statement must not be null.");
-		Assert.notNull(evaluationType,
-				"The XPath evaluation type must not be null.");
 
 		this.statement = new XPathStatement(statement);
-		this.evaluationType = evaluationType;
 	}
 
-	public XPathTransformer(XPathStatement statement,
-			XPathEvaluationType evaluationType) {
+	public XPathTransformer(XPathStatement statement) {
 		Assert.notNull(statement, "The XPath statement must not be null.");
-		Assert.notNull(evaluationType,
-				"The XPath evaluation type must not be null.");
 
 		this.statement = statement;
-		this.evaluationType = evaluationType;
 	}
 
 	@Override
@@ -48,7 +41,8 @@ public class XPathTransformer extends
 
 		IOXPath xpath = createXPath();
 
-		Object transformedPayload = evaluationType.evaluateXPath(xpath, payload);
+		Object transformedPayload = evaluationType
+				.evaluateXPath(xpath, payload);
 		return transformedPayload;
 	}
 
