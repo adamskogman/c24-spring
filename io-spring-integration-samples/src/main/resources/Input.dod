@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<dataModel targetNamespace="http://www.progress.com/ads/examples/models/basic" hibernateIDGeneratorMethodDefault="native" encrypted="false" encoding="UTF-8" elementFormDefault="Qualified" attributeFormDefault="Unqualified" IOversion="3.1.0" version="0.0.1" name="Input.dod">
+    <type>
+        <complexType specifyStructure="true" specialisation="Generic complex" processAsBatch="false" excludeFromDatabase="false" contentModel="Sequence" abstract="false" name="Employee">
+            <facet facetType="terminator">
+                <value>0d0a|0d|0a</value>
+            </facet>
+            <facet facetType="delimiter">
+                <value>Infix|false|2c</value>
+            </facet>
+            <facet facetType="format_type">
+                <value>Delimited</value>
+            </facet>
+            <element identifier="false" typeRef="Salutation" min="1" max="1" name="Salutation"/>
+            <element identifier="false" typeRef="FirstName" min="1" max="1" name="FirstName"/>
+            <element identifier="false" typeRef="LastName" min="1" max="1" name="LastName"/>
+            <element identifier="false" typeRef="JobTitle" min="1" max="1" name="JobTitle"/>
+        </complexType>
+    </type>
+    <validationRule severity="Error" name="FirstLetterCapital">
+        <code>java.lang.String name = (java.lang.String)object;
+if (!java.lang.Character.isUpperCase(name.charAt(0))) //object is invalid
+{
+	 manager.fireValidationEvent(new biz.c24.io.api.data.ValidationEvent(object, component, context, biz.c24.io.api.ValidationResultEnum.FAILED_RULE_ERROR, &quot;Names must begin with a capital letter&quot;));
+	return false;
+}
+else
+    return true;</code>
+    </validationRule>
+    <type>
+        <atomicSimpleType baseType="#string" name="FirstName">
+            <facet facetType="terminator">
+                <value></value>
+            </facet>
+            <validationRuleRef ref="FirstLetterCapital"/>
+        </atomicSimpleType>
+    </type>
+    <type>
+        <atomicSimpleType baseType="#string" name="LastName">
+            <facet facetType="terminator">
+                <value></value>
+            </facet>
+        </atomicSimpleType>
+    </type>
+    <type>
+        <atomicSimpleType baseType="#string" name="JobTitle" id="BAS001">
+            <facet facetType="terminator">
+                <value></value>
+            </facet>
+            <validationRule severity="Error" errorCode="BAS001" name="JobTitleDomCon" id="BAS001">
+                <annotation>
+                    <documentation>Domain Constraint Basic 001: Issue in Job Title value</documentation>
+                </annotation>
+                <domainConstraint identifier="http://www.progress.com/ads/examples/models/basic/AllJobTitles">
+                    <select namespaceAware="false" ignoreDocumentNode="true"/>
+                </domainConstraint>
+            </validationRule>
+        </atomicSimpleType>
+    </type>
+    <type>
+        <complexType specifyStructure="true" specialisation="Generic complex" processAsBatch="false" excludeFromDatabase="false" contentModel="Sequence" abstract="false" name="Employees">
+            <element identifier="false" typeRef="Employee" min="0" max="-1" name="Employee"/>
+        </complexType>
+    </type>
+    <element identifier="true" typeRef="Employees" min="1" max="1" name="Employees"/>
+    <type>
+        <atomicSimpleType baseType="#string" name="Salutation">
+            <validationRule severity="Error" name="SalutationRule">
+                <domainConstraint identifier="http://www.progress.com/artix/ds/examples/models/basic/salutations/Salutations">
+                    <select namespaceAware="false" ignoreDocumentNode="true"/>
+                </domainConstraint>
+            </validationRule>
+        </atomicSimpleType>
+    </type>
+    <namespace uri="http://www.progress.com/ads/examples/models/basic" prefix=""/>
+</dataModel>

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:c24="http://www.c24.biz/schema/spring-core"
+	xmlns:int-c24="http://www.c24.biz/schema/spring-integration" xmlns:int="http://www.springframework.org/schema/integration"
+	xsi:schemaLocation="http://www.springframework.org/schema/integration http://www.springframework.org/schema/integration/spring-integration-2.0.xsd
+		http://www.c24.biz/schema/spring-core http://www.c24.biz/schema/spring-core.xsd
+		http://www.c24.biz/schema/spring-integration http://www.c24.biz/schema/spring-integration.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<c24:model id="input"
+		base-element="com.progress.ads.examples.models.basic.InputDocumentRootElement" />
+
+	<bean id="textSourceFactory" class="biz.c24.io.spring.source.TextualSourceFactory" />
+
+	<int:channel id="in-channel" />
+	<int:channel id="out-channel" />
+
+	<int-c24:unmarshalling-transformer
+		id="parser" source-factory="textSourceFactory" input-channel="in-channel"
+		output-channel="channel2" model-ref="input" />
+
+	<int-c24:transformer
+		transform-class="com.progress.ads.examples.transforms.basic.ExampleTransform"
+		input-channel="channel2" output-channel="tx-output"
+		always-return-array="false" />
+
+	<int:publish-subscribe-channel id="tx-output" />
+
+	<int-c24:xpath-transformer input-channel="tx-output"
+		evaluation-type="OBJECT_RESULT" xpath-statement="/Emails"
+		output-channel="emails-channel" />
+
+	<bean id="emailStatement" class="biz.c24.io.api.data.XPathStatement">
+		<constructor-arg value="/Email" />
+	</bean>
+
+	<int-c24:xpath-transformer input-channel="tx-output"
+		evaluation-type="OBJECT_RESULT" xpath-statement-ref="emailStatement"
+		output-channel="email-channel" />
+
+	<bean id="xmlSinkFactory" class="biz.c24.io.spring.sink.XmlSinkFactory" />
+
+	<int-c24:marshalling-transformer
+		sink-factory="xmlSinkFactory" output-type="BYTE_ARRAY" input-channel="emails-channel" />
+
+	<bean id="txtSinkFactory" class="biz.c24.io.spring.sink.TextualSinkFactory" />
+
+	<int-c24:marshalling-transformer
+		sink-factory="txtSinkFactory" output-type="BYTE_ARRAY" input-channel="email-channel" />
+
+
+
+</beans>
