@@ -18,11 +18,12 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.util.FileCopyUtils;
 
-import com.progress.ads.examples.models.basic.Employees;
+import biz.c24.io.examples.models.basic.Employees;
+
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration("router.xml")
-public class RouterTest {
+@ContextConfiguration("selector.xml")
+public class SelectorTests {
 
 	@Autowired
 	MessageChannel textInputChannel;
@@ -39,13 +40,13 @@ public class RouterTest {
 	}
 
 	@Test
-	public void canUnmarshal() throws Exception {
+	public void canSelect() throws Exception {
 
 		template.convertAndSend(loadCsvBytes());
 
 		Message<?> message = rightChannel.receive(1);
 
-		assertThat(message.getPayload(), notNullValue());
+		assertThat(message, notNullValue());
 		assertThat(message.getPayload(), is(Employees.class));
 
 	}

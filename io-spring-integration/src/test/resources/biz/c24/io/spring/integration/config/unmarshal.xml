@@ -11,7 +11,7 @@
 	<bean id="textualSourceFactory" class="biz.c24.io.spring.source.TextualSourceFactory" />
 
 	<c24:model id="inputDocumentModel"
-		base-element="com.progress.ads.examples.models.basic.InputDocumentRootElement" />
+		base-element="biz.c24.io.examples.models.basic.InputDocumentRootElement" />
 
 	<!-- ===== The flow ===== -->
 

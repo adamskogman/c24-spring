@@ -5,30 +5,24 @@ import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.junit.Assert.assertThat;
 
 import org.junit.Test;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.integration.Message;
 import org.springframework.integration.support.MessageBuilder;
-import org.springframework.util.FileCopyUtils;
 
+import biz.c24.io.examples.models.basic.Employees;
+import biz.c24.io.examples.models.basic.InputDocumentRootElement;
 import biz.c24.io.spring.source.TextualSourceFactory;
 import biz.c24.io.spring.source.XmlSourceFactory;
 import biz.c24.io.spring.util.C24Model;
+import static biz.c24.io.spring.integration.test.TestUtils.*;
 
-import com.progress.ads.examples.models.basic.Employees;
-import com.progress.ads.examples.models.basic.InputDocumentRootElement;
-
-public class IoUnmarshallingTransformerIUTest {
+public class IoUnmarshallingTransformerIUTests {
 
 	C24Model model = new C24Model(InputDocumentRootElement.getInstance());
 
 	@Test
 	public void canUnmarshalTextFromBytearray() throws Exception {
 
-		ClassPathResource resource = new ClassPathResource("valid-1.txt",
-				IoUnmarshallingTransformerIUTest.class);
-		byte[] valid1 = FileCopyUtils
-				.copyToByteArray(resource.getInputStream());
-
+		byte[] valid1 = loadCsvBytes();
 		IoUnmarshallingTransformer transformer = new IoUnmarshallingTransformer(
 				model, new TextualSourceFactory());
 
@@ -46,11 +40,8 @@ public class IoUnmarshallingTransformerIUTest {
 	@Test
 	public void canUnmarshalTextFromString() throws Exception {
 
-		ClassPathResource resource = new ClassPathResource("valid-1.txt",
-				IoUnmarshallingTransformerIUTest.class);
-		byte[] valid1 = FileCopyUtils
-				.copyToByteArray(resource.getInputStream());
-		String validString = new String(valid1, "UTF-8");
+		
+		String validString = loadCsvString();
 
 		IoUnmarshallingTransformer transformer = new IoUnmarshallingTransformer(
 				model, new TextualSourceFactory());
@@ -69,11 +60,7 @@ public class IoUnmarshallingTransformerIUTest {
 	@Test
 	public void canUnmarshalXmlFromString() throws Exception {
 
-		ClassPathResource resource = new ClassPathResource("valid-XML-1.xml",
-				IoUnmarshallingTransformerIUTest.class);
-		byte[] valid1 = FileCopyUtils
-				.copyToByteArray(resource.getInputStream());
-		String validString = new String(valid1, "UTF-8");
+		String validString = loadXmlString();
 
 		IoUnmarshallingTransformer transformer = new IoUnmarshallingTransformer(
 				model, new XmlSourceFactory());
@@ -92,10 +79,7 @@ public class IoUnmarshallingTransformerIUTest {
 	@Test
 	public void canUnmarshalXmlFromBytearray() throws Exception {
 
-		ClassPathResource resource = new ClassPathResource("valid-XML-1.xml",
-				IoUnmarshallingTransformerIUTest.class);
-		byte[] valid1 = FileCopyUtils
-				.copyToByteArray(resource.getInputStream());
+		byte[] valid1 = loadXmlBytes();
 
 		IoUnmarshallingTransformer transformer = new IoUnmarshallingTransformer(
 				model, new XmlSourceFactory());

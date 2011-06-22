@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<transform version="0.0.3" validateOutputs="false" validateInputs="false" targetNamespace="http://www.progress.com/ads/examples/transforms/basic" readOnly="false" processingOrder="Outputs" encrypted="false" IOversion="3.1.0" name="Example.tfd">
+<transform version="0.0.3" validateOutputs="false" validateInputs="false" targetNamespace="http://www.c24.biz/io/examples/transforms/basic" readOnly="false" processingOrder="Outputs" encrypted="false" IOversion="3.1.0" name="Example.tfd">
     <input typeRef="#Document Root" required="false" path="" modelRef="Input.dod" endID="0"/>
     <localTransformRef refId="22" y="62" x="268" id="23"/>
     <contextPath input="true" endID="0" contextRef="Employees/Employee" id="24"/>
@@ -9,7 +9,7 @@
     <nextId>31</nextId>
     <output typeRef="#Document Root" required="false" path="" modelRef="Output.dod" endID="0"/>
     <localTransform id="22">
-        <transform version="0.0.3" validateOutputs="false" validateInputs="false" targetNamespace="http://www.progress.com/ads/examples/transforms/basic" readOnly="false" processingOrder="Outputs" encrypted="false" IOversion="3.1.0" name="EmployeeToEmail">
+        <transform version="0.0.3" validateOutputs="false" validateInputs="false" targetNamespace="http://www.c24.biz/io/examples/transforms/basic" readOnly="false" processingOrder="Outputs" encrypted="false" IOversion="3.1.0" name="EmployeeToEmail">
             <input typeRef="Employee" required="false" path="" modelRef="Input.dod" endID="0"/>
             <constant constant="@company.com" id="1"/>
             <transformMethod name="SUBSTRING" y="132" x="228" id="5"/>

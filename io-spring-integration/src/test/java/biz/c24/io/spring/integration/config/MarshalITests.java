@@ -8,7 +8,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.integration.Message;
 import org.springframework.integration.MessageChannel;
@@ -18,11 +17,10 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.util.FileCopyUtils;
 
-import com.progress.ads.examples.models.basic.Employees;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration("selector.xml")
-public class SelectorTest {
+@ContextConfiguration("marshal.xml")
+public class MarshalITests {
 
 	@Autowired
 	MessageChannel textInputChannel;
@@ -30,8 +28,7 @@ public class SelectorTest {
 	private MessagingTemplate template;
 
 	@Autowired
-	@Qualifier("rightChannel")
-	PollableChannel rightChannel;
+	PollableChannel outputChannel;
 
 	@Before
 	public void before() {
@@ -39,15 +36,16 @@ public class SelectorTest {
 	}
 
 	@Test
-	public void canSelect() throws Exception {
+	public void canMarshal() throws Exception {
 
 		template.convertAndSend(loadCsvBytes());
 
-		Message<?> message = rightChannel.receive(1);
+		Message<?> message = outputChannel.receive(1);
 
 		assertThat(message, notNullValue());
-		assertThat(message.getPayload(), is(Employees.class));
+		assertThat(message.getPayload(), is(byte[].class));
 
+		
 	}
 
 	byte[] loadCsvBytes() throws Exception {

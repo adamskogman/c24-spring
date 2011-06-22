@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:c24="http://www.c24.biz/schema/spring-core"
+	xmlns:int="http://www.springframework.org/schema/integration"
+	xmlns:int-c24="http://www.c24.biz/schema/spring-integration"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.c24.biz/schema/spring-core http://www.c24.biz/schema/spring-core.xsd
+		http://www.springframework.org/schema/integration http://www.springframework.org/schema/integration/spring-integration-2.0.xsd
+		http://www.c24.biz/schema/spring-integration http://www.c24.biz/schema/spring-integration.xsd">
+
+	<bean id="textualSourceFactory" class="biz.c24.io.spring.source.TextualSourceFactory" />
+
+	<c24:model id="inputDocumentModel"
+		base-element="biz.c24.io.examples.models.basic.InputDocumentRootElement" />
+
+	<bean id="xmlSinkFactory" class="biz.c24.io.spring.sink.XmlSinkFactory">
+		<property name="encoding" value="UTF-8" />
+	</bean>
+
+	<!-- ===== The flow ===== -->
+
+	<int:channel id="textInputChannel" />
+
+	<int-c24:unmarshalling-transformer
+		source-factory-ref="textualSourceFactory" input-channel="textInputChannel"
+		output-channel="cdoChannel" model-ref="inputDocumentModel" />
+
+	<int-c24:marshalling-transformer
+		input-channel="cdoChannel" output-channel="outputChannel"
+		sink-factory="xmlSinkFactory" output-type="BYTE_ARRAY" />
+
+	<int:channel id="outputChannel">
+		<int:queue capacity="1" />
+	</int:channel>
+
+</beans>

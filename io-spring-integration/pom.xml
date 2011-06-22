@@ -47,7 +47,7 @@
 	</dependencies>
 
 	<build>
-		<plugins>		
+		<plugins>
 			<plugin>
 				<artifactId>maven-antrun-plugin</artifactId>
 				<version>1.6</version>
@@ -60,27 +60,17 @@
 						<configuration>
 							<target>
 								<taskdef name="deploy" classname="biz.c24.io.ant.DeployTask" />
-								<deploy file="src/test/resources/SampleModel.dod" 
-								        todir="target/generated-test-classes/model"
-								        deployenvironment="false"
-								        generatemainmethods="false" />								    
-								<deploy file="src/test/resources/Input.dod" 
-								        todir="target/generated-test-classes/model"
-								        deployenvironment="false"
-								        generatemainmethods="false" />								    
-								<deploy file="src/test/resources/Output.dod" 
-								        todir="target/generated-test-classes/model"
-								        deployenvironment="false"
-								        generatemainmethods="false" />								    
-								<deploy file="src/test/resources/Example.tfd" 
-								        todir="target/generated-test-classes/model"
-								        deployenvironment="false"
-								        generatemainmethods="false" />								    
+								<deploy file="src/test/resources/Input.dod" todir="target/generated-test-classes/model"
+									deployenvironment="false" generatemainmethods="false" />
+								<deploy file="src/test/resources/Output.dod" todir="target/generated-test-classes/model"
+									deployenvironment="false" generatemainmethods="false" />
+								<deploy file="src/test/resources/Example.tfd" todir="target/generated-test-classes/model"
+									deployenvironment="false" generatemainmethods="false" />
 							</target>
 						</configuration>
 					</execution>
 				</executions>
-				
+
 				<dependencies>
 					<dependency>
 						<groupId>biz.c24.io</groupId>
@@ -91,7 +81,7 @@
 						<groupId>biz.c24.io</groupId>
 						<artifactId>c24-io-studio</artifactId>
 						<version>${c24.version}</version>
-					</dependency>					
+					</dependency>
 					<dependency>
 						<groupId>log4j</groupId>
 						<artifactId>log4j</artifactId>
@@ -113,24 +103,24 @@
 						<version>2.0.8</version>
 					</dependency>
 					<dependency>
-					    <groupId>jakarta-regexp</groupId>
-					    <artifactId>jakarta-regexp</artifactId>
-					    <version>1.4</version>
+						<groupId>jakarta-regexp</groupId>
+						<artifactId>jakarta-regexp</artifactId>
+						<version>1.4</version>
 					</dependency>
 					<dependency>
-					    <groupId>xerces</groupId>
-					    <artifactId>xercesImpl</artifactId>
-					    <version>2.9.1</version>
+						<groupId>xerces</groupId>
+						<artifactId>xercesImpl</artifactId>
+						<version>2.9.1</version>
 					</dependency>
 					<dependency>
 						<groupId>commons-io</groupId>
 						<artifactId>commons-io</artifactId>
 						<version>1.4</version>
-					</dependency>						
+					</dependency>
 				</dependencies>
-			
+
 			</plugin>
-			
+
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>build-helper-maven-plugin</artifactId>

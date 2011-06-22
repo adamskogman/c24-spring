@@ -8,6 +8,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.integration.Message;
 import org.springframework.integration.MessageChannel;
@@ -17,11 +18,11 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.util.FileCopyUtils;
 
-import com.progress.ads.examples.models.basic.Employees;
+import biz.c24.io.examples.models.basic.Employees;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration("unmarshal.xml")
-public class UnmarshalITest {
+@ContextConfiguration("router.xml")
+public class RouterTests {
 
 	@Autowired
 	MessageChannel textInputChannel;
@@ -29,7 +30,8 @@ public class UnmarshalITest {
 	private MessagingTemplate template;
 
 	@Autowired
-	PollableChannel cdoChannel;
+	@Qualifier("rightChannel")
+	PollableChannel rightChannel;
 
 	@Before
 	public void before() {
@@ -41,7 +43,7 @@ public class UnmarshalITest {
 
 		template.convertAndSend(loadCsvBytes());
 
-		Message<?> message = cdoChannel.receive(1);
+		Message<?> message = rightChannel.receive(1);
 
 		assertThat(message.getPayload(), notNullValue());
 		assertThat(message.getPayload(), is(Employees.class));

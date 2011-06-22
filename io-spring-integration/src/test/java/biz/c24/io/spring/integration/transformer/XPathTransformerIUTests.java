@@ -1,8 +1,9 @@
 package biz.c24.io.spring.integration.transformer;
 
-import static org.hamcrest.CoreMatchers.*;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.junit.Assert.assertThat;
-import static org.junit.matchers.JUnitMatchers.*;
+import static org.junit.matchers.JUnitMatchers.hasItems;
 
 import java.util.List;
 
@@ -13,12 +14,11 @@ import org.springframework.integration.support.MessageBuilder;
 
 import biz.c24.io.api.data.ComplexDataObject;
 import biz.c24.io.api.presentation.TextualSource;
+import biz.c24.io.examples.models.basic.Employee;
+import biz.c24.io.examples.models.basic.InputDocumentRootElement;
 import biz.c24.io.spring.integration.xpath.XPathEvaluationType;
-
-import com.progress.ads.examples.models.basic.Employee;
-import com.progress.ads.examples.models.basic.InputDocumentRootElement;
-
-public class XPathTransformerIUTest {
+import static biz.c24.io.spring.integration.test.TestUtils.loadObject;
+public class XPathTransformerIUTests {
 
 	@Test
 	public void canTransformToListOfString() throws Exception {
@@ -67,20 +67,6 @@ public class XPathTransformerIUTest {
 
 		assertThat(outputMessage.getPayload(), notNullValue());
 		assertThat((String) outputMessage.getPayload(), is("Andy"));
-	}
-
-	ComplexDataObject loadObject() throws Exception {
-
-		ClassPathResource resource = new ClassPathResource("valid-1.txt",
-				IoUnmarshallingTransformerIUTest.class);
-
-		TextualSource textualSource = new TextualSource(
-				resource.getInputStream());
-
-		ComplexDataObject object = textualSource
-				.readObject(InputDocumentRootElement.getInstance());
-
-		return object;
 	}
 
 }
