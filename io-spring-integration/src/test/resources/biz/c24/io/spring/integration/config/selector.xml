@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:int-c24="http://www.c24.biz/schema/spring-integration"
+	xmlns:c24="http://www.c24.biz/schema/spring-core" xmlns:int="http://www.springframework.org/schema/integration"
+	xmlns:int-xml="http://www.springframework.org/schema/integration/xml"
+	xsi:schemaLocation="http://www.springframework.org/schema/integration/xml http://www.springframework.org/schema/integration/xml/spring-integration-xml-2.0.xsd
+		http://www.springframework.org/schema/integration http://www.springframework.org/schema/integration/spring-integration-2.0.xsd
+		http://www.c24.biz/schema/spring-core http://www.c24.biz/schema/spring-core.xsd
+		http://www.c24.biz/schema/spring-integration http://www.c24.biz/schema/spring-integration.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+
+	<bean id="textualSourceFactory" class="biz.c24.io.spring.source.TextualSourceFactory" />
+
+	<c24:model id="inputDocumentModel"
+		base-element="com.progress.ads.examples.models.basic.InputDocumentRootElement" />
+
+	<!-- ===== The flow ===== -->
+
+	<int:channel id="textInputChannel" />
+
+	<int-c24:unmarshalling-transformer
+		source-factory-ref="textualSourceFactory" input-channel="textInputChannel"
+		output-channel="cdoChannel" model-ref="inputDocumentModel" />
+
+	<int:channel id="cdoChannel">
+	</int:channel>
+
+	<int:chain input-channel="cdoChannel" output-channel="rightChannel">
+		<int:filter discard-channel="wrongChannel" ref="boolSelector" />
+		<int:filter discard-channel="wrongChannel" ref="stringSelector" />
+	</int:chain>
+
+	<int-c24:xpath-selector id="boolSelector"
+		evaluation-result-type="boolean" xpath-statement="//Employee/FirstName/text()='Andy'" />
+
+	<int-c24:xpath-selector id="stringSelector"
+		evaluation-result-type="string" xpath-statement="//Employee/FirstName"
+		string-test-value="Andy" />
+
+	<int:channel id="rightChannel">
+		<int:queue capacity="1" />
+	</int:channel>
+
+	<int:channel id="wrongChannel">
+		<int:queue capacity="1" />
+	</int:channel>
+
+
+</beans>

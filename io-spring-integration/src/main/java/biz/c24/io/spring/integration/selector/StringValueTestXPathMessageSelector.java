@@ -19,7 +19,7 @@ public class StringValueTestXPathMessageSelector extends
 
 	private volatile boolean caseSensitive = true;
 
-	private volatile String valueToTestFor;
+	private volatile String stringTestValue;
 
 	/**
 	 * @param statement
@@ -41,22 +41,22 @@ public class StringValueTestXPathMessageSelector extends
 		String value = createXPath().getString(payload);
 		
 		if (this.caseSensitive) {
-			return this.valueToTestFor.equals(value);
+			return this.stringTestValue.equals(value);
 		}
 		else {
-			return this.valueToTestFor.equalsIgnoreCase(value);
+			return this.stringTestValue.equalsIgnoreCase(value);
 		}
 
 		
 	}
 
 	public String getValueToTestFor() {
-		return valueToTestFor;
+		return stringTestValue;
 	}
 
 	public void setValueToTestFor(String valueToTestFor) {
 		Assert.notNull(valueToTestFor, "'valueToTestFor' must not be null.");
-		this.valueToTestFor = valueToTestFor;
+		this.stringTestValue = valueToTestFor;
 	}
 
 	public boolean isCaseSensitive() {
@@ -68,7 +68,7 @@ public class StringValueTestXPathMessageSelector extends
 	}
 
 	public void afterPropertiesSet() throws Exception {
-		Assert.notNull(valueToTestFor, "'valueToTestFor' must not be null.");
+		Assert.notNull(stringTestValue, "'valueToTestFor' must not be null.");
 	}
 
 }
