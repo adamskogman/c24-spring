@@ -65,4 +65,12 @@ public abstract class AbstractSinkFactory implements SinkFactory {
 		return sink;
 	}
 
+	public String getEncoding() {
+		return encoding;
+	}
+
+	public void setEncoding(String encoding) {
+		this.encoding = encoding;
+	}
+
 }
