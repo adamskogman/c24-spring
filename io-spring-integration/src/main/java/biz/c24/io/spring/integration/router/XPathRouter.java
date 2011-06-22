@@ -34,6 +34,8 @@ import biz.c24.io.api.data.XPathStatement;
  * Message Router that uses {@link XPathStatement} evaluation to determine
  * channel names.
  * 
+ * TODO Evaluate as list of strings, not just a single string.
+ * 
  * @author askogman
  * 
  */
@@ -64,7 +66,7 @@ public class XPathRouter extends AbstractMessageRouter {
 	}
 
 	public String getComponentType() {
-		return "c24:xpath-router";
+		return "int-c24:xpath-router";
 	}
 
 	protected IOXPath createXPath() {
