@@ -41,8 +41,6 @@
 						<configuration>
 							<target>
 								<taskdef name="deploy" classname="biz.c24.io.ant.DeployTask" />
-								<deploy file="src/main/resources/SampleModel.dod" todir="target/generated-classes/model"
-									deployenvironment="false" generatemainmethods="false" />
 								<deploy file="src/main/resources/Input.dod" todir="target/generated-classes/model"
 									deployenvironment="false" generatemainmethods="false" />
 								<deploy file="src/main/resources/Output.dod" todir="target/generated-classes/model"
