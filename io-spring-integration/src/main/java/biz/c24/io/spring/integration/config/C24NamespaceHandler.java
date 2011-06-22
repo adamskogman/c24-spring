@@ -22,9 +22,13 @@ class C24NamespaceHandler extends NamespaceHandlerSupport {
 				new IoUnmarshallingTransformerParser());
 		registerBeanDefinitionParser("marshalling-transformer",
 				new IoMarshallingTransformerParser());
-		registerBeanDefinitionParser("transformer",
-				new IoTransformerParser());
+		registerBeanDefinitionParser("transformer", new IoTransformerParser());
 		registerBeanDefinitionParser("xpath-transformer",
 				new IoXPathTransformerParser());
+
+		registerBeanDefinitionParser("xpath-router", new IoXPathRouterParser());
+		registerBeanDefinitionParser("xpath-selector",
+				new IoXPathSelectorParser());
+
 	}
 }

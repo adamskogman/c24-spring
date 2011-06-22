@@ -6,15 +6,11 @@ package biz.c24.io.spring.integration.config;
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
 import org.springframework.beans.factory.xml.ParserContext;
 import org.springframework.integration.config.xml.AbstractTransformerParser;
-import org.springframework.integration.config.xml.IntegrationNamespaceUtils;
 import org.springframework.util.Assert;
-import org.springframework.util.StringUtils;
 import org.w3c.dom.Element;
 
-import biz.c24.io.spring.config.C24ModelBeanDefinitionParser;
-
 /**
- * @author askogman
+ * @author Adam Skogman
  * 
  */
 public class IoMarshallingTransformerParser extends AbstractTransformerParser {

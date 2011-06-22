@@ -33,14 +33,13 @@ public class IoUnmarshallingTransformerParser extends AbstractTransformerParser 
 				: C24ModelBeanDefinitionParser.DEFAULT_BEAN_NAME;
 		builder.addConstructorArgReference(modelRef);
 
-		// IntegrationNamespaceUtils.setValueIfAttributeDefined(builder, element, "send-timeout");
-		
-		String sourceFactory = element.getAttribute("source-factory");
+		// IntegrationNamespaceUtils.setValueIfAttributeDefined(builder,
+		// element, "send-timeout");
+
+		String sourceFactory = element.getAttribute("source-factory-ref");
 		Assert.hasText(sourceFactory,
 				"the 'source-factory' attribute is required");
 		builder.addConstructorArgReference(sourceFactory);
-
-		System.out.println("hello!");
 
 	}
 
