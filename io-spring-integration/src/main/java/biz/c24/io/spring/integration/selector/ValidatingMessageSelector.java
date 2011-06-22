@@ -8,7 +8,6 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.integration.Message;
 import org.springframework.integration.MessagingException;
 import org.springframework.integration.core.MessageSelector;
-import org.springframework.xml.validation.XmlValidator;
 
 import biz.c24.io.api.data.ComplexDataObject;
 
@@ -18,6 +17,7 @@ import biz.c24.io.api.data.ComplexDataObject;
  */
 public class ValidatingMessageSelector implements MessageSelector {
 
+	@SuppressWarnings("unused")
 	private final Log logger = LogFactory.getLog(this.getClass());
 
 	private volatile boolean throwExceptionOnRejection;

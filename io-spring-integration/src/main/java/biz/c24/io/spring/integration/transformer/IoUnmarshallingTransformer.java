@@ -4,7 +4,6 @@
 package biz.c24.io.spring.integration.transformer;
 
 import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;

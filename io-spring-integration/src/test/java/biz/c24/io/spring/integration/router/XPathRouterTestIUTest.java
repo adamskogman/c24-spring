@@ -1,19 +1,15 @@
 package biz.c24.io.spring.integration.router;
 
-import static org.hamcrest.CoreMatchers.*;
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
+import static org.hamcrest.CoreMatchers.sameInstance;
+import static org.junit.Assert.assertThat;
+import static org.mockito.Mockito.when;
 
-import java.io.ByteArrayInputStream;
-
-import org.hamcrest.core.IsSame;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.integration.Message;
-import org.springframework.integration.MessageChannel;
 import org.springframework.integration.channel.QueueChannel;
 import org.springframework.integration.support.MessageBuilder;
 import org.springframework.integration.support.channel.ChannelResolver;
@@ -21,7 +17,6 @@ import org.springframework.integration.support.channel.ChannelResolver;
 import biz.c24.io.api.data.ComplexDataObject;
 import biz.c24.io.api.presentation.TextualSource;
 import biz.c24.io.spring.integration.transformer.IoUnmarshallingTransformerIUTest;
-import biz.c24.io.spring.model.TestConstants;
 
 import com.progress.ads.examples.models.basic.InputDocumentRootElement;
 
