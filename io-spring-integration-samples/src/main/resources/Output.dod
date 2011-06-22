@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<dataModel targetNamespace="http://www.progress.com/ads/examples/models/basic" hibernateIDGeneratorMethodDefault="native" encrypted="false" encoding="UTF-8" elementFormDefault="Qualified" attributeFormDefault="Unqualified" IOversion="3.1.0" version="0.0.1" name="Output.dod">
+<dataModel targetNamespace="http://www.c24.biz/io/examples/models/basic" hibernateIDGeneratorMethodDefault="native" encrypted="false" encoding="UTF-8" elementFormDefault="Qualified" attributeFormDefault="Unqualified" IOversion="3.1.0" version="0.0.1" name="Output.dod">
     <type>
         <complexType specifyStructure="true" specialisation="Generic complex" processAsBatch="false" excludeFromDatabase="false" contentModel="Sequence" abstract="false" name="Email">
             <facet facetType="delimiter">
@@ -38,5 +38,5 @@
         </complexType>
     </type>
     <element identifier="true" typeRef="Emails" min="1" max="1" name="Emails"/>
-    <namespace uri="http://www.progress.com/ads/examples/models/basic" prefix=""/>
+    <namespace uri="http://www.c24.biz/io/examples/models/basic" prefix=""/>
 </dataModel>

@@ -8,7 +8,7 @@
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
 	<c24:model id="input"
-		base-element="com.progress.ads.examples.models.basic.InputDocumentRootElement" />
+		base-element="biz.c24.io.examples.models.basic.InputDocumentRootElement" />
 
 	<bean id="textSourceFactory" class="biz.c24.io.spring.source.TextualSourceFactory" />
 
@@ -16,7 +16,7 @@
 	<int:channel id="out-channel" />
 
 	<int-c24:unmarshalling-transformer
-		id="parser" source-factory="textSourceFactory" input-channel="in-channel"
+		id="parser" source-factory-ref="textSourceFactory" input-channel="in-channel"
 		output-channel="channel2" model-ref="input" />
 
 	<int-c24:transformer

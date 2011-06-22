@@ -11,7 +11,7 @@ import biz.c24.io.spring.util.C24Model;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("classpath:/META-INF/spring/si-context.xml")
-public class ContextTest {
+public class ContextTests {
 
 	@Autowired
 	ApplicationContext context;

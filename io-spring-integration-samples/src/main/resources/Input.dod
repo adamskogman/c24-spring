@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<dataModel targetNamespace="http://www.progress.com/ads/examples/models/basic" hibernateIDGeneratorMethodDefault="native" encrypted="false" encoding="UTF-8" elementFormDefault="Qualified" attributeFormDefault="Unqualified" IOversion="3.1.0" version="0.0.1" name="Input.dod">
+<dataModel targetNamespace="http://www.c24.biz/io/examples/models/basic" hibernateIDGeneratorMethodDefault="native" encrypted="false" encoding="UTF-8" elementFormDefault="Qualified" attributeFormDefault="Unqualified" IOversion="3.1.0" version="0.0.1" name="Input.dod">
     <type>
         <complexType specifyStructure="true" specialisation="Generic complex" processAsBatch="false" excludeFromDatabase="false" contentModel="Sequence" abstract="false" name="Employee">
             <facet facetType="terminator">
@@ -51,7 +51,7 @@ else
                 <annotation>
                     <documentation>Domain Constraint Basic 001: Issue in Job Title value</documentation>
                 </annotation>
-                <domainConstraint identifier="http://www.progress.com/ads/examples/models/basic/AllJobTitles">
+                <domainConstraint identifier="http://www.c24.biz/io/examples/models/basic/AllJobTitles">
                     <select namespaceAware="false" ignoreDocumentNode="true"/>
                 </domainConstraint>
             </validationRule>
@@ -66,11 +66,11 @@ else
     <type>
         <atomicSimpleType baseType="#string" name="Salutation">
             <validationRule severity="Error" name="SalutationRule">
-                <domainConstraint identifier="http://www.progress.com/artix/ds/examples/models/basic/salutations/Salutations">
+                <domainConstraint identifier="http://www.c24.biz/io/examples/models/basic/salutations/Salutations">
                     <select namespaceAware="false" ignoreDocumentNode="true"/>
                 </domainConstraint>
             </validationRule>
         </atomicSimpleType>
     </type>
-    <namespace uri="http://www.progress.com/ads/examples/models/basic" prefix=""/>
+    <namespace uri="http://www.c24.biz/io/examples/models/basic" prefix=""/>
 </dataModel>
