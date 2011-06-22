@@ -10,6 +10,7 @@
 	<modules>
 		<module>io-spring-core</module>
 		<module>io-spring-integration</module>
+		<module>io-spring-integration-samples</module>
 	</modules>
 
 	<developers>
