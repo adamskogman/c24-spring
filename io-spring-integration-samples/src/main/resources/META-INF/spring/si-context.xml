@@ -20,7 +20,7 @@
 		output-channel="channel2" model-ref="input" />
 
 	<int-c24:transformer
-		transform-class="com.progress.ads.examples.transforms.basic.ExampleTransform"
+		transform-class="biz.c24.io.examples.transforms.basic.ExampleTransform"
 		input-channel="channel2" output-channel="tx-output"
 		always-return-array="false" />
 
