@@ -331,7 +331,7 @@
 				use="optional" />
 		</xsd:complexType>
 	</xsd:element>
-	
+
 	<!-- TODO <xsd:element name="validating-filter"> -->
 
 	<!-- TODO <xsd:element name="xpath-statement"> <xsd:complexType> <xsd:annotation> 
@@ -342,6 +342,139 @@
 		type="xsd:string" use="optional"/> <xsd:attribute name="ns-uri" type="xsd:string" 
 		use="optional"/> <xsd:attribute name="namespace-map" type="xsd:string" use="optional"/> 
 		</xsd:complexType> </xsd:element> -->
+
+	<xsd:element name="xpath-header-enricher">
+		<xsd:annotation>
+			<xsd:documentation>
+				Defines a Header Enricher Message Transformer that
+				evaluates XPath
+				statements against the
+				message payload and inserts the
+				result of the evaluation into a messsage
+				header.
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:extension base="inputOutputEndpoint">
+					<xsd:sequence minOccurs="1" maxOccurs="unbounded">
+						<xsd:element type="xpathHeaderType" name="header" />
+					</xsd:sequence>
+					<xsd:attribute name="default-overwrite">
+						<xsd:annotation>
+							<xsd:documentation>
+								Specify the default boolean value for whether
+								to overwrite existing
+								header values. This will
+								only take effect
+								for sub-elements that do not provide their own
+								'overwrite'
+								attribute. If the
+								'default-overwrite' attribute is not provided,
+								then the specified header values
+								will NOT
+								overwrite any existing
+								ones with the same header names.
+							</xsd:documentation>
+						</xsd:annotation>
+						<xsd:simpleType>
+							<xsd:union memberTypes="xsd:boolean xsd:string" />
+						</xsd:simpleType>
+					</xsd:attribute>
+					<xsd:attribute name="should-skip-nulls">
+						<xsd:annotation>
+							<xsd:documentation>
+								Specify whether null values, such as might be
+								returned from an
+								expression evaluation, should be
+								skipped. The
+								default value is true. Set this to false if a null value
+								should
+								trigger removal of
+								the corresponding header instead.
+							</xsd:documentation>
+						</xsd:annotation>
+						<xsd:simpleType>
+							<xsd:union memberTypes="xsd:boolean xsd:string" />
+						</xsd:simpleType>
+					</xsd:attribute>
+				</xsd:extension>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+
+	<xsd:complexType name="xpathHeaderType">
+		<xsd:annotation>
+			<xsd:documentation>
+				Defines an XPath statement to be configured within
+				an
+				&lt;xpath-header-enricher/&gt; element.
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:attribute name="name" type="xsd:string" use="required">
+			<xsd:annotation>
+				<xsd:documentation>
+					The name of the header to be enriched.
+				</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+		<xsd:attribute name="xpath-statement" type="xsd:string">
+			<xsd:annotation>
+				<xsd:documentation>
+					The XPath Expression as a String. Either this or
+					'xpath-statement-ref'
+					must be provided, but not both.
+				</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+		<xsd:attribute name="xpath-statement-ref" type="xsd:string">
+			<xsd:annotation>
+				<xsd:documentation>
+					The XPath Expression reference. Either this or
+					'xpath-statement' must
+					be provided, but not both.
+				</xsd:documentation>
+				<xsd:appinfo>
+					<tool:annotation kind="ref">
+						<tool:expected-type type="biz.c24.io.api.data.XPathStatement" />
+					</tool:annotation>
+				</xsd:appinfo>
+			</xsd:annotation>
+		</xsd:attribute>
+		<xsd:attribute name="evaluation-type" default="STRING_RESULT">
+			<xsd:annotation>
+				<xsd:documentation>
+					The result type expected from the XPath
+					evaluation. This will be
+					the type of the header.
+			</xsd:documentation>
+			</xsd:annotation>
+			<xsd:simpleType>
+				<xsd:restriction base="xsd:string">
+					<xsd:enumeration value="BOOLEAN_RESULT" />
+					<xsd:enumeration value="STRING_RESULT" />
+					<xsd:enumeration value="NUMBER_RESULT" />
+					<xsd:enumeration value="OBJECT_RESULT" />
+					<xsd:enumeration value="LIST_RESULT" />
+				</xsd:restriction>
+			</xsd:simpleType>
+		</xsd:attribute>
+		<xsd:attribute name="overwrite">
+			<xsd:annotation>
+				<xsd:documentation>
+					Boolean value to indicate whether this header
+					value should overwrite an
+					existing header value
+					for the same name if
+					already present on the input Message.
+				</xsd:documentation>
+			</xsd:annotation>
+			<xsd:simpleType>
+				<xsd:union memberTypes="xsd:boolean xsd:string" />
+			</xsd:simpleType>
+		</xsd:attribute>
+	</xsd:complexType>
+
 	<xsd:complexType name="inputOutputEndpoint">
 		<xsd:sequence>
 			<xsd:element ref="integration:poller" minOccurs="0"

@@ -30,5 +30,8 @@ class C24NamespaceHandler extends NamespaceHandlerSupport {
 		registerBeanDefinitionParser("xpath-selector",
 				new IoXPathSelectorParser());
 
+		registerBeanDefinitionParser("xpath-header-enricher",
+				new IoXPathHeaderEnricherParser());
+
 	}
 }
