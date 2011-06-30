@@ -7,6 +7,7 @@
 	<packaging>pom</packaging>
 	<name>C24 Spring Support</name>
 
+
 	<modules>
 		<module>io-spring-core</module>
 		<module>io-spring-integration</module>
