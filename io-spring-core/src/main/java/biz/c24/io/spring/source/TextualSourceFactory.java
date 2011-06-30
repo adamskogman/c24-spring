@@ -102,4 +102,12 @@ public class TextualSourceFactory implements SourceFactory {
 		this.lookBehind = lookBehind;
 	}
 
+	public String getEncoding() {
+		return encoding;
+	}
+
+	public void setEncoding(String encoding) {
+		this.encoding = encoding;
+	}
+
 }

@@ -113,4 +113,12 @@ public class BinarySourceFactory implements SourceFactory {
 		this.lookBehind = lookBehind;
 	}
 
+	public String getEncoding() {
+		return encoding;
+	}
+
+	public void setEncoding(String encoding) {
+		this.encoding = encoding;
+	}
+
 }
