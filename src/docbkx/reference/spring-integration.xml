@@ -61,7 +61,8 @@
 		input-channel="..."
 		output-channel="..." />
 			 ]]></programlisting>
-
+			</para>
+			<para>
 				Two specific attributes are required. The
 				<emphasis>source-factory-ref</emphasis>
 				is a
@@ -78,6 +79,16 @@
 				and a
 				<classname>FixSourceFactory</classname>
 				.
+			</para>
+			<para>
+				The second attribute is a
+				<emphasis>model-ref</emphasis>
+				. When unmarshalling, you must configure which
+				ComplexDataObject derived class you want to create. Typically, this is
+				clear from the use case, such as
+				when receiving a message on a specific MQ queue, or to a specific Web Service
+				endpoint. Please see section TODO for
+				information about configuring a model.
 			</para>
 		</section>
 
@@ -223,7 +234,8 @@
 							<classname>byte[]</classname>
 							as the payload.
 							It's up to you to determine if that makes sense given the chose Sink type. Configure the
-							encoding on the
+							encoding
+							on the
 							<interfacename>SinkFactory</interfacename>
 							.
 						</para>
@@ -233,24 +245,215 @@
 
 		</section>
 
-		<!-- TODO
-			<section id="marshalling-bean-config"></section>
-		 -->
+		<!-- TODO <section id="marshalling-bean-config"></section> -->
 	</section>
 
 	<section id="transformation">
 		<title>Using C24 Transforms</title>
-		<section id="transformation-namespace"></section>
-		<section id="transformation-input"></section>
-		<section id="transformation-output"></section>
-		<section id="transformation-bean-config"></section>
+		<section id="transformation-namespace">
+			<title>Configuring C24 Transforms using the XML namespace</title>
+			<para>
+				<programlisting language="xml"><![CDATA[<int-c24:transformer
+	transform-class="biz.c24.io.examples.transforms.basic.ExampleTransform"
+	input-channel="..." output-channel="..."
+	always-return-array="false" />]]></programlisting>
+			</para>
+			<para>
+				The attributes to configure are:
+				<itemizedlist>
+					<listitem>
+						<para>
+							<emphasis>transform-class</emphasis>
+							- the class name of the C24 IO generated transform.
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							<emphasis>always-return-array</emphasis>
+							- if you want the output to always be an array, even if only a single object was the output from the transform.
+							See below.
+						</para>
+					</listitem>
+				</itemizedlist>
+			</para>
+		</section>
+		<section id="transformation-input">
+			<title>Input payloads</title>
+			<para>
+				The Spring Integration IO transformer only accepts a single Object as the input payload.
+				In effect, this should be of
+				a
+				<classname>ComplexDataObject</classname>
+				subclass.
+			</para>
+		</section>
+		<section id="transformation-output">
+			<title>Output payload</title>
+			<para>
+				The result of transforming a single object (see above) can either be a single object, or an array of objects.
+				The
+				default is to only output a single
+				<classname>ComplexDataObject</classname>
+				as the payload. If the transform yields more then one object, or if the
+				attribute
+				<emphasis>always-return-array</emphasis>
+				is set to true, then an
+				<classname>Object[]</classname>
+				will be the payload.
+
+			</para>
+		</section>
+		<!-- TODO <section id="transformation-bean-config"></section> -->
 	</section>
 
 	<section id="xpath">
 		<title>Using C24 XPath</title>
-		<section id="xpath-transformation"></section>
-		<section id="xpath-router"></section>
-		<section id="xpath-selector"></section>
+		<para>C24 IO has excellent XPath capabilities, and specifically any ComplexDataObject can be queries using XPath. The
+			following components
+			leverage that capability by providing Spring Integration routers, selectors (for filters) and
+			transformers.
+			A common trait is that they either take a simple XPath statement as a String, or a reference to a XPath
+			Statement
+			defined using a standard Spring bean./bean>.
+		</para>
+		<section id="xpath-statements">
+			<title>XPath Statements as Beans</title>
+			<para>
+				In some cases, an XPath statement cannot be expressed just as a simple string. A good example is if it needs to
+				navigate
+				and differeniate between more than one namespace. If so, you can declare and configure a C24 Xpath Statement, a
+				<classname></classname>
+			</para>
+
+			<!-- TODO Revise when we have namespace. -->
+		</section>
+		<section id="xpath-transformation">
+			<title>
+				Transforming Objects using XPath
+			</title>
+			<subtitle>Picking out parts of a larger structure using XPath</subtitle>
+			<para>
+				<programlisting language="xml"><![CDATA[<int-c24:xpath-transformer input-channel="..."
+	evaluation-type="OBJECT_RESULT" xpath-statement="/Emails"
+	output-channel="..." />]]></programlisting>
+			</para>
+			<para>
+				The input to the transformer must always be a subclass of
+				<classname>ComplexDataObject.</classname>
+				<itemizedlist>
+					<listitem>
+						<para>
+							<emphasis>evaluation-type</emphasis>
+							determines the type of the output payload. Options include Object, String, boolean and list (for selecting more
+							than one node).
+							See the enum
+							<classname>biz.c24.io.spring.integration.xpath.XPathEvaluationType</classname>
+							for details.
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							<emphasis>xpath-statement</emphasis>
+							is used to provide a simple XPath expression as a string.
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							<emphasis>xpath-statement-ref</emphasis>
+							is used to provide a reference to an XPath statement
+							declared as a bean elsewhere.
+						</para>
+					</listitem>
+				</itemizedlist>
+			</para>
+		</section>
+		<section id="xpath-router">
+			<title>
+				Routing using XPath
+			</title>
+			<para>
+				<programlisting language="xml"><![CDATA[<int-c24:xpath-router input-channel="..."
+	xpath-statement="//Employee[1]/FirstName" default-output-channel="wrongChannel">
+	<int-c24:mapping value="Andy" channel="rightChannel" />
+	<int-c24:mapping value="Barry" channel="anotherChannel" />
+</int-c24:xpath-router>]]></programlisting>
+			</para>
+			<para>
+				The input to the router must always be a subclass of
+				<classname>ComplexDataObject</classname>
+				.
+				<itemizedlist>
+					<listitem>
+						<para>
+							<emphasis>xpath-statement</emphasis>
+							is used to provide a simple XPath expression as a string.
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							<emphasis>xpath-statement-ref</emphasis>
+							is used to provide a reference to an XPath statement
+							declared as a bean elsewhere.
+						</para>
+					</listitem>
+				</itemizedlist>
+				The provided Xpath
+				<emphasis>must</emphasis>
+				evaluate to a string.
+			</para>
+		</section>
+		<section id="xpath-selector">
+			<title>
+				Filtering using XPath
+			</title>
+			<para>
+				Filtering can be done either be provining an XPath statement that evaluates to a boolean,
+				or by providing both a
+				XPath Statement and a String to compare the result to.
+				<programlisting language="xml"><![CDATA[<int:filter discard-channel="wrongChannel" ref="boolSelector" />
+
+<int-c24:xpath-selector id="boolSelector"
+	evaluation-result-type="boolean" xpath-statement="//Employee/FirstName/text()='Andy'" />
+
+<int:filter discard-channel="wrongChannel" ref="stringSelector" />
+
+<int-c24:xpath-selector id="stringSelector"
+	evaluation-result-type="string" xpath-statement="//Employee/FirstName"
+	string-test-value="Andy" />]]></programlisting>
+			</para>
+			<para>
+				The input to the selector must always be a subclass of
+				<classname>ComplexDataObject</classname>
+				.
+				<itemizedlist>
+					<listitem>
+						<para>
+							<emphasis>evaluation-result-type</emphasis>
+							determines if this is a boolean or String based selector.
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							<emphasis>string-test-value</emphasis>
+							is required by the String based selector.
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							<emphasis>xpath-statement</emphasis>
+							is used to provide a simple XPath expression as a string.
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							<emphasis>xpath-statement-ref</emphasis>
+							is used to provide a reference to an XPath statement
+							declared as a bean elsewhere.
+						</para>
+					</listitem>
+				</itemizedlist>
+			</para>
+		</section>
 		<section id="xpath-header-enricher"></section>
 	</section>
 
