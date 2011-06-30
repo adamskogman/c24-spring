@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE preface PUBLIC "-//OASIS//DTD DocBook XML V4.4//EN"
+"http://www.oasis-open.org/docbook/xml/4.4/docbookx.dtd">
+<preface id="preface">
+  <title>Preface</title>
+
+  <section id="project">
+    <title>Project metadata</title>
+
+    <itemizedlist spacing="compact">
+
+      <listitem>
+        <para>Bugtracker - <ulink
+        url="https://support.c24.biz/">https://support.c24.biz/</ulink></para>
+      </listitem>
+
+      <listitem>
+        <para>Maven Release repository - <ulink
+        url="http://repo.c24io.net:8081/nexus/content/groups/public">http://repo.c24io.net:8081/nexus/content/groups/public</ulink></para>
+      </listitem>
+
+    </itemizedlist>
+  </section>
+</preface>
