@@ -25,7 +25,6 @@
 		</para>
 		<para>
 			This guide will emphasise the use of Spring XML namespaces to configure C24 IO Spring components.
-
 			The namespaces are
 			configured like this:
 			<programlisting language="xml"><![CDATA[
@@ -321,7 +320,8 @@
 			<para>
 				In some cases, an XPath statement cannot be expressed just as a simple string. A good example is if it needs to
 				navigate
-				and differeniate between more than one namespace. If so, you can declare and configure a C24 Xpath Statement, a
+				and differeniate between more than one namespace. If so, you can declare and configure a C24 Xpath
+				Statement, a
 				<classname></classname>
 			</para>
 
@@ -454,7 +454,24 @@
 				</itemizedlist>
 			</para>
 		</section>
-		<section id="xpath-header-enricher"></section>
+		<section id="xpath-header-enricher">
+			<title>XPath Header enricher</title>
+			<para>
+				Before passing a ComplexDataObject payload to a channel adapter or similar, it
+				is often needed to pick out certain dat aand put it into named headers. For this use case,
+				there is an XPath header enricher.
+
+				<programlisting language="xml"><![CDATA[<int-c24:xpath-header-enricher input-channel="..."
+output-channel="...">
+	<int-c24:header name="firstName"  xpath-statement="//Employee/FirstName"/>
+	<int-c24:header name="lastName"  xpath-statement="//Employee/LastName"/>
+</int-c24:xpath-header-enricher>
+]]></programlisting>
+				Note that several headers can be enriched at the same time. The XPath expressions will be evaluated
+				into Strings. No other data type is supported.
+			</para>
+
+		</section>
 	</section>
 
 
