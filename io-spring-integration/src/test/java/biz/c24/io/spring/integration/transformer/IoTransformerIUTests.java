@@ -22,7 +22,7 @@ public class IoTransformerIUTests {
 	@Test
 	public void canTransform() throws Exception {
 
-		IoTransformer transformer = new IoTransformer();
+		C24Transformer transformer = new C24Transformer();
 		transformer.setTransformClass(ExampleTransform.class);
 
 		Message<?> message = MessageBuilder.withPayload(loadObject()).build();

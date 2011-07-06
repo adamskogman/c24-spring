@@ -28,7 +28,7 @@ public class XPathRouterTestIUTests {
 	public void routesOnString() throws Exception {
 
 		// Andy
-		XPathRouter router = new XPathRouter("//Employee[1]/FirstName");
+		C24XPathRouter router = new C24XPathRouter("//Employee[1]/FirstName");
 		router.setChannelResolver(channelResolver);
 
 		when(channelResolver.resolveChannelName("Andy")).thenReturn(

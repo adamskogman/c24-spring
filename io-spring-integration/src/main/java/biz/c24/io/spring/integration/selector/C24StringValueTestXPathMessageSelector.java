@@ -14,7 +14,7 @@ import biz.c24.io.api.data.XPathStatement;
  * @author askogman
  * 
  */
-public class StringValueTestXPathMessageSelector extends
+public class C24StringValueTestXPathMessageSelector extends
 		AbstractXPathMessageSelector implements InitializingBean {
 
 	private volatile boolean caseSensitive = true;
@@ -24,14 +24,14 @@ public class StringValueTestXPathMessageSelector extends
 	/**
 	 * @param statement
 	 */
-	public StringValueTestXPathMessageSelector(String statement) {
+	public C24StringValueTestXPathMessageSelector(String statement) {
 		super(statement);
 	}
 
 	/**
 	 * @param statement
 	 */
-	public StringValueTestXPathMessageSelector(XPathStatement statement) {
+	public C24StringValueTestXPathMessageSelector(XPathStatement statement) {
 		super(statement);
 	}
 

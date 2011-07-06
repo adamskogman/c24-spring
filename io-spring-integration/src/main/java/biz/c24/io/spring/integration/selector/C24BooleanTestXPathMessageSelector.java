@@ -11,20 +11,20 @@ import biz.c24.io.api.data.XPathStatement;
  * @author askogman
  * 
  */
-public class BooleanTestXPathMessageSelector extends
+public class C24BooleanTestXPathMessageSelector extends
 		AbstractXPathMessageSelector {
 
 	/**
 	 * @param statement
 	 */
-	public BooleanTestXPathMessageSelector(String statement) {
+	public C24BooleanTestXPathMessageSelector(String statement) {
 		super(statement);
 	}
 
 	/**
 	 * @param statement
 	 */
-	public BooleanTestXPathMessageSelector(XPathStatement statement) {
+	public C24BooleanTestXPathMessageSelector(XPathStatement statement) {
 		super(statement);
 	}
 

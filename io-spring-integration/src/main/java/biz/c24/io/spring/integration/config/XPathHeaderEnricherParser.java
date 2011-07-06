@@ -33,11 +33,11 @@ import org.springframework.util.StringUtils;
  * @author Mark Fisher
  * @since 2.0
  */
-public class IoXPathHeaderEnricherParser extends AbstractTransformerParser {
+public class XPathHeaderEnricherParser extends AbstractTransformerParser {
 
 	@Override
 	protected final String getTransformerClassName() {
-		return "biz.c24.io.spring.integration.transformer.IoXPathHeaderEnricher";
+		return "biz.c24.io.spring.integration.transformer.C24XPathHeaderEnricher";
 	}
 
 	@Override
@@ -59,7 +59,7 @@ public class IoXPathHeaderEnricherParser extends AbstractTransformerParser {
 				String elementName = node.getLocalName();
 				if ("header".equals(elementName)) {
 					BeanDefinitionBuilder builder = BeanDefinitionBuilder.genericBeanDefinition(
-							"biz.c24.io.spring.integration.transformer.IoXPathHeaderEnricher$XPathExpressionEvaluatingHeaderValueMessageProcessor");
+							"biz.c24.io.spring.integration.transformer.C24XPathHeaderEnricher$XPathExpressionEvaluatingHeaderValueMessageProcessor");
 					String expressionString = headerElement.getAttribute("xpath-statement");
 					String expressionRef = headerElement.getAttribute("xpath-statement-ref");
 					boolean isExpressionString = StringUtils.hasText(expressionString);

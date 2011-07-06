@@ -17,7 +17,7 @@ import biz.c24.io.spring.sink.SinkFactory;
  * @author askogman
  * 
  */
-public class IoMarshallingTransformer extends
+public class C24MarshallingTransformer extends
 		AbstractPayloadTransformer<Object, Object> {
 
 	SinkFactory sinkFactory;
@@ -45,7 +45,6 @@ public class IoMarshallingTransformer extends
 	protected void onInit() throws Exception {
 		super.onInit();
 
-		Assert.notNull(sinkFactory, "The property 'sinkFactory' must be set.");
 		Assert.notNull(outputType, "The property 'outputType' must be set.");
 	}
 

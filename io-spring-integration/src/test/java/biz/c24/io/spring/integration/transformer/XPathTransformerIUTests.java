@@ -23,7 +23,7 @@ public class XPathTransformerIUTests {
 	@Test
 	public void canTransformToListOfString() throws Exception {
 
-		XPathTransformer transformer = new XPathTransformer("//FirstName");
+		C24XPathTransformer transformer = new C24XPathTransformer("//FirstName");
 		transformer.setEvaluationType(XPathEvaluationType.LIST_RESULT);
 
 		Message<?> message = MessageBuilder.withPayload(loadObject()).build();
@@ -40,7 +40,7 @@ public class XPathTransformerIUTests {
 	@Test
 	public void canTransformToListOfEmployee() throws Exception {
 
-		XPathTransformer transformer = new XPathTransformer("//Employee");
+		C24XPathTransformer transformer = new C24XPathTransformer("//Employee");
 		transformer.setEvaluationType(XPathEvaluationType.LIST_RESULT);
 
 		Message<?> message = MessageBuilder.withPayload(loadObject()).build();
@@ -57,7 +57,7 @@ public class XPathTransformerIUTests {
 	@Test
 	public void canTransformToString() throws Exception {
 
-		XPathTransformer transformer = new XPathTransformer(
+		C24XPathTransformer transformer = new C24XPathTransformer(
 				"//Employee[1]/FirstName");
 		transformer.setEvaluationType(XPathEvaluationType.STRING_RESULT);
 

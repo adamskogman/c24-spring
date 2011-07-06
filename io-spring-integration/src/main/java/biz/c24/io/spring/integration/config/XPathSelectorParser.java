@@ -26,7 +26,7 @@ import org.w3c.dom.Element;
 /**
  * @author Adam Skogman
  */
-public class IoXPathSelectorParser extends AbstractSingleBeanDefinitionParser {
+public class XPathSelectorParser extends AbstractSingleBeanDefinitionParser {
 
 	@Override
 	protected boolean shouldGenerateId() {
@@ -62,7 +62,7 @@ public class IoXPathSelectorParser extends AbstractSingleBeanDefinitionParser {
 		if (evaluationType.equals("boolean")) {
 			builder.getBeanDefinition()
 					.setBeanClass(
-							biz.c24.io.spring.integration.selector.BooleanTestXPathMessageSelector.class);
+							biz.c24.io.spring.integration.selector.C24BooleanTestXPathMessageSelector.class);
 			Assert.state(
 					!StringUtils.hasText(stringTestValue),
 					"'string-test-value' should not be specified when 'evaluation-result-type' is boolean");
@@ -72,7 +72,7 @@ public class IoXPathSelectorParser extends AbstractSingleBeanDefinitionParser {
 			builder.addPropertyValue("valueToTestFor", stringTestValue);
 			builder.getBeanDefinition()
 					.setBeanClass(
-							biz.c24.io.spring.integration.selector.StringValueTestXPathMessageSelector.class);
+							biz.c24.io.spring.integration.selector.C24StringValueTestXPathMessageSelector.class);
 		} else {
 			throw new IllegalArgumentException(
 					"Unsupported value ["

@@ -24,7 +24,7 @@ public class IoMarshallingTransformerIUTests {
 	@Test
 	public void canMarshalXmlToBytearray() throws Exception {
 
-		IoMarshallingTransformer ioMarshallingTransformer = new IoMarshallingTransformer();
+		C24MarshallingTransformer ioMarshallingTransformer = new C24MarshallingTransformer();
 		ioMarshallingTransformer.setOutputType(OutputType.BYTE_ARRAY);
 		XmlSinkFactory xmlSinkFactory = new XmlSinkFactory();
 		ioMarshallingTransformer.setSinkFactory(xmlSinkFactory);
@@ -45,7 +45,7 @@ public class IoMarshallingTransformerIUTests {
 	@Test
 	public void canMarshalXmlToString() throws Exception {
 
-		IoMarshallingTransformer ioMarshallingTransformer = new IoMarshallingTransformer();
+		C24MarshallingTransformer ioMarshallingTransformer = new C24MarshallingTransformer();
 		ioMarshallingTransformer.setOutputType(OutputType.STRING);
 		XmlSinkFactory xmlSinkFactory = new XmlSinkFactory();
 		ioMarshallingTransformer.setSinkFactory(xmlSinkFactory);
@@ -64,7 +64,7 @@ public class IoMarshallingTransformerIUTests {
 	@Test
 	public void canMarshalTextToString() throws Exception {
 
-		IoMarshallingTransformer ioMarshallingTransformer = new IoMarshallingTransformer();
+		C24MarshallingTransformer ioMarshallingTransformer = new C24MarshallingTransformer();
 		ioMarshallingTransformer.setOutputType(OutputType.STRING);
 		ioMarshallingTransformer.setSinkFactory(new TextualSinkFactory());
 
@@ -79,7 +79,7 @@ public class IoMarshallingTransformerIUTests {
 	@Test
 	public void canMarshalTextToByteArray() throws Exception {
 
-		IoMarshallingTransformer ioMarshallingTransformer = new IoMarshallingTransformer();
+		C24MarshallingTransformer ioMarshallingTransformer = new C24MarshallingTransformer();
 		ioMarshallingTransformer.setOutputType(OutputType.BYTE_ARRAY);
 		ioMarshallingTransformer.setSinkFactory(new TextualSinkFactory());
 

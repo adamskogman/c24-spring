@@ -23,8 +23,9 @@ public class IoUnmarshallingTransformerIUTests {
 	public void canUnmarshalTextFromBytearray() throws Exception {
 
 		byte[] valid1 = loadCsvBytes();
-		IoUnmarshallingTransformer transformer = new IoUnmarshallingTransformer(
-				model, new TextualSourceFactory());
+		C24UnmarshallingTransformer transformer = new C24UnmarshallingTransformer(
+				model);
+		transformer.setSourceFactory(new TextualSourceFactory());
 
 		Message message = MessageBuilder.withPayload(valid1).build();
 
@@ -40,10 +41,9 @@ public class IoUnmarshallingTransformerIUTests {
 	@Test
 	public void canUnmarshalTextFromString() throws Exception {
 
-		
 		String validString = loadCsvString();
 
-		IoUnmarshallingTransformer transformer = new IoUnmarshallingTransformer(
+		C24UnmarshallingTransformer transformer = new C24UnmarshallingTransformer(
 				model, new TextualSourceFactory());
 
 		Message message = MessageBuilder.withPayload(validString).build();
@@ -62,7 +62,7 @@ public class IoUnmarshallingTransformerIUTests {
 
 		String validString = loadXmlString();
 
-		IoUnmarshallingTransformer transformer = new IoUnmarshallingTransformer(
+		C24UnmarshallingTransformer transformer = new C24UnmarshallingTransformer(
 				model, new XmlSourceFactory());
 
 		Message message = MessageBuilder.withPayload(validString).build();
@@ -81,7 +81,7 @@ public class IoUnmarshallingTransformerIUTests {
 
 		byte[] valid1 = loadXmlBytes();
 
-		IoUnmarshallingTransformer transformer = new IoUnmarshallingTransformer(
+		C24UnmarshallingTransformer transformer = new C24UnmarshallingTransformer(
 				model, new XmlSourceFactory());
 
 		Message message = MessageBuilder.withPayload(valid1).build();

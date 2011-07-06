@@ -37,13 +37,13 @@ import biz.c24.io.spring.integration.xpath.XPathEvaluationType;
  * 
  * @author Adam Skogman
  */
-public class IoXPathHeaderEnricher extends HeaderEnricher {
+public class C24XPathHeaderEnricher extends HeaderEnricher {
 
 	/**
 	 * Create an instance of XPathHeaderEnricher using a map with header names
 	 * as keys and XPathExpressionValueHolders to evaluate the values.
 	 */
-	public IoXPathHeaderEnricher(
+	public C24XPathHeaderEnricher(
 			Map<String, XPathExpressionEvaluatingHeaderValueMessageProcessor> expressionMap) {
 		super(expressionMap);
 	}

@@ -16,42 +16,44 @@
 
 package biz.c24.io.spring.integration.config;
 
-import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
 import org.springframework.beans.factory.xml.ParserContext;
-import org.springframework.integration.config.xml.AbstractRouterParser;
+import org.springframework.integration.config.xml.AbstractTransformerParser;
+import org.springframework.integration.config.xml.IntegrationNamespaceUtils;
 import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
 import org.w3c.dom.Element;
 
 /**
- * Parser for the &lt;xpath-router/&gt; element.
+ * Parser for the 'xpath-transformer' element.
  * 
  * @author Adam Skogman
  */
-public class IoXPathRouterParser extends AbstractRouterParser {
+public class XPathTransformerParser extends AbstractTransformerParser {
 
 	@Override
-	protected BeanDefinition doParseRouter(Element element,
-			ParserContext parserContext) {
+	protected String getTransformerClassName() {
+		return "biz.c24.io.spring.integration.transformer.C24XPathTransformer";
+	}
 
-		BeanDefinitionBuilder xpathRouterBuilder = BeanDefinitionBuilder
-				.genericBeanDefinition("biz.c24.io.spring.integration.router.XPathRouter");
+	@Override
+	protected void parseTransformer(Element element,
+			ParserContext parserContext, BeanDefinitionBuilder builder) {
 
 		String expression = element.getAttribute("xpath-statement");
 		String expressionRef = element.getAttribute("xpath-statement-ref");
-
 		boolean hasRef = StringUtils.hasText(expressionRef);
 		Assert.isTrue(
 				hasRef ^ StringUtils.hasText(expression),
 				"Exactly one of the 'xpath-statement' or 'xpath-statement-ref' attributes is required.");
 		if (hasRef) {
-			xpathRouterBuilder.addConstructorArgReference(expressionRef);
+			builder.addConstructorArgReference(expressionRef);
 		} else {
-			xpathRouterBuilder.addConstructorArgValue(expression);
+			builder.addConstructorArgValue(expression);
 		}
 
-		return xpathRouterBuilder.getBeanDefinition();
+		IntegrationNamespaceUtils.setValueIfAttributeDefined(builder, element,
+				"evaluation-type");
 	}
 
 }

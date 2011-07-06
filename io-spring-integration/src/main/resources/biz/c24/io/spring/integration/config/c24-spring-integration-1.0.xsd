@@ -80,7 +80,7 @@
 						</xsd:annotation>
 					</xsd:attribute>
 					<xsd:attribute name="source-factory-ref" type="xsd:string"
-						use="required">
+						use="optional">
 						<xsd:annotation>
 							<xsd:appinfo>
 								<tool:annotation kind="ref">

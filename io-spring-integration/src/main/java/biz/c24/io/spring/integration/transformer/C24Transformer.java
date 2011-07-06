@@ -18,7 +18,7 @@ import biz.c24.io.api.transform.Transform;
  * @author askogman
  * 
  */
-public class IoTransformer extends AbstractTransformer implements
+public class C24Transformer extends AbstractTransformer implements
 		InitializingBean {
 
 	private final Log logger = LogFactory.getLog(this.getClass());
@@ -42,7 +42,7 @@ public class IoTransformer extends AbstractTransformer implements
 	/**
 	 * 
 	 */
-	public IoTransformer() {
+	public C24Transformer() {
 	}
 
 	/**

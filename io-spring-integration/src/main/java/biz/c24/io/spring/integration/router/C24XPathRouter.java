@@ -39,7 +39,7 @@ import biz.c24.io.api.data.XPathStatement;
  * @author askogman
  * 
  */
-public class XPathRouter extends AbstractMessageRouter {
+public class C24XPathRouter extends AbstractMessageRouter {
 
 	private final XPathStatement statement;
 
@@ -49,7 +49,7 @@ public class XPathRouter extends AbstractMessageRouter {
 	 * @param expression
 	 *            the XPath expression as a String
 	 */
-	public XPathRouter(String expression) {
+	public C24XPathRouter(String expression) {
 		Assert.hasText(expression, "expression must not be empty");
 		this.statement = new XPathStatement(expression);
 	}
@@ -60,7 +60,7 @@ public class XPathRouter extends AbstractMessageRouter {
 	 * @param statement
 	 *            the XPath statement
 	 */
-	public XPathRouter(XPathStatement statement) {
+	public C24XPathRouter(XPathStatement statement) {
 		Assert.notNull(statement, "statement must not be null");
 		this.statement = statement;
 	}

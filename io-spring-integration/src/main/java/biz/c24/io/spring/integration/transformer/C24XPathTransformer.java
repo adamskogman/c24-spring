@@ -17,19 +17,19 @@ import biz.c24.io.spring.integration.xpath.XPathEvaluationType;
  * @author askogman
  * 
  */
-public class XPathTransformer extends
+public class C24XPathTransformer extends
 		AbstractPayloadTransformer<ComplexDataObject, Object> {
 
 	volatile XPathStatement statement;
 	volatile XPathEvaluationType evaluationType = XPathEvaluationType.OBJECT_RESULT;
 
-	public XPathTransformer(String statement) {
+	public C24XPathTransformer(String statement) {
 		Assert.notNull(statement, "The XPath statement must not be null.");
 
 		this.statement = new XPathStatement(statement);
 	}
 
-	public XPathTransformer(XPathStatement statement) {
+	public C24XPathTransformer(XPathStatement statement) {
 		Assert.notNull(statement, "The XPath statement must not be null.");
 
 		this.statement = statement;

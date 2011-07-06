@@ -38,23 +38,53 @@ import biz.c24.io.spring.util.C24Utils;
  * @author askogman
  * 
  */
-public class IoUnmarshallingTransformer extends
+public class C24UnmarshallingTransformer extends
 		AbstractPayloadTransformer<Object, Object> {
 
+	// TODO The model has a default Source. Use that by default.
+
 	private final C24Model model;
-	private final SourceFactory sourceFactory;
+	private SourceFactory sourceFactory;
 
 	protected final Log logger = LogFactory.getLog(getClass());
 
-	public IoUnmarshallingTransformer(C24Model model,
-			SourceFactory sourceFactory) {
-		super();
-
+	/**
+	 * Create a transformer, using the default source for the model provided.
+	 * 
+	 * @param model
+	 */
+	public C24UnmarshallingTransformer(C24Model model) {
 		Assert.notNull(model);
-		Assert.notNull(sourceFactory);
+
+		this.model = model;
+	}
+
+	/**
+	 * Create a transformer.
+	 * 
+	 * @param model
+	 */
+	public C24UnmarshallingTransformer(C24Model model,
+			SourceFactory sourceFactory) {
+		Assert.notNull(model);
 
 		this.model = model;
 		this.sourceFactory = sourceFactory;
+	}
+
+	public void setSourceFactory(SourceFactory sourceFactory) {
+
+		this.sourceFactory = sourceFactory;
+	}
+
+	@Override
+	protected void onInit() throws Exception {
+		super.onInit();
+
+		if (this.sourceFactory == null) {
+			this.sourceFactory = this.model;
+		}
+
 	}
 
 	@Override
