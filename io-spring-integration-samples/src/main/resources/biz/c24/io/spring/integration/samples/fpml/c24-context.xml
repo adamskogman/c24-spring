@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:c24="http://www.c24.biz/schema/spring-core"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.c24.biz/schema/spring-core http://www.c24.biz/schema/spring-core.xsd">
+
+	<c24:model id="fpmlModel" base-element="org.fpml.x2010.fpml49.FpMLElement" />
+
+	<bean id="xmlSinkFactory" class="biz.c24.io.spring.sink.XmlSinkFactory" />
+
+</beans>

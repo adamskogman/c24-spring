@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:int-c24="http://www.c24.biz/schema/spring-integration"
+	xmlns:c24="http://www.c24.biz/schema/spring-core" xmlns:int="http://www.springframework.org/schema/integration"
+	xsi:schemaLocation="http://www.springframework.org/schema/integration http://www.springframework.org/schema/integration/spring-integration-2.0.xsd
+		http://www.c24.biz/schema/spring-core http://www.c24.biz/schema/spring-core.xsd
+		http://www.c24.biz/schema/spring-integration http://www.c24.biz/schema/spring-integration.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+
+	<bean id="sourceFactory" class="biz.c24.io.spring.source.FixSourceFactory">
+		<property name="encoding" value="UTF-8" />
+	</bean>
+
+	<!-- ===== The flow ===== -->
+
+	<int-c24:unmarshalling-transformer
+		source-factory-ref="sourceFactory" model-ref="inputDocumentModel"
+		input-channel="..." output-channel="..." />
+
+	<int:channel id="cdoChannel">
+		<int:queue capacity="1" />
+	</int:channel>
+
+</beans>

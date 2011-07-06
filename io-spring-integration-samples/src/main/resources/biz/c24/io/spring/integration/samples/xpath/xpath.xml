@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:int-c24="http://www.c24.biz/schema/spring-integration"
+	xmlns:c24="http://www.c24.biz/schema/spring-core" xmlns:int="http://www.springframework.org/schema/integration"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/integration http://www.springframework.org/schema/integration/spring-integration-2.0.xsd
+		http://www.c24.biz/schema/spring-core http://www.c24.biz/schema/spring-core.xsd
+		http://www.c24.biz/schema/spring-integration http://www.c24.biz/schema/spring-integration.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.0.xsd">
+
+
+	<bean id="textualSourceFactory" class="biz.c24.io.spring.source.TextualSourceFactory">
+		<property name="encoding" value="UTF-8" />
+	</bean>
+
+	<c24:model id="inputDocumentModel"
+		base-element="biz.c24.io.examples.models.basic.InputDocumentRootElement" />
+
+	<!-- ===== The flow ===== -->
+
+	<int:channel id="textInputChannel" />
+
+	<int-c24:unmarshalling-transformer
+		source-factory-ref="textualSourceFactory" model-ref="inputDocumentModel"
+		input-channel="..." output-channel="..." />
+
+	<int:channel id="cdoChannel">
+		<int:queue capacity="1" />
+	</int:channel>
+
+	<bean id="fancyStatement" class="biz.c24.io.api.data.XPathStatement">
+		<constructor-arg value="//Foo/Bar" />
+		<constructor-arg value="true" /><!-- Ignore doc node -->
+		<constructor-arg ref="#nsMappings.toArray" />
+	</bean>
+
+	<util:list id="nsMappings" value-type="biz.c24.io.api.data.NamespaceMapping">
+		<bean class="biz.c24.io.api.data.NamespaceMapping">
+			<constructor-arg value="http://example.org/ns/schema1" />
+			<constructor-arg value="ns1" />
+		</bean>
+		<bean class="biz.c24.io.api.data.NamespaceMapping">
+			<constructor-arg value="http://example.org/ns/schema2" />
+			<constructor-arg value="ns2" />
+		</bean>
+	</util:list>
+
+	<int-c24:xpath-transformer xpath-statement="//Emails"
+		evaluation-type="STRING_RESULT" />
+
+	<int-c24:xpath-router input-channel="cdoChannel"
+		xpath-statement="//Employee[1]/FirstName" default-output-channel="wrongChannel">
+
+		<int-c24:mapping value="Andy" channel="rightChannel" />
+
+	</int-c24:xpath-router>
+
+	<int-c24:xpath-header-enricher
+		input-channel="fpmlChannel" output-channel="richerChannel">
+		<int-c24:header name="party1" xpath-statement="//Employee[1]/FirstName" />
+		<int-c24:header name="bar" xpath-statement="//Employee[1]/LastName" />
+	</int-c24:xpath-header-enricher>
+
+
+
+</beans>

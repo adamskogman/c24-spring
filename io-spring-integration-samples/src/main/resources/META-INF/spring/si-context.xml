@@ -1,11 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:c24="http://www.c24.biz/schema/spring-core"
-	xmlns:int-c24="http://www.c24.biz/schema/spring-integration" xmlns:int="http://www.springframework.org/schema/integration"
-	xsi:schemaLocation="http://www.springframework.org/schema/integration http://www.springframework.org/schema/integration/spring-integration-2.0.xsd
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:c24="http://www.c24.biz/schema/spring-core" xmlns:int-c24="http://www.c24.biz/schema/spring-integration"
+	xmlns:int="http://www.springframework.org/schema/integration" xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:int-jdbc="http://www.springframework.org/schema/integration/jdbc"
+	xsi:schemaLocation="http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-3.0.xsd
+		http://www.springframework.org/schema/integration http://www.springframework.org/schema/integration/spring-integration-2.0.xsd
 		http://www.c24.biz/schema/spring-core http://www.c24.biz/schema/spring-core.xsd
+		http://www.springframework.org/schema/integration/jdbc http://www.springframework.org/schema/integration/jdbc/spring-integration-jdbc-2.0.xsd
 		http://www.c24.biz/schema/spring-integration http://www.c24.biz/schema/spring-integration.xsd
-		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.0.xsd">
 
 	<c24:model id="input"
 		base-element="biz.c24.io.examples.models.basic.InputDocumentRootElement" />
@@ -18,6 +23,7 @@
 	<int-c24:unmarshalling-transformer
 		id="parser" source-factory-ref="textSourceFactory" input-channel="in-channel"
 		output-channel="channel2" model-ref="input" />
+
 
 	<int-c24:transformer
 		transform-class="biz.c24.io.examples.transforms.basic.ExampleTransform"
@@ -48,6 +54,13 @@
 	<int-c24:marshalling-transformer
 		sink-factory="txtSinkFactory" output-type="BYTE_ARRAY" input-channel="email-channel" />
 
+	<int-jdbc:outbound-channel-adapter channel="db-output">
+		
+	</int-jdbc:outbound-channel-adapter>
+
+	<jdbc:embedded-database id="dataSource" type="H2">
+		<jdbc:script/>
+	</jdbc:embedded-database>
 
 
 </beans>
