@@ -41,10 +41,13 @@ import biz.c24.io.spring.util.C24Utils;
 public class C24UnmarshallingTransformer extends
 		AbstractPayloadTransformer<Object, Object> {
 
-	// TODO The model has a default Source. Use that by default.
-
 	private final C24Model model;
 	private SourceFactory sourceFactory;
+	private boolean unwrapDocumentRoot = true;
+
+	public void setUnwrapDocumentRoot(boolean unwrapDocumentRoot) {
+		this.unwrapDocumentRoot = unwrapDocumentRoot;
+	}
 
 	protected final Log logger = LogFactory.getLog(getClass());
 
@@ -94,7 +97,11 @@ public class C24UnmarshallingTransformer extends
 
 		ComplexDataObject result = source.readObject(model.getRootElement());
 
-		return C24Utils.potentiallyUnwrapDocumentRoot(result);
+		if (unwrapDocumentRoot) {
+			result = C24Utils.potentiallyUnwrapDocumentRoot(result);
+		}
+
+		return result;
 
 	}
 

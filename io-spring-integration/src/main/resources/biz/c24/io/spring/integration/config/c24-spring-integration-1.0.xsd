@@ -89,6 +89,9 @@
 							</xsd:appinfo>
 						</xsd:annotation>
 					</xsd:attribute>
+					<xsd:attribute name="unwrap-document-root" type="xsd:boolean"
+						use="optional" default="true">
+					</xsd:attribute>
 				</xsd:extension>
 			</xsd:complexContent>
 		</xsd:complexType>
@@ -111,6 +114,27 @@
 			</xsd:complexContent>
 		</xsd:complexType>
 	</xsd:element>
+
+	<xsd:element name="validating-header-enricher">
+		<xsd:complexType>
+			<xsd:annotation>
+				<xsd:documentation>
+					Defines a C24 Validating header enricher.
+				</xsd:documentation>
+			</xsd:annotation>
+			<xsd:complexContent>
+				<xsd:extension base="inputOutputEndpoint">
+					<xsd:attribute name="fail-events" type="xsd:boolean"
+						default="true" />
+					<xsd:attribute name="pass-events" type="xsd:boolean"
+						default="false" />
+					<xsd:attribute name="statistics" type="xsd:boolean"
+						default="false" />
+				</xsd:extension>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+
 
 	<xsd:element name="xpath-transformer">
 		<xsd:complexType>

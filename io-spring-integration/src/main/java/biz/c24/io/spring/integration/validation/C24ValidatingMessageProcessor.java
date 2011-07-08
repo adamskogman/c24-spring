@@ -42,7 +42,7 @@ public class C24ValidatingMessageProcessor extends
 			cdo = (ComplexDataObject) payload;
 		} catch (ClassCastException e) {
 			throw new MessagingException("Cannot validate payload of type ["
-					+ payload.getClass().getName()
+					+ payload != null ? payload.getClass().getName() : "null"
 					+ "]. Only ComplexDataObject is supported.", e);
 		}
 

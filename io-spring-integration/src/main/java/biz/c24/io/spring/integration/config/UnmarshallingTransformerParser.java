@@ -36,6 +36,9 @@ public class UnmarshallingTransformerParser extends AbstractTransformerParser {
 		IntegrationNamespaceUtils.setReferenceIfAttributeDefined(builder,
 				element, "source-factory-ref", "sourceFactory");
 
+		IntegrationNamespaceUtils.setValueIfAttributeDefined(builder,
+				element, "unwrap-document-root", "unwrapDocumentRoot");
+
 	}
 
 }
