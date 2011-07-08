@@ -4,10 +4,16 @@ import java.io.InputStream;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.math.RoundingMode;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.List;
 import java.util.Random;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutorCompletionService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 import org.fpml.x2010.fpml49.FpMLElement;
 import org.fpml.x2010.fpml49.FxOptionLeg;
@@ -25,47 +31,34 @@ import biz.c24.io.api.data.ComplexDataObject;
 import biz.c24.io.api.data.Element;
 import biz.c24.io.api.data.ISO8601Date;
 import biz.c24.io.api.data.ISO8601DateTime;
+import biz.c24.io.api.presentation.Sink;
 import biz.c24.io.api.presentation.Source;
+import biz.c24.io.spring.sink.OutputType;
+import biz.c24.io.spring.sink.SinkFactory;
 
-public class FpmlGenerator extends MessageProducerSupport {
+public class PreRenderingFpmlGenerator extends MessageProducerSupport {
 
-	private static final int ITERATIONS = 1;
+	private static final int ITERATIONS = 1000;
+
+	private static final int THREADS = 4;
 
 	Resource base;
+	SinkFactory sinkFactory;
 
 	class Generator implements Runnable {
 
-		TradeConfirmed tradeConfirmed;
+		List<Object> payloads;
 
 		public void run() {
 
-			try {
-				tradeConfirmed = readTradeConfirmed();
-			} catch (Exception e) {
-				e.printStackTrace();
-				return;
-			}
+			System.out.println("Starting!");
 
-			for (int i = 0; i < ITERATIONS; i++) {
+			for (Object payload : payloads) {
 
-				TradeConfirmed fpML;
-				try {
-					fpML = randomizeFpML(tradeConfirmed);
-					// Number number = IOXPathFactory.getInstance("//amount")
-					// .getNumber(fpML);
+				Message<?> message = MessageBuilder.withPayload(payload)
+						.build();
 
-					if (i % 500 == 0) {
-						breakFpml(fpML);
-					}
-
-					Message<TradeConfirmed> message = MessageBuilder
-							.withPayload(fpML).build();
-
-					sendMessage(message);
-
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
+				sendMessage(message);
 			}
 
 			System.out.println("Done!");
@@ -84,10 +77,73 @@ public class FpmlGenerator extends MessageProducerSupport {
 	protected void doStart() {
 		super.doStart();
 
-		new Thread(new Generator()).start();
-		new Thread(new Generator()).start();
-		new Thread(new Generator()).start();
-		new Thread(new Generator()).start();
+		try {
+			List<Generator> generators = preRender();
+
+			for (Generator generator : generators) {
+				new Thread(generator).start();
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+	}
+
+	private List<Generator> preRender() throws Exception {
+
+		List<Generator> result = new ArrayList<Generator>(THREADS);
+
+		final TradeConfirmed tradeConfirmed = readTradeConfirmed();
+
+		ExecutorCompletionService<Generator> completionService = new ExecutorCompletionService<PreRenderingFpmlGenerator.Generator>(
+				Executors.newFixedThreadPool(THREADS));
+
+		for (int i = 0; i < THREADS; i++) {
+			completionService
+					.submit(new Callable<PreRenderingFpmlGenerator.Generator>() {
+
+						public Generator call() throws Exception {
+							System.out.println("Rendering... ");
+							
+							OutputType ot = OutputType.BYTE_ARRAY;
+							Random rand = new Random();
+							TradeConfirmed myTradeConfirmed = (TradeConfirmed) tradeConfirmed
+									.cloneDeep();
+
+							Generator gen = new Generator();
+
+							List<Object> payloads = new ArrayList<Object>(
+									ITERATIONS);
+
+							for (int j = 0; j < ITERATIONS; j++) {
+
+								TradeConfirmed fpML = randomizeFpML(myTradeConfirmed);
+
+								if (rand.nextInt(100) == 0) {
+									breakFpml(fpML);
+								}
+
+								Sink sink = ot.getSink(sinkFactory);
+								sink.writeObject(fpML);
+								Object payload = ot.getOutput(sink);
+
+								payloads.add(payload);
+							}
+
+							gen.payloads = payloads;
+
+							return gen;
+						}
+					});
+		}
+
+		for (int i = 0; i < THREADS; i++) {
+			Future<Generator> future = completionService.take();
+			result.add(future.get());
+		}
+
+		return result;
 
 	}
 
@@ -202,4 +258,13 @@ public class FpmlGenerator extends MessageProducerSupport {
 	public void setBase(Resource base) {
 		this.base = base;
 	}
+
+	public SinkFactory getSinkFactory() {
+		return sinkFactory;
+	}
+
+	public void setSinkFactory(SinkFactory sinkFactory) {
+		this.sinkFactory = sinkFactory;
+	}
+
 }

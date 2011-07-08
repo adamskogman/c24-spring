@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:c24="http://www.c24.biz/schema/spring-core"
+	xmlns:int-c24="http://www.c24.biz/schema/spring-integration" xmlns:int="http://www.springframework.org/schema/integration"
+	xmlns:jdbc="http://www.springframework.org/schema/jdbc" xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:int-jdbc="http://www.springframework.org/schema/integration/jdbc"
+	xmlns:amqp="http://www.springframework.org/schema/integration/amqp"
+	xmlns:rabbit="http://www.springframework.org/schema/rabbit"
+	xsi:schemaLocation="http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-3.0.xsd
+		http://www.springframework.org/schema/integration/amqp http://www.springframework.org/schema/integration/amqp/spring-integration-amqp.xsd
+		http://www.springframework.org/schema/integration http://www.springframework.org/schema/integration/spring-integration-2.0.xsd
+		http://www.c24.biz/schema/spring-core http://www.c24.biz/schema/spring-core.xsd
+		http://www.springframework.org/schema/integration/jdbc http://www.springframework.org/schema/integration/jdbc/spring-integration-jdbc-2.0.xsd
+		http://www.c24.biz/schema/spring-integration http://www.c24.biz/schema/spring-integration.xsd
+		http://www.springframework.org/schema/rabbit http://www.springframework.org/schema/rabbit/spring-rabbit-1.0.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.0.xsd">
+
+	<import resource="rabbitmq-context.xml" />
+	<import resource="c24-context.xml" />
+
+	<!-- EVENT GERERATION -->
+
+	<bean class="biz.c24.io.spring.integration.samples.fpml.PreRenderingFpmlGenerator">
+		<property name="base"
+			value="classpath:biz/c24/io/spring/integration/samples/fpml/generator/fx-ex10-amer-opt.xml" />
+		<property name="outputChannel" ref="rawFpmlChannel" />
+		<property name="sinkFactory" ref="sinkFactory"></property>
+	</bean>
+
+	<int:channel id="rawFpmlChannel" />
+
+	<amqp:outbound-channel-adapter channel="rawFpmlChannel"
+		exchange-name="c24.demo.exchange" routing-key="fpml" />
+
+</beans>

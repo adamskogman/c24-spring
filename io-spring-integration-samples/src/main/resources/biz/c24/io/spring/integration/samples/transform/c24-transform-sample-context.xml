@@ -7,13 +7,25 @@
 		http://www.c24.biz/schema/spring-integration http://www.c24.biz/schema/spring-integration.xsd
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
+	<int:channel id="inputChannel" />
 
+	<c24:model id="inputDocumentModel"
+		base-element="biz.c24.io.examples.models.basic.InputDocumentRootElement" />
 
-	<int-c24:transformer
-		transform-class="biz.c24.io.examples.transforms.basic.ExampleTransform"
-		input-channel="employeesChannel"
-		output-channel="emailsChannel" />
+	<int:chain input-channel="inputChannel" output-channel="outputChannel">
 
+		<int-c24:unmarshalling-transformer
+			model-ref="inputDocumentModel" unwrap-document-root="false" />
+
+		<!-- Put Transformer here -->
+		<int-c24:transformer
+			transform-class="biz.c24.io.examples.transforms.basic.ExampleTransform" />
+
+	</int:chain>
+
+	<int:channel id="outputChannel">
+		<int:queue capacity="1" />
+	</int:channel>
 
 
 

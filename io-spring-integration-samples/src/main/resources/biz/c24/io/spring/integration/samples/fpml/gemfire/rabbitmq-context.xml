@@ -17,9 +17,12 @@
 
 	<rabbit:queue name="fpml" />
 
+<!-- 	<rabbit:queue name="c24.demo.invalidqueue" /> -->
+
 	<rabbit:direct-exchange name="c24.demo.exchange">
 		<rabbit:bindings>
 			<rabbit:binding queue="fpml" key="fpml" />
+<!-- 			<rabbit:binding queue="c24.demo.invalidqueue" key="c24.demo.invalidbinding" /> -->
 		</rabbit:bindings>
 	</rabbit:direct-exchange>
 
