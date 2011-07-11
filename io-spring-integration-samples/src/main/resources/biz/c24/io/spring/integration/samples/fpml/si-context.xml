@@ -23,20 +23,18 @@
 
 	<amqp:inbound-channel-adapter queue-names="fpml"
 		channel="rawFplmFromRabbit" />
-	<amqp:inbound-channel-adapter queue-names="fpml"
-		channel="rawFplmFromRabbit" />
-	<amqp:inbound-channel-adapter queue-names="fpml"
-		channel="rawFplmFromRabbit" />
-	<amqp:inbound-channel-adapter queue-names="fpml"
-		channel="rawFplmFromRabbit" />
 
 	<int:channel id="rawFplmFromRabbit" />
 
 	<int:chain input-channel="rawFplmFromRabbit" output-channel="validatedChannel">
 
+		<int:header-enricher>
+			<int:correlation-id expression="headers[id]" />
+		</int:header-enricher>
+
 		<int-c24:unmarshalling-transformer
 			model-ref="fpmlModel" />
-
+			
 		<int-c24:validating-header-enricher
 			fail-events="true" pass-events="false" statistics="false" />
 
@@ -51,9 +49,9 @@
 	</int:chain>
 
 	<int:channel id="invalidChannel"></int:channel>
-	
+
 	<int:logging-channel-adapter channel="invalidChannel"
-		level="WARN" expression="headers[id] + ' ' + headers[c24_failEvents]" />
+		level="WARN" expression="headers[correlationId] + ' ' + headers[c24_failEvents]" />
 
 
 	<!-- BRANCH: TRANSFORM TO XML AND PUT IN DB -->
@@ -76,7 +74,7 @@
 	<int:channel id="dbChannel" />
 
 	<int-jdbc:outbound-channel-adapter
-		query="insert into cdos (id, valid, buyer, seller, xml) values (:headers[id], :headers[c24_valid], :headers[db_buyer],:headers[db_seller], :payload)"
+		query="insert into cdos (id, valid, buyer, seller, xml) values (:headers[correlationId], :headers[c24_valid], :headers[db_buyer], :headers[db_seller], :payload)"
 		data-source="dataSource" channel="dbChannel" />
 
 </beans>
