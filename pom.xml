@@ -2,16 +2,16 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>biz.c24.io.spring</groupId>
-	<artifactId>io-spring</artifactId>
-	<version>0.0.1.BUILD-SNAPSHOT</version>
+	<artifactId>c24-spring</artifactId>
+	<version>1.0.0.BUILD-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<name>C24 Spring Support</name>
 
 
 	<modules>
-		<module>io-spring-core</module>
-		<module>io-spring-integration</module>
-		<module>io-spring-integration-samples</module>
+		<module>c24-spring-core</module>
+		<module>c24-spring-integration</module>
+		<module>c24-spring-integration-samples</module>
 	</modules>
 
 	<developers>
