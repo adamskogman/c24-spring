@@ -1,2 +1,2 @@
-http\://www.c24.biz/schema/spring-core-1.0.xsd=biz/c24/io/spring/config/spring-core-1.0.xsd
-http\://www.c24.biz/schema/spring-core.xsd=biz/c24/io/spring/config/spring-core-1.0.xsd
+http\://schema.c24.biz/spring-core-1.0.xsd=biz/c24/io/spring/config/spring-core-1.0.xsd
+http\://schema.c24.biz/spring-core.xsd=biz/c24/io/spring/config/spring-core-1.0.xsd

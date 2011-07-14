@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsd:schema xmlns="http://www.c24.biz/schema/spring-integration"
+<xsd:schema xmlns="http://schema.c24.biz/spring-integration"
 	xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:beans="http://www.springframework.org/schema/beans"
 	xmlns:tool="http://www.springframework.org/schema/tool"
 	xmlns:integration="http://www.springframework.org/schema/integration"
-	xmlns:core="http://www.c24.biz/schema/spring-core" targetNamespace="http://www.c24.biz/schema/spring-integration"
+	xmlns:core="http://schema.c24.biz/spring-core" targetNamespace="http://schema.c24.biz/spring-integration"
 	elementFormDefault="qualified" attributeFormDefault="unqualified">
 
 	<xsd:import namespace="http://www.springframework.org/schema/beans" />
 	<xsd:import namespace="http://www.springframework.org/schema/tool" />
 	<xsd:import namespace="http://www.springframework.org/schema/integration"
 		schemaLocation="http://www.springframework.org/schema/integration/spring-integration-2.0.xsd" />
-	<xsd:import namespace="http://www.c24.biz/schema/spring-core" />
+	<xsd:import namespace="http://schema.c24.biz/spring-core" />
 
 	<xsd:annotation>
 		<xsd:documentation>

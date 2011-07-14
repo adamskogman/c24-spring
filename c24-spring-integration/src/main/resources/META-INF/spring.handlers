@@ -1,1 +1,1 @@
-http\://www.c24.biz/schema/spring-integration=biz.c24.io.spring.integration.config.C24NamespaceHandler
+http\://schema.c24.biz/spring-integration=biz.c24.io.spring.integration.config.C24NamespaceHandler
