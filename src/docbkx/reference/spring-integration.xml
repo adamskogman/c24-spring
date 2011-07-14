@@ -2,477 +2,377 @@
 <!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.4//EN"
 "http://www.oasis-open.org/docbook/xml/4.4/docbookx.dtd">
 <chapter id="spring-integration">
-	<title>C24 IO Spring Integration Support</title>
+  <title>C24 IO support for Spring Integration</title>
 
-	<section id="si-intro">
-		<title>Introduction</title>
-		<para>
-			C24 IO Spring Integration support extends the Spring Integration Core
-			with implementations of transformers,
-			selector and routers designed
-			to make working with C24 IO Complex Data Object messages in Spring
-			Integration simple.
-			The provided messaging components are designed to work with any data represented as a
-			ComplexDataObject.
-		</para>
-		<para>
-			Also provided are unmarshaling and marshalling transformers for turning
-			String or byte type payloads into
-			C24 IO
-			Complex Data Objects, and turning CDOs back intp String or bytes.
-			We're using transformer to mean Spring Integration
-			transformer, not a IO transform.
-		</para>
-		<para>
-			This guide will emphasise the use of Spring XML namespaces to configure C24 IO Spring components.
-			The namespaces are
-			configured like this:
-			<programlisting language="xml"><![CDATA[
-			 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:int-c24="http://www.c24.biz/schema/spring-integration"
-	xmlns:c24="http://www.c24.biz/schema/spring-core" xmlns:int="http://www.springframework.org/schema/integration"
-	xsi:schemaLocation="http://www.springframework.org/schema/integration http://www.springframework.org/schema/integration/spring-integration-2.0.xsd
-		http://www.c24.biz/schema/spring-core http://www.c24.biz/schema/spring-core.xsd
-		http://www.c24.biz/schema/spring-integration http://www.c24.biz/schema/spring-integration.xsd
-		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
-			 ]]></programlisting>
-		</para>
-	</section>
-	<section id="unmarshalling">
-		<title>Unmarshalling Payloads</title>
-		<para>
-			This section will explain how to use the unmarshalling (parsing) capabilities of C24 IO within the Spring
-			Integration
-			Framework. The basis for C24 IO unmarshalling is the
-			<classname>Source</classname>
-			class. In Spring Integration, unmarshalling is implemented as a Spring Integration
-			<emphasis>Transformer</emphasis>
-			.
-		</para>
-		<section id="unmarshalling-namespace">
-			<title>Using the XML namespace</title>
+  <abstract>
+    <para>Spring Integration provides an extension of the Spring programming
+    model to support the well-known <ulink url="http://www.eaipatterns.com/">
+    Enterprise Integration Patterns </ulink> . C24 IO components for Spring
+    Integration makes C24 marshaling and transformation directly usable as
+    Spring Integration components.</para>
+  </abstract>
 
-			<para>
-				Configuring an unmarshalling transformer using the namespace:
-				<programlisting language="xml"><![CDATA[<int-c24:unmarshalling-transformer
-		source-factory-ref="textualSourceFactory"
-		model-ref="inputDocumentModel"
-		input-channel="..."
-		output-channel="..." />
-			 ]]></programlisting>
-			</para>
-			<para>
-				Two specific attributes are required. The
-				<emphasis>source-factory-ref</emphasis>
-				is a
-				<interfacename>SourceFactory</interfacename>
-				defined as a bean elsewhere in the XML config. There are many
-				<interfacename>SourceFactory</interfacename>
-				implementations,
-				each wrapping a C24 IO
-				<classname>Source</classname>
-				implementation. E.g. the is a
-				<classname>XmlSourcefactory</classname>
-				, a
-				<classname>TextualSourceFactory</classname>
-				and a
-				<classname>FixSourceFactory</classname>
-				.
-			</para>
-			<para>
-				The second attribute is a
-				<emphasis>model-ref</emphasis>
-				. When unmarshalling, you must configure which
-				ComplexDataObject derived class you want to create. Typically, this is
-				clear from the use case, such as
-				when receiving a message on a specific MQ queue, or to a specific Web Service
-				endpoint. Please see section TODO for
-				information about configuring a model.
-			</para>
-		</section>
+  <section id="si-intro">
+    <title>Introduction</title>
 
-		<section id="unmarshalling-input">
-			<title>Input to the Unmarshalling Transformer</title>
-			<para>
-				These are the message payloads supported by the unmarshalling transformer. They will be passed to the
-				C24
-				<classname>Source</classname>
-				either as a
-				<interfacename>Reader</interfacename>
-				(you can't control the encoding) or a
-				<interfacename>InputStream</interfacename>
-				(you can configure the encoding on the
-				<classname>SourceFactory</classname>
-				).
-				<itemizedlist>
-					<listitem>
-						<para>
-							<interfacename>Reader</interfacename>
-							- will be passed as-is.
-						</para>
-					</listitem>
-					<listitem>
-						<para>
-							<classname>String</classname>
-							- will be passed as a
-							<classname>StringReader</classname>
-							.
-						</para>
-					</listitem>
-					<listitem>
-						<para>
-							<interfacename>InputStream</interfacename>
-							- will be passed as-is.
-						</para>
-					</listitem>
-					<listitem>
-						<para>
-							<classname>byte[]</classname>
-							- will be passed as a
-							<classname>ByteArrayInputStream</classname>
-							.
-						</para>
-					</listitem>
-					<listitem>
-						<para>
-							<classname>File</classname>
-							- will be passed as a
-							<classname>FileInputStream</classname>
-							.
-						</para>
-					</listitem>
-				</itemizedlist>
-			</para>
-			<para>
-				The actual unmarshalling is determined by the C24
-				<classname>Source</classname>
-				that is used.
-				The package
-				<classname>biz.c24.io.spring.source</classname>
-				holds a number of
-				<interfacename>SourceFactory</interfacename>
-				implementations that wrap different C24 Sources. All the configuration properties that you would usually
-				find on the
-				Source subclass (such as
-				<methodname>setEncoding()</methodname>
-				) is available on the individual
-				SourceFactory implementations.
-			</para>
-			<para>
-				The source factories are configured as beans, like so:
-				<programlisting language="xml"><![CDATA[<bean id="textualSourceFactory" class="biz.c24.io.spring.source.TextualSourceFactory">
-	<property name="encoding" value="UTF-8"/>
-</bean>]]></programlisting>
-			</para>
-		</section>
+    <para>C24 IO Spring Integration support extends the Spring Integration
+    Core with implementations of transformers, selector and routers designed
+    to make working with C24 IO Complex Data Object messages in Spring
+    Integration simple. The provided messaging components are designed to work
+    with any data represented as a ComplexDataObject.</para>
 
-		<!-- Add section on configuring as a bean -->
+    <para>Also provided are unmarshaling and marshalling transformers for
+    turning String or byte type payloads into C24 IO Complex Data Objects, and
+    turning CDOs back intp String or bytes. We're using transformer to mean
+    Spring Integration transformer, not a IO transform.</para>
 
-	</section>
+    <para>This guide will emphasise the use of Spring XML namespaces to
+    configure C24 IO Spring components. The namespaces are configured like
+    this: <programlisting language="xml">&lt;beans xmlns="http://www.springframework.org/schema/beans"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+  xmlns:int="http://www.springframework.org/schema/integration"
+  xmlns:int-c24="http://schema.c24.biz/spring-integration"
+  xsi:schemaLocation="http://www.springframework.org/schema/integration 
+    http://www.springframework.org/schema/integration/spring-integration-2.0.xsd
+    http://schema.c24.biz/schema/spring-integration 
+    http://schema.c24.biz/spring-integration.xsd
+    http://www.springframework.org/schema/beans 
+    http://www.springframework.org/schema/beans/spring-beans.xsd"&gt;
 
-	<section id="marshalling">
-		<title>Marshalling with C24 Sinks</title>
-		<para>
-			This section will explain how to use the marshalling capabilities of C24 IO within the Spring
-			Integration
-			Framework.
-			The basis for C24 IO marshalling is the
-			<classname>Sink</classname>
-			classes. In Spring Integration, marshalling is implemented as a Spring Integration
-			<emphasis>Transformer</emphasis>
-			.
-		</para>
+&lt;/beans&gt;</programlisting></para>
+  </section>
 
-		<section id="marshalling-namespace">
-			<title>Marshalling using the XML namespace</title>
-			<para>
-				A marshalling transformer is configured like this:
-				<programlisting language="xml"><![CDATA[<int-c24:marshalling-transformer
-	input-channel="..." output-channel="..."
-	sink-factory="xmlSinkFactory" output-type="BYTE_ARRAY" />]]></programlisting>
-				The sink-factory is a reference to a
-				<interfacename>SinkFactory</interfacename>
-				that is defined as a bean. The output-type is an enum vale that determines if the output is a String or a byte
-				array.
-			</para>
+  <section id="unmarshalling">
+    <title>Unmarshalling Payloads</title>
 
-		</section>
-		<section id="marshalling-output">
-			<title>Output options for the marshalling transformer</title>
-			<para>
-				The actual marshalling is determined by the C24
-				<classname>Sink</classname>
-				that is used.
-				The package
-				<classname>biz.c24.io.spring.sink</classname>
-				holds a number of
-				<interfacename>SinkFactory</interfacename>
-				implementations that wrap different C24 sinks. All the configuration properties that you would usually
-				find on the
-				Sink subclass (such as
-				<methodname>setEncoding()</methodname>
-				) is available on the individual
-				SinkFactory implementations.
-			</para>
-			<para>
-				The output type determines what kind of payload will be output from the marshaling transformer.
-				<itemizedlist>
-					<listitem>
-						<para>
-							<emphasis>STRING</emphasis>
-							will output a
-							<classname>String</classname>
-							as the payload.
-							It's up to the user to determine if that makes sense given the chose Sink type.
-						</para>
-					</listitem>
-					<listitem>
-						<para>
-							<emphasis>BYTE_ARRAY</emphasis>
-							will output a
-							<classname>byte[]</classname>
-							as the payload.
-							It's up to you to determine if that makes sense given the chose Sink type. Configure the
-							encoding
-							on the
-							<interfacename>SinkFactory</interfacename>
-							.
-						</para>
-					</listitem>
-				</itemizedlist>
-			</para>
+    <para>This section will explain how to use the unmarshalling (parsing)
+    capabilities of C24 IO within the Spring Integration Framework. The basis
+    for C24 IO unmarshalling is the <classname>Source</classname> class. In
+    Spring Integration, unmarshalling is implemented as a Spring Integration
+    <interfacename>Transformer</interfacename>.</para>
 
-		</section>
+    <section id="unmarshalling-namespace">
+      <title>Using the XML namespace</title>
 
-		<!-- TODO <section id="marshalling-bean-config"></section> -->
-	</section>
+      <para>Configuring an unmarshalling transformer using the namespace:
+      <programlisting language="xml">&lt;int-c24:unmarshalling-transformer
+  source-factory-ref="textualSourceFactory"
+  model-ref="inputDocumentModel"
+  input-channel="…"
+  output-channel="…" /&gt;</programlisting></para>
 
-	<section id="transformation">
-		<title>Using C24 Transforms</title>
-		<section id="transformation-namespace">
-			<title>Configuring C24 Transforms using the XML namespace</title>
-			<para>
-				<programlisting language="xml"><![CDATA[<int-c24:transformer
-	transform-class="biz.c24.io.examples.transforms.basic.ExampleTransform"
-	input-channel="..." output-channel="..."
-	always-return-array="false" />]]></programlisting>
-			</para>
-			<para>
-				The attributes to configure are:
-				<itemizedlist>
-					<listitem>
-						<para>
-							<emphasis>transform-class</emphasis>
-							- the class name of the C24 IO generated transform.
-						</para>
-					</listitem>
-					<listitem>
-						<para>
-							<emphasis>always-return-array</emphasis>
-							- if you want the output to always be an array, even if only a single object was the output from the transform.
-							See below.
-						</para>
-					</listitem>
-				</itemizedlist>
-			</para>
-		</section>
-		<section id="transformation-input">
-			<title>Input payloads</title>
-			<para>
-				The Spring Integration IO transformer only accepts a single Object as the input payload.
-				In effect, this should be of
-				a
-				<classname>ComplexDataObject</classname>
-				subclass.
-			</para>
-		</section>
-		<section id="transformation-output">
-			<title>Output payload</title>
-			<para>
-				The result of transforming a single object (see above) can either be a single object, or an array of objects.
-				The
-				default is to only output a single
-				<classname>ComplexDataObject</classname>
-				as the payload. If the transform yields more then one object, or if the
-				attribute
-				<emphasis>always-return-array</emphasis>
-				is set to true, then an
-				<classname>Object[]</classname>
-				will be the payload.
+      <para>Two specific attributes are required. The
+      <emphasis>source-factory-ref</emphasis> is a
+      <interfacename>SourceFactory</interfacename> defined as a bean elsewhere
+      in the XML config. There are many
+      <interfacename>SourceFactory</interfacename> implementations, each
+      wrapping a C24 IO <classname>Source</classname> implementation. E.g. the
+      is a <classname>XmlSourcefactory</classname> , a
+      <classname>TextualSourceFactory</classname> and a
+      <classname>FixSourceFactory</classname> .</para>
 
-			</para>
-		</section>
-		<!-- TODO <section id="transformation-bean-config"></section> -->
-	</section>
+      <para>The second attribute is a <emphasis>model-ref</emphasis> . When
+      unmarshalling, you must configure which ComplexDataObject derived class
+      you want to create. Typically, this is clear from the use case, such as
+      when receiving a message on a specific MQ queue, or to a specific Web
+      Service endpoint. Please see section TODO for information about
+      configuring a model.</para>
+    </section>
 
-	<section id="xpath">
-		<title>Using C24 XPath</title>
-		<para>C24 IO has excellent XPath capabilities, and specifically any ComplexDataObject can be queries using XPath. The
-			following components
-			leverage that capability by providing Spring Integration routers, selectors (for filters) and
-			transformers.
-			A common trait is that they either take a simple XPath statement as a String, or a reference to a XPath
-			Statement
-			defined using a standard Spring bean./bean>.
-		</para>
-		<section id="xpath-statements">
-			<title>XPath Statements as Beans</title>
-			<para>
-				In some cases, an XPath statement cannot be expressed just as a simple string. A good example is if it needs to
-				navigate
-				and differeniate between more than one namespace. If so, you can declare and configure a C24 Xpath
-				Statement, a
-				<classname></classname>
-			</para>
+    <section id="unmarshalling-input">
+      <title>Input to the Unmarshalling Transformer</title>
 
-			<!-- TODO Revise when we have namespace. -->
-		</section>
-		<section id="xpath-transformation">
-			<title>
-				Transforming Objects using XPath
-			</title>
-			<subtitle>Picking out parts of a larger structure using XPath</subtitle>
-			<para>
-				<programlisting language="xml"><![CDATA[<int-c24:xpath-transformer input-channel="..."
-	evaluation-type="OBJECT_RESULT" xpath-statement="/Emails"
-	output-channel="..." />]]></programlisting>
-			</para>
-			<para>
-				The input to the transformer must always be a subclass of
-				<classname>ComplexDataObject.</classname>
-				<itemizedlist>
-					<listitem>
-						<para>
-							<emphasis>evaluation-type</emphasis>
-							determines the type of the output payload. Options include Object, String, boolean and list (for selecting more
-							than one node).
-							See the enum
-							<classname>biz.c24.io.spring.integration.xpath.XPathEvaluationType</classname>
-							for details.
-						</para>
-					</listitem>
-					<listitem>
-						<para>
-							<emphasis>xpath-statement</emphasis>
-							is used to provide a simple XPath expression as a string.
-						</para>
-					</listitem>
-					<listitem>
-						<para>
-							<emphasis>xpath-statement-ref</emphasis>
-							is used to provide a reference to an XPath statement
-							declared as a bean elsewhere.
-						</para>
-					</listitem>
-				</itemizedlist>
-			</para>
-		</section>
-		<section id="xpath-router">
-			<title>
-				Routing using XPath
-			</title>
-			<para>
-				<programlisting language="xml"><![CDATA[<int-c24:xpath-router input-channel="..."
-	xpath-statement="//Employee[1]/FirstName" default-output-channel="wrongChannel">
-	<int-c24:mapping value="Andy" channel="rightChannel" />
-	<int-c24:mapping value="Barry" channel="anotherChannel" />
-</int-c24:xpath-router>]]></programlisting>
-			</para>
-			<para>
-				The input to the router must always be a subclass of
-				<classname>ComplexDataObject</classname>
-				.
-				<itemizedlist>
-					<listitem>
-						<para>
-							<emphasis>xpath-statement</emphasis>
-							is used to provide a simple XPath expression as a string.
-						</para>
-					</listitem>
-					<listitem>
-						<para>
-							<emphasis>xpath-statement-ref</emphasis>
-							is used to provide a reference to an XPath statement
-							declared as a bean elsewhere.
-						</para>
-					</listitem>
-				</itemizedlist>
-				The provided Xpath
-				<emphasis>must</emphasis>
-				evaluate to a string.
-			</para>
-		</section>
-		<section id="xpath-selector">
-			<title>
-				Filtering using XPath
-			</title>
-			<para>
-				Filtering can be done either be provining an XPath statement that evaluates to a boolean,
-				or by providing both a
-				XPath Statement and a String to compare the result to.
-				<programlisting language="xml"><![CDATA[<int:filter discard-channel="wrongChannel" ref="boolSelector" />
+      <para>These are the message payloads supported by the unmarshalling
+      transformer. They will be passed to the C24
+      <classname>Source</classname> either as a
+      <interfacename>Reader</interfacename> (you can't control the encoding)
+      or a <interfacename>InputStream</interfacename> (you can configure the
+      encoding on the <classname>SourceFactory</classname> ). <itemizedlist
+          spacing="compact">
+          <listitem>
+            <para><interfacename>Reader</interfacename> - will be passed
+            as-is.</para>
+          </listitem>
 
-<int-c24:xpath-selector id="boolSelector"
-	evaluation-result-type="boolean" xpath-statement="//Employee/FirstName/text()='Andy'" />
+          <listitem>
+            <para><classname>String</classname> - will be passed as a
+            <classname>StringReader</classname> .</para>
+          </listitem>
 
-<int:filter discard-channel="wrongChannel" ref="stringSelector" />
+          <listitem>
+            <para><interfacename>InputStream</interfacename> - will be passed
+            as-is.</para>
+          </listitem>
 
-<int-c24:xpath-selector id="stringSelector"
-	evaluation-result-type="string" xpath-statement="//Employee/FirstName"
-	string-test-value="Andy" />]]></programlisting>
-			</para>
-			<para>
-				The input to the selector must always be a subclass of
-				<classname>ComplexDataObject</classname>
-				.
-				<itemizedlist>
-					<listitem>
-						<para>
-							<emphasis>evaluation-result-type</emphasis>
-							determines if this is a boolean or String based selector.
-						</para>
-					</listitem>
-					<listitem>
-						<para>
-							<emphasis>string-test-value</emphasis>
-							is required by the String based selector.
-						</para>
-					</listitem>
-					<listitem>
-						<para>
-							<emphasis>xpath-statement</emphasis>
-							is used to provide a simple XPath expression as a string.
-						</para>
-					</listitem>
-					<listitem>
-						<para>
-							<emphasis>xpath-statement-ref</emphasis>
-							is used to provide a reference to an XPath statement
-							declared as a bean elsewhere.
-						</para>
-					</listitem>
-				</itemizedlist>
-			</para>
-		</section>
-		<section id="xpath-header-enricher">
-			<title>XPath Header enricher</title>
-			<para>
-				Before passing a ComplexDataObject payload to a channel adapter or similar, it
-				is often needed to pick out certain dat aand put it into named headers. For this use case,
-				there is an XPath header enricher.
+          <listitem>
+            <para><classname>byte[]</classname> - will be passed as a
+            <classname>ByteArrayInputStream</classname> .</para>
+          </listitem>
 
-				<programlisting language="xml"><![CDATA[<int-c24:xpath-header-enricher input-channel="..."
-output-channel="...">
-	<int-c24:header name="firstName"  xpath-statement="//Employee/FirstName"/>
-	<int-c24:header name="lastName"  xpath-statement="//Employee/LastName"/>
-</int-c24:xpath-header-enricher>
-]]></programlisting>
-				Note that several headers can be enriched at the same time. The XPath expressions will be evaluated
-				into Strings. No other data type is supported.
-			</para>
+          <listitem>
+            <para><classname>File</classname> - will be passed as a
+            <classname>FileInputStream</classname> .</para>
+          </listitem>
+        </itemizedlist></para>
 
-		</section>
-	</section>
+      <para>The actual unmarshalling is determined by the C24
+      <classname>Source</classname> that is used. The package
+      <classname>biz.c24.io.spring.source</classname> holds a number of
+      <interfacename>SourceFactory</interfacename> implementations that wrap
+      different C24 Sources. All the configuration properties that you would
+      usually find on the Source subclass (such as
+      <methodname>setEncoding()</methodname> ) is available on the individual
+      SourceFactory implementations.</para>
 
+      <para>The source factories are configured as beans, like so:
+      <programlisting language="xml">&lt;bean id="textualSourceFactory" class="biz.c24.io.spring.source.TextualSourceFactory"&gt;
+  &lt;property name="encoding" value="UTF-8"/&gt;
+&lt;/bean&gt;</programlisting></para>
+    </section>
 
+    <!-- Add section on configuring as a bean -->
+  </section>
+
+  <section id="marshalling">
+    <title>Marshalling with C24 Sinks</title>
+
+    <para>This section will explain how to use the marshalling capabilities of
+    C24 IO within the Spring Integration Framework. The basis for C24 IO
+    marshalling is the <classname>Sink</classname> classes. In Spring
+    Integration, marshalling is implemented as a Spring Integration
+    <interfacename>Transformer</interfacename>.</para>
+
+    <section id="marshalling-namespace">
+      <title>Marshalling using the XML namespace</title>
+
+      <para>A marshalling transformer is configured like this: <programlisting
+      language="xml">&lt;int-c24:marshalling-transformer
+  input-channel="…" 
+  output-channel="…"
+  sink-factory="xmlSinkFactory"
+  output-type="BYTE_ARRAY" /&gt;</programlisting>The sink-factory is a
+      reference to a <interfacename>SinkFactory</interfacename> that is
+      defined as a bean. The output-type is an enum vale that determines if
+      the output is a String or a byte array.</para>
+    </section>
+
+    <section id="marshalling-output">
+      <title>Output options for the marshalling transformer</title>
+
+      <para>The actual marshalling is determined by the C24
+      <classname>Sink</classname> that is used. The package
+      <classname>biz.c24.io.spring.sink</classname> holds a number of
+      <interfacename>SinkFactory</interfacename> implementations that wrap
+      different C24 sinks. All the configuration properties that you would
+      usually find on the Sink subclass (such as
+      <methodname>setEncoding()</methodname> ) is available on the individual
+      <interfacename>SinkFactory</interfacename> implementations.</para>
+
+      <para>The output type determines what kind of payload will be output
+      from the marshaling transformer. <itemizedlist spacing="compact">
+          <listitem>
+            <para><emphasis>STRING</emphasis> will output a
+            <classname>String</classname> as the payload. It's up to the user
+            to determine if that makes sense given the chose Sink type.</para>
+          </listitem>
+
+          <listitem>
+            <para><emphasis>BYTE_ARRAY</emphasis> will output a
+            <classname>byte[]</classname> as the payload. It's up to you to
+            determine if that makes sense given the chose Sink type. Configure
+            the encoding on the <interfacename>SinkFactory</interfacename>
+            .</para>
+          </listitem>
+        </itemizedlist></para>
+    </section>
+
+    <!-- TODO <section id="marshalling-bean-config"></section> -->
+  </section>
+
+  <section id="transformation">
+    <title>Using C24 Transforms</title>
+
+    <section id="transformation-namespace">
+      <title>Configuring C24 Transforms using the XML namespace</title>
+
+      <para><programlisting language="xml">&lt;int-c24:transformer
+  transform-class="biz.c24.io.examples.transforms.basic.ExampleTransform"
+  input-channel="…"
+  output-channel="…"
+  always-return-array="false" /&gt;</programlisting></para>
+
+      <para>The attributes to configure are: <itemizedlist spacing="compact">
+          <listitem>
+            <para><emphasis>transform-class</emphasis> - the class name of the
+            C24 IO generated transform.</para>
+          </listitem>
+
+          <listitem>
+            <para><emphasis>always-return-array</emphasis> - if you want the
+            output to always be an array, even if only a single object was the
+            output from the transform. See below.</para>
+          </listitem>
+        </itemizedlist></para>
+    </section>
+
+    <section id="transformation-input">
+      <title>Input payloads</title>
+
+      <para>The Spring Integration IO transformer only accepts a single Object
+      as the input payload. In effect, this should be of a
+      <classname>ComplexDataObject</classname> subclass.</para>
+    </section>
+
+    <section id="transformation-output">
+      <title>Output payload</title>
+
+      <para>The result of transforming a single object (see above) can either
+      be a single object, or an array of objects. The default is to only
+      output a single <classname>ComplexDataObject</classname> as the payload.
+      If the transform yields more then one object, or if the attribute
+      <emphasis>always-return-array</emphasis> is set to true, then an
+      <classname>Object[]</classname> will be the payload.</para>
+    </section>
+
+    <!-- TODO <section id="transformation-bean-config"></section> -->
+  </section>
+
+  <section id="xpath">
+    <title>Using C24 XPath</title>
+
+    <para>C24 IO has excellent XPath capabilities, and specifically any
+    ComplexDataObject can be queries using XPath. The following components
+    leverage that capability by providing Spring Integration routers,
+    selectors (for filters) and transformers. A common trait is that they
+    either take a simple XPath statement as a String, or a reference to a
+    XPath Statement defined using a standard Spring bean.</para>
+
+    <section id="xpath-statements">
+      <title>XPath Statements as Beans</title>
+
+      <para>In some cases, an XPath statement cannot be expressed just as a
+      simple string. A good example is if it needs to navigate and
+      differeniate between more than one namespace. If so, you can declare and
+      configure a C24 Xpath Statement, a <classname></classname></para>
+
+      <!-- TODO Revise when we have namespace. -->
+    </section>
+
+    <section id="xpath-transformation">
+      <title>Transforming Objects using XPath</title>
+
+      <subtitle>Picking out parts of a larger structure using XPath</subtitle>
+
+      <para><programlisting language="xml">&lt;int-c24:xpath-transformer input-channel="..."
+  evaluation-type="OBJECT_RESULT"
+  xpath-statement="/Emails"
+  output-channel="..." /&gt;</programlisting></para>
+
+      <para>The input to the transformer must always be a subclass of
+      <classname>ComplexDataObject.</classname> <itemizedlist
+          spacing="compact">
+          <listitem>
+            <para><emphasis>evaluation-type</emphasis> determines the type of
+            the output payload. Options include Object, String, boolean and
+            list (for selecting more than one node). See the enum
+            <classname>biz.c24.io.spring.integration.xpath.XPathEvaluationType</classname>
+            for details.</para>
+          </listitem>
+
+          <listitem>
+            <para><emphasis>xpath-statement</emphasis> is used to provide a
+            simple XPath expression as a string.</para>
+          </listitem>
+
+          <listitem>
+            <para><emphasis>xpath-statement-ref</emphasis> is used to provide
+            a reference to an XPath statement declared as a bean
+            elsewhere.</para>
+          </listitem>
+        </itemizedlist></para>
+    </section>
+
+    <section id="xpath-router">
+      <title>Routing using XPath</title>
+
+      <para><programlisting language="xml">&lt;int-c24:xpath-router input-channel="..."
+  xpath-statement="//Employee[1]/FirstName" default-output-channel="wrongChannel"&gt;
+  &lt;int-c24:mapping value="Andy" channel="rightChannel" /&gt;
+  &lt;int-c24:mapping value="Barry" channel="anotherChannel" /&gt;
+&lt;/int-c24:xpath-router&gt;</programlisting></para>
+
+      <para>The input to the router must always be a subclass of
+      <classname>ComplexDataObject</classname> . <itemizedlist
+          spacing="compact">
+          <listitem>
+            <para><emphasis>xpath-statement</emphasis> is used to provide a
+            simple XPath expression as a string.</para>
+          </listitem>
+
+          <listitem>
+            <para><emphasis>xpath-statement-ref</emphasis> is used to provide
+            a reference to an XPath statement declared as a bean
+            elsewhere.</para>
+          </listitem>
+        </itemizedlist> The provided Xpath <emphasis>must</emphasis> evaluate
+      to a string.</para>
+    </section>
+
+    <section id="xpath-selector">
+      <title>Filtering using XPath</title>
+
+      <para>Filtering can be done either be provining an XPath statement that
+      evaluates to a boolean, or by providing both a XPath Statement and a
+      String to compare the result to. <programlisting language="xml">&lt;int:filter discard-channel="wrongChannel" ref="boolSelector" /&gt;
+
+&lt;int-c24:xpath-selector id="boolSelector"
+  evaluation-result-type="boolean"
+  xpath-statement="//Employee/FirstName/text()='Andy'" /&gt;
+
+&lt;int:filter discard-channel="wrongChannel" ref="stringSelector" /&gt;
+
+&lt;int-c24:xpath-selector id="stringSelector"
+  evaluation-result-type="string" xpath-statement="//Employee/FirstName"
+  string-test-value="Andy" /&gt;</programlisting></para>
+
+      <para>The input to the selector must always be a subclass of
+      <classname>ComplexDataObject</classname> . <itemizedlist
+          spacing="compact">
+          <listitem>
+            <para><emphasis>evaluation-result-type</emphasis> determines if
+            this is a boolean or String based selector.</para>
+          </listitem>
+
+          <listitem>
+            <para><emphasis>string-test-value</emphasis> is required by the
+            String based selector.</para>
+          </listitem>
+
+          <listitem>
+            <para><emphasis>xpath-statement</emphasis> is used to provide a
+            simple XPath expression as a string.</para>
+          </listitem>
+
+          <listitem>
+            <para><emphasis>xpath-statement-ref</emphasis> is used to provide
+            a reference to an XPath statement declared as a bean
+            elsewhere.</para>
+          </listitem>
+        </itemizedlist></para>
+    </section>
+
+    <section id="xpath-header-enricher">
+      <title>XPath Header enricher</title>
+
+      <para>Before passing a <classname>ComplexDataObject</classname> payload
+      to a channel adapter or similar, it is often needed to pick out certain
+      dat aand put it into named headers. For this use case, there is an XPath
+      header enricher. <programlisting language="xml">&lt;int-c24:xpath-header-enricher input-channel="..." output-channel="..."&gt;
+  &lt;int-c24:header name="firstName" xpath-statement="//Employee/FirstName" /&gt;
+  &lt;int-c24:header name="lastName" xpath-statement="//Employee/LastName" /&gt;
+&lt;/int-c24:xpath-header-enricher&gt;</programlisting> Note that several
+      headers can be enriched at the same time. The XPath expressions will be
+      evaluated into Strings. No other data type is supported.</para>
+    </section>
+  </section>
 </chapter>

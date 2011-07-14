@@ -1,0 +1,15 @@
+Bundle-SymbolicName: biz.c24.io.spring.integration.sample
+Bundle-Name: C24 Spring Integration Sample
+Bundle-Vendor: C24
+Bundle-ManifestVersion: 2
+Export-Template:
+ biz.c24.io.spring.integration.samples.*;version="${project.version}"
+Import-Template:
+ biz.c24.io.api.*;version="[4.0.0,5.0.0)",
+ biz.c24.io.spring.*;version="${project.version}",
+ org.apache.log4j.*;version="${log4j.version:[=.=.=,+1.0.0)}",
+ org.fpml.*;version="${fpml.version:[=.=.=,+1.0.0)}",
+ org.h2.*;version="${h2.version:[=.=.=,+1.0.0)}",
+ org.junit.*;version="${junit.version:[=.=.=,+1.0.0)}",
+ org.springframework.*;version="${spring.version:[=.=.=.=,+1.0.0)}",
+ org.springframework.integration.*;version="${spring.integration.version:[=.=.=.=,+1.0.0)}"

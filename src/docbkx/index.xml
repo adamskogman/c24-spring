@@ -2,104 +2,74 @@
 <!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.4//EN"
 "http://www.oasis-open.org/docbook/xml/4.4/docbookx.dtd">
 <book xmlns:xi="http://www.w3.org/2001/XInclude">
-	<bookinfo>
-		<title>C24 IO Spring Reference Manual</title>
+  <bookinfo>
+    <title>C24 IO Spring Reference Manual</title>
 
-		<releaseinfo>${project.version}</releaseinfo>
+    <releaseinfo>version;</releaseinfo>
 
-		<authorgroup>
-			<author>
-				<firstname>Adam</firstname>
-				<surname>Skogman</surname>
-				<affiliation>
-					<jobtitle>Consulting Architect</jobtitle>
-					<orgname>SpringSource - a division of VMware</orgname>
-				</affiliation>
+    <authorgroup>
+      <author>
+        <firstname>Adam</firstname>
 
-				<email>askogman@vmware.com</email>
-			</author>
+        <surname>Skogman</surname>
 
-			<author>
-				<firstname>Oliver</firstname>
-				<surname>Gierke</surname>
+        <affiliation>
+          <jobtitle>Consulting Architect</jobtitle>
 
-				<affiliation>
-					<jobtitle>Senior Consultant</jobtitle>
-					<orgname>SpringSource - a division of VMware</orgname>
-				</affiliation>
+          <orgname>SpringSource - a division of VMware</orgname>
+        </affiliation>
 
-				<email>ogierke@vmware.com</email>
-			</author>
-		</authorgroup>
+        <email>askogman@vmware.com</email>
+      </author>
 
-		<legalnotice>
-			<para>Copies of this document may be made for your own use and for
-				distribution to others, provided that you do not charge any fee for
-				such
-				copies and further provided that each copy contains this
-				Copyright
-				Notice, whether distributed in print or electronically.
-			</para>
-		</legalnotice>
+      <author>
+        <firstname>Oliver</firstname>
 
-		<pubdate />
+        <surname>Gierke</surname>
 
-		<copyright>
-			<year>2011</year>
+        <affiliation>
+          <jobtitle>Senior Consultant</jobtitle>
 
-			<holder>C24</holder>
-		</copyright>
+          <orgname>SpringSource - a division of VMware</orgname>
+        </affiliation>
 
-	</bookinfo>
+        <email>ogierke@vmware.com</email>
+      </author>
+    </authorgroup>
 
-	<toc />
+    <legalnotice>
+      <para>Copies of this document may be made for your own use and for
+      distribution to others, provided that you do not charge any fee for such
+      copies and further provided that each copy contains this Copyright
+      Notice, whether distributed in print or electronically.</para>
+    </legalnotice>
 
-	<xi:include href="preface.xml" />
+    <pubdate />
 
-	<part id="spring-integration">
-		<title>C24 IO components for the Spring Integration Framework</title>
-		<partintro>
-			<para>
-				Spring Integration provides an extension of the Spring programming
-				model to support the well-known
-				<ulink url="http://www.eaipatterns.com/">
-					Enterprise Integration Patterns
-				</ulink>
-				.
-				C24 IO components for Spring Integration makes C24 marshaling and
-				transformation
-				directly usable as Spring Integration components.
-			</para>
-		</partintro>
-		<xi:include href="./reference/spring-integration.xml" />
+    <copyright>
+      <year>2011</year>
 
-	</part>
+      <holder>C24</holder>
+    </copyright>
+  </bookinfo>
 
-	<part id="spring-core">
-		<title>C24 IO components for the Spring Framework</title>
-		<partintro>
-			<para>
-				C24 IO can be integrated into several of the core Spring
-				Framework features as well.
-				C24 IO plugs into Spring-WS for SOAP
-				based services, replacing the XML marshalling framework.
-				If plugs
-				into Spring MVC for building REST interfaces using C24 IO
-				marshalling and unmarshalling,
-				allowing any C24 IO supported data
-				type to be passed seamlessly over REST/HTTP.
-			</para>
-		</partintro>
-	</part>
+  <toc />
 
+  <xi:include href="preface.xml" />
 
-	<part id="appendix">
-		<title>Appendix</title>
+  <part>
+  	<title>Reference documentation</title>
+    <xi:include href="./reference/spring-core.xml" />
+    <xi:include href="./reference/spring-integration.xml" />
+  </part>
 
 <!-- 
+  <part id="appendix">
+    <title>Appendix</title>    
 		<xi:include href="appendix/faq.xml" />
 
 		<xi:include href="appendix/glossary.xml" />
+
+  </part>
 -->
-	</part>
 </book>

@@ -8,7 +8,6 @@
     <title>Project metadata</title>
 
     <itemizedlist spacing="compact">
-
       <listitem>
         <para>Bugtracker - <ulink
         url="https://support.c24.biz/">https://support.c24.biz/</ulink></para>
@@ -19,6 +18,25 @@
         url="http://repo.c24io.net:8081/nexus/content/groups/public">http://repo.c24io.net:8081/nexus/content/groups/public</ulink></para>
       </listitem>
 
+      <listitem>
+        <para>Sources - <ulink
+        url="https://github.com/C24-Technologies/c24-spring">https://github.com/C24-Technologies/c24-spring</ulink></para>
+      </listitem>
     </itemizedlist>
+
+    <section>
+      <title>Modules</title>
+
+      <itemizedlist spacing="compact">
+        <listitem>
+          <para>Core - Integration with core Spring components</para>
+        </listitem>
+
+        <listitem>
+          <para>Integration - Integration with Spring Integration
+          components</para>
+        </listitem>
+      </itemizedlist>
+    </section>
   </section>
 </preface>

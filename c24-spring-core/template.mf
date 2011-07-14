@@ -1,0 +1,12 @@
+Bundle-SymbolicName: biz.c24.io.spring.core
+Bundle-Name: C24 Spring Core Support
+Bundle-Vendor: C24
+Bundle-ManifestVersion: 2
+Export-Template:
+ biz.c24.io.spring.*;version="${project.version}"
+Import-Template:
+ biz.c24.io.api.*;version="[4.0.0,5.0.0)",
+ javax.xml.*;version="0",
+ org.apache.xml.*;version="${xerces.version:[=.=.=,+1.0.0)}",
+ org.springframework.*;version="${spring.version:[=.=.=.=,+1.0.0)}",
+ org.w3c.dom.*;version="0"

@@ -149,9 +149,6 @@
 
     <!-- These extensions are required for table printing and other stuff -->
     <xsl:param name="tablecolumns.extension">0</xsl:param>
-    <!-- FOP provide only PDF Bookmarks at the moment -->
-    <xsl:param name="fop.extensions">1</xsl:param>
-    <xsl:param name="fop1.extensions">1</xsl:param>
     <xsl:param name="ignore.image.scaling">0</xsl:param>
 
     <!--###################################################
@@ -201,7 +198,7 @@
 
     <!-- Left aligned text and no hyphenation -->
     <xsl:param name="alignment">justify</xsl:param>
-    <xsl:param name="hyphenate">false</xsl:param>
+    <xsl:param name="hyphenate">true</xsl:param>
 
     <!-- Default Font size -->
     <xsl:param name="body.font.master">11</xsl:param>
