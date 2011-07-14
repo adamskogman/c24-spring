@@ -1,3 +1,18 @@
+/*
+ * Copyright 2011 the original author or authors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *			http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package biz.c24.io.spring.integration.samples.fpml;
 
 import java.io.InputStream;
@@ -101,41 +116,41 @@ public class PreRenderingFpmlGenerator extends MessageProducerSupport {
 
 		for (int i = 0; i < THREADS; i++) {
 			completionService
-					.submit(new Callable<PreRenderingFpmlGenerator.Generator>() {
+			.submit(new Callable<PreRenderingFpmlGenerator.Generator>() {
 
-						public Generator call() throws Exception {
-							System.out.println("Rendering... ");
-							
-							OutputType ot = OutputType.BYTE_ARRAY;
-							Random rand = new Random();
-							TradeConfirmed myTradeConfirmed = (TradeConfirmed) tradeConfirmed
-									.cloneDeep();
+				public Generator call() throws Exception {
+					System.out.println("Rendering... ");
 
-							Generator gen = new Generator();
+					OutputType ot = OutputType.BYTE_ARRAY;
+					Random rand = new Random();
+					TradeConfirmed myTradeConfirmed = (TradeConfirmed) tradeConfirmed
+							.cloneDeep();
 
-							List<Object> payloads = new ArrayList<Object>(
-									ITERATIONS);
+					Generator gen = new Generator();
 
-							for (int j = 0; j < ITERATIONS; j++) {
+					List<Object> payloads = new ArrayList<Object>(
+							ITERATIONS);
 
-								TradeConfirmed fpML = randomizeFpML(myTradeConfirmed);
+					for (int j = 0; j < ITERATIONS; j++) {
 
-								if (rand.nextInt(100) == 0) {
-									breakFpml(fpML);
-								}
+						TradeConfirmed fpML = randomizeFpML(myTradeConfirmed);
 
-								Sink sink = ot.getSink(sinkFactory);
-								sink.writeObject(fpML);
-								Object payload = ot.getOutput(sink);
-
-								payloads.add(payload);
-							}
-
-							gen.payloads = payloads;
-
-							return gen;
+						if (rand.nextInt(100) == 0) {
+							breakFpml(fpML);
 						}
-					});
+
+						Sink sink = ot.getSink(sinkFactory);
+						sink.writeObject(fpML);
+						Object payload = ot.getOutput(sink);
+
+						payloads.add(payload);
+					}
+
+					gen.payloads = payloads;
+
+					return gen;
+				}
+			});
 		}
 
 		for (int i = 0; i < THREADS; i++) {
@@ -224,10 +239,10 @@ public class PreRenderingFpmlGenerator extends MessageProducerSupport {
 		SettlementInstruction settlementInstruction = optionPremium
 				.getSettlementInformation().getSettlementInstruction();
 		settlementInstruction.getCorrespondentInformation()
-				.getRoutingIdentificationmodel().getRoutingIds().getRoutingId()[0]
+		.getRoutingIdentificationmodel().getRoutingIds().getRoutingId()[0]
 				.setValue(sendTo);
 		settlementInstruction.getBeneficiary().getRoutingIdentificationmodel()
-				.getRoutingIds().getRoutingId()[0].setValue(sentBy);
+		.getRoutingIds().getRoutingId()[0].setValue(sentBy);
 		optionPremium.getPremiumQuote().setPremiumValue(premiumValue);
 		fxOptionLeg.setValueDate(valueDate);
 
@@ -243,7 +258,7 @@ public class PreRenderingFpmlGenerator extends MessageProducerSupport {
 		fxOptionLeg.getQuotedAs().getFaceOnCurrency().setValue("USD");
 		fxOptionLeg.getQuotedAs().getQuotedTenor().setPeriod("M");
 		fxOptionLeg.getQuotedAs().getQuotedTenor()
-				.setPeriodMultiplier(new BigInteger("6"));
+		.setPeriodMultiplier(new BigInteger("6"));
 
 		tradeConfirmed.getParty()[0].getPartyId()[0].setValue(sendTo);
 		tradeConfirmed.getParty()[1].getPartyId()[0].setValue(sentBy);

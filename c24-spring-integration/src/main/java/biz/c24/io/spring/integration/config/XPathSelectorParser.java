@@ -1,11 +1,11 @@
 /*
- * Copyright 2002-2010 the original author or authors.
+ * Copyright 2011 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *			http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package biz.c24.io.spring.integration.config;
 
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
@@ -61,8 +60,8 @@ public class XPathSelectorParser extends AbstractSingleBeanDefinitionParser {
 
 		if (evaluationType.equals("boolean")) {
 			builder.getBeanDefinition()
-					.setBeanClass(
-							biz.c24.io.spring.integration.selector.C24BooleanTestXPathMessageSelector.class);
+			.setBeanClass(
+					biz.c24.io.spring.integration.selector.C24BooleanTestXPathMessageSelector.class);
 			Assert.state(
 					!StringUtils.hasText(stringTestValue),
 					"'string-test-value' should not be specified when 'evaluation-result-type' is boolean");
@@ -71,8 +70,8 @@ public class XPathSelectorParser extends AbstractSingleBeanDefinitionParser {
 					"'string-test-value' must be specified when 'evaluation-result-type' is string");
 			builder.addPropertyValue("valueToTestFor", stringTestValue);
 			builder.getBeanDefinition()
-					.setBeanClass(
-							biz.c24.io.spring.integration.selector.C24StringValueTestXPathMessageSelector.class);
+			.setBeanClass(
+					biz.c24.io.spring.integration.selector.C24StringValueTestXPathMessageSelector.class);
 		} else {
 			throw new IllegalArgumentException(
 					"Unsupported value ["

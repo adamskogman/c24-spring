@@ -1,3 +1,18 @@
+/*
+ * Copyright 2011 the original author or authors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *			http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package biz.c24.io.spring.util;
 
 import java.io.InputStream;
@@ -41,22 +56,22 @@ public class C24Model implements SourceFactory {
 				.getValidObjectClass();
 
 		if (!DocumentRoot.class.isAssignableFrom(type)) {
-		
+
 			// If the model wraps something which is not a document root class,
 			// then just use it as-is
 			map.put(type, element);
 
 		} else {
-			
+
 			// For document root classes, inspect the child elements.
-			
+
 			DocumentRoot root = (DocumentRoot) BeanUtils.instantiateClass(type);
 
 			for (int i = 0; i < root.getElementDeclCount(); i++) {
 				Element declaredElement = root.getElementDecl(i);
 				map.put(declaredElement.getType().getValidObjectClass(), element);
 			}
-			
+
 		}
 
 	}

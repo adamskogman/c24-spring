@@ -1,5 +1,17 @@
-/**
- * 
+/*
+ * Copyright 2011 the original author or authors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *			http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 package biz.c24.io.spring.source;
 
@@ -64,14 +76,18 @@ public class BinarySourceFactory implements SourceFactory {
 		// Only set the property if a value has been provided to one of the
 		// setters. If not, let the underlying Source retain the default.
 
-		if (encoding != null)
+		if (encoding != null) {
 			binarySource.setEncoding(encoding);
-		if (endOfDataRequired != null)
+		}
+		if (endOfDataRequired != null) {
 			binarySource.setEndOfDataRequired(endOfDataRequired);
-		if (lookAhead != null)
+		}
+		if (lookAhead != null) {
 			binarySource.setLookAhead(lookAhead);
-		if (lookBehind != null)
+		}
+		if (lookBehind != null) {
 			binarySource.setLookBehind(lookBehind);
+		}
 
 		doConfigure(binarySource);
 

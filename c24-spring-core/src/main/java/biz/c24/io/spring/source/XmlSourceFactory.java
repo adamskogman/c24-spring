@@ -1,12 +1,22 @@
-/**
- * 
+/*
+ * Copyright 2011 the original author or authors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *			http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 package biz.c24.io.spring.source;
 
 import java.io.InputStream;
 import java.io.Reader;
-
-import org.apache.poi.util.StringUtil;
 
 import biz.c24.io.api.presentation.Source;
 import biz.c24.io.api.presentation.XMLSource;
@@ -62,41 +72,53 @@ public class XmlSourceFactory implements SourceFactory {
 		// Only set the property if a value has been provided to one of the
 		// setters. If not, let the underlying Source retain the default.
 
-		if (continueAfterFatalError != null)
+		if (continueAfterFatalError != null) {
 			source.setContinueAfterFatalError(continueAfterFatalError);
+		}
 
-		if (dynamicValidationEnabled != null)
+		if (dynamicValidationEnabled != null) {
 			source.setDynamicValidationEnabled(dynamicValidationEnabled);
+		}
 
-		if (externalGeneralEntities != null)
+		if (externalGeneralEntities != null) {
 			source.setExternalGeneralEntities(externalGeneralEntities);
+		}
 
-		if (externalParameterEntities != null)
+		if (externalParameterEntities != null) {
 			source.setExternalParameterEntities(externalParameterEntities);
+		}
 
-		if (loadDTDGrammer != null)
+		if (loadDTDGrammer != null) {
 			source.setLoadDTDGrammer(loadDTDGrammer);
+		}
 
-		if (loadExternalDTD != null)
+		if (loadExternalDTD != null) {
 			source.setLoadExternalDTD(loadExternalDTD);
+		}
 
-		if (schemaFullCheckingEnabled != null)
+		if (schemaFullCheckingEnabled != null) {
 			source.setSchemaFullCheckingEnabled(schemaFullCheckingEnabled);
+		}
 
-		if (schemaValidationEnabled != null)
+		if (schemaValidationEnabled != null) {
 			source.setSchemaValidationEnabled(schemaValidationEnabled);
+		}
 
-		if (validationEnabled != null)
+		if (validationEnabled != null) {
 			source.setValidationEnabled(validationEnabled);
+		}
 
-		if (warnOnDuplicateAttDef != null)
+		if (warnOnDuplicateAttDef != null) {
 			source.setWarnOnDuplicateAttDef(warnOnDuplicateAttDef);
+		}
 
-		if (warnOnUndeclaredElemDef != null)
+		if (warnOnUndeclaredElemDef != null) {
 			source.setWarnOnUndeclaredElemDef(warnOnUndeclaredElemDef);
+		}
 
-		if (encoding != null)
+		if (encoding != null) {
 			source.setEncoding(encoding);
+		}
 
 		doConfigure(source);
 
