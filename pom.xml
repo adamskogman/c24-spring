@@ -1,12 +1,16 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
+	
 	<groupId>biz.c24.io.spring</groupId>
 	<artifactId>c24-spring</artifactId>
 	<version>1.0.0.BUILD-SNAPSHOT</version>
+	
 	<packaging>pom</packaging>
+	
 	<name>C24 Spring Support</name>
-
+	<description>Library for C24 Spring integration</description>
+	<url>http://www.c24.biz</url>
 
 	<modules>
 		<module>c24-spring-core</module>
@@ -197,4 +201,5 @@
 			<url>http://repo.c24io.net:8081/nexus/content/groups/public</url>
 		</pluginRepository>
 	</pluginRepositories>
+	
 </project>
