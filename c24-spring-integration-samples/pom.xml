@@ -6,9 +6,9 @@
 	<description></description>
 
 	<parent>
-		<artifactId>io-spring</artifactId>
 		<groupId>biz.c24.io.spring</groupId>
-		<version>0.0.1.BUILD-SNAPSHOT</version>
+		<artifactId>c24-spring</artifactId>
+		<version>1.0.0.BUILD-SNAPSHOT</version>
 	</parent>
 
 	<dependencies>
@@ -33,9 +33,9 @@
 		<!-- C24 Spring Integration -->
 
 		<dependency>
-			<artifactId>io-spring-integration</artifactId>
 			<groupId>biz.c24.io.spring</groupId>
-			<version>0.0.1.BUILD-SNAPSHOT</version>
+			<artifactId>c24-spring-integration</artifactId>
+			<version>${project.version}</version>
 		</dependency>
 
 		<!-- RabbitMQ -->
@@ -117,7 +117,7 @@
 					</execution>
 				</executions>
 
-				<dependencies>
+				<dependencies> 
 					<dependency>
 						<groupId>biz.c24.io</groupId>
 						<artifactId>c24-io-api</artifactId>
