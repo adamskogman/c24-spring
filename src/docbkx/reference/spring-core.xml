@@ -14,8 +14,93 @@
   </abstract>
 
   <section>
-    <title>Section</title>
+    <title>C24 model</title>
+
+    <para>The very core of the C24 Spring integration is integrating a C24
+    model into a Spring application. To do so the core module contains a
+    <classname>C24Model</classname> class that can be constructed by handing
+    it an <classname>Element</classname> from you generated model
+    classes.</para>
+
+    <example>
+      <title>Programatically setting up a <classname>C24Model</classname>
+      instance</title>
+
+      <programlisting language="java">C24Model model = new C24Model(YourGeneratedElementClass.getInstance());</programlisting>
+    </example>
+
+    <para>To ease that process in a Spring application we offer a namespace
+    element that allows you to either define the
+    <classname>Element</classname> class to build the model from or define a
+    base package to scan for C24 classes.</para>
+
+    <example>
+      <title>Using the XMl namespace to setup a C24 model</title>
+
+      <programlisting language="xml">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:c24="http://schema.c24.biz/spring-core"&gt;
+
+  &lt;c24:model base-package="com.acme.mypackage" /&gt;
+
+  &lt;!-- or --&gt;
+
+  &lt;c24:model base-element="com.acme.mypackage.SampleModelDocumentRootElement" /&gt;
+&lt;/beans&gt;</programlisting>
+    </example>
+
+    <para>If you don't add an <code>id</code>-attribute to the model element
+    we will default to <code>_c24model</code>. All other namespace elements
+    will reference the model bean by this id by default so that you should
+    need to wire the model into those explictly. However if you have multiple
+    C24 modely in your app, you have to assign an id to them and then refer to
+    them via the model-ref attribute of other namespace element.</para>
+  </section>
+
+  <section>
+    <title>HttpMessageConverters</title>
 
     <para></para>
+
+    <example>
+      <title>Setting up HttpMessageconverters to bind request and response
+      data to C24 objects</title>
+
+      <programlisting language="xml">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:c24="http://schema.c24.biz/spring-core"&gt;
+
+  &lt;c24:http-message-converter id="xml"&gt;
+    &lt;c24:format type="TEXT" /&gt;
+    &lt;c24:format type="XML" content-type="application/vnd.foo+xml" /&gt;
+  &lt;/c24:http-message-converter&gt;
+
+  &lt;c24:model base-package="com.acme.mypackage" /&gt;
+
+&lt;/beans&gt;</programlisting>
+    </example>
+  </section>
+
+  <section>
+    <title>OXM integration</title>
+
+    <para></para>
+
+    <example>
+      <title>Configuring an Spring C24 OXM marshaller </title>
+
+      <programlisting language="xml">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:c24="http://schema.c24.biz/spring-core"&gt;
+
+  &lt;c24:marshaller id="marshaller" /&gt;
+
+  &lt;c24:model base-package="com.acme.mypackage" /&gt;
+
+&lt;/beans&gt;</programlisting>
+    </example>
   </section>
 </chapter>
