@@ -18,8 +18,6 @@ package biz.c24.io.spring.http;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
@@ -39,8 +37,9 @@ import biz.c24.io.api.presentation.TextualSink;
 import biz.c24.io.api.presentation.TextualSource;
 import biz.c24.io.api.presentation.XMLSink;
 import biz.c24.io.api.presentation.XMLSource;
-import biz.c24.io.spring.http.DataFormat.Type;
-import biz.c24.io.spring.util.C24Model;
+import biz.c24.io.spring.core.C24Model;
+import biz.c24.io.spring.core.DataFormat;
+import biz.c24.io.spring.core.DataFormats;
 import biz.c24.io.spring.util.C24Utils;
 
 /**
@@ -135,45 +134,6 @@ public class C24HttpMessageConverter implements HttpMessageConverter<ComplexData
 			return new TextualSink(stream);
 		default:
 			throw new IllegalStateException("Unsupported data format!");
-		}
-	}
-
-
-	private class DataFormats {
-
-		private final Collection<DataFormat> formats;
-
-		public DataFormats(Collection<DataFormat> formats) {
-			Assert.notNull(formats);
-			this.formats = formats;
-		}
-
-		public Type getTypeFor(MediaType mediaType) {
-			for (DataFormat format : formats) {
-				if (format.supports(mediaType)) {
-					return format.getType();
-				}
-			}
-
-			return null;
-		}
-
-		public List<MediaType> getSupportedMediaTypes() {
-			List<MediaType> result = new ArrayList<MediaType>();
-			for (DataFormat format : formats) {
-				result.addAll(format.getMediaTypes());
-			}
-			return result;
-		}
-
-
-		public boolean supports(MediaType mediaType) {
-
-			for (DataFormat format : formats) {
-				return format.supports(mediaType);
-			}
-
-			return false;
 		}
 	}
 }

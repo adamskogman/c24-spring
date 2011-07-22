@@ -30,8 +30,8 @@ import org.springframework.util.Assert;
 
 import biz.c24.io.api.data.ComplexDataObject;
 import biz.c24.io.api.presentation.Source;
+import biz.c24.io.spring.core.C24Model;
 import biz.c24.io.spring.source.SourceFactory;
-import biz.c24.io.spring.util.C24Model;
 import biz.c24.io.spring.util.C24Utils;
 
 /**

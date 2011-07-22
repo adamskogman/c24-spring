@@ -37,7 +37,7 @@ import org.springframework.core.type.filter.TypeFilter;
 import org.springframework.util.StringUtils;
 import org.w3c.dom.Element;
 
-import biz.c24.io.spring.util.C24Model;
+import biz.c24.io.spring.core.C24Model;
 
 /**
  * {@link BeanDefinitionParser} to build a {@link C24Model} bean definition.

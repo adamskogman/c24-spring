@@ -26,7 +26,7 @@ import org.springframework.integration.support.MessageBuilder;
 import biz.c24.io.examples.models.basic.InputDocumentRootElement;
 import biz.c24.io.examples.models.basic.OutputDocumentRoot;
 import biz.c24.io.examples.transforms.basic.ExampleTransform;
-import biz.c24.io.spring.util.C24Model;
+import biz.c24.io.spring.core.C24Model;
 
 
 public class IoTransformerIUTests {

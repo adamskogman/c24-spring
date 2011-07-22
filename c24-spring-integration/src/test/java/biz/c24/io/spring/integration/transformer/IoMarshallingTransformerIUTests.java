@@ -24,10 +24,10 @@ import org.springframework.integration.Message;
 import org.springframework.integration.support.MessageBuilder;
 
 import biz.c24.io.examples.models.basic.InputDocumentRootElement;
+import biz.c24.io.spring.core.C24Model;
 import biz.c24.io.spring.sink.OutputType;
 import biz.c24.io.spring.sink.TextualSinkFactory;
 import biz.c24.io.spring.sink.XmlSinkFactory;
-import biz.c24.io.spring.util.C24Model;
 
 public class IoMarshallingTransformerIUTests {
 

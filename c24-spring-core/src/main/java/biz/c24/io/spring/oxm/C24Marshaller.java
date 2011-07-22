@@ -35,7 +35,7 @@ import biz.c24.io.api.data.ComplexDataObject;
 import biz.c24.io.api.data.Element;
 import biz.c24.io.api.presentation.XMLSink;
 import biz.c24.io.api.presentation.XMLSource;
-import biz.c24.io.spring.util.C24Model;
+import biz.c24.io.spring.core.C24Model;
 import biz.c24.io.spring.util.C24Utils;
 
 /**

@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package biz.c24.io.spring.util;
+package biz.c24.io.spring.core;
 
 import java.io.InputStream;
 import java.io.Reader;

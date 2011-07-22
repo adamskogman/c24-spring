@@ -25,9 +25,9 @@ import org.springframework.integration.support.MessageBuilder;
 
 import biz.c24.io.examples.models.basic.Employees;
 import biz.c24.io.examples.models.basic.InputDocumentRootElement;
+import biz.c24.io.spring.core.C24Model;
 import biz.c24.io.spring.source.TextualSourceFactory;
 import biz.c24.io.spring.source.XmlSourceFactory;
-import biz.c24.io.spring.util.C24Model;
 
 public class IoUnmarshallingTransformerIUTests {
 

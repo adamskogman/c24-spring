@@ -32,10 +32,11 @@ import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.oxm.XmlMappingException;
 import org.springframework.xml.transform.StringSource;
 
+import biz.c24.io.spring.core.C24Model;
 import biz.c24.io.spring.model.TestConstants;
-import biz.c24.io.spring.util.C24Model;
 
 /**
+ * Unit tests for {@link C24Marshaller}.
  * 
  * @author Oliver Gierke
  */

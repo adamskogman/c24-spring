@@ -24,7 +24,7 @@ import org.springframework.beans.factory.xml.ParserContext;
 import org.springframework.http.MediaType;
 import org.w3c.dom.Element;
 
-import biz.c24.io.spring.http.DataFormat;
+import biz.c24.io.spring.core.DataFormat;
 
 /**
  *

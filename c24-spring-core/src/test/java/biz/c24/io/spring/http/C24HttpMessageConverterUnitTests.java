@@ -34,9 +34,10 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpInputMessage;
 import org.springframework.http.MediaType;
 
-import biz.c24.io.spring.http.DataFormat.Type;
+import biz.c24.io.spring.core.C24Model;
+import biz.c24.io.spring.core.DataFormat;
+import biz.c24.io.spring.core.DataFormat.Type;
 import biz.c24.io.spring.model.TestConstants;
-import biz.c24.io.spring.util.C24Model;
 
 /**
  * 
