@@ -181,6 +181,20 @@
             </plugin>
 		</plugins>
 	</build>
+	
+	<distributionManagement>
+       <repository>
+           <id>c24</id>
+           <name>C24 Maven Repository</name>
+           <url>http://repo.c24io.net:8081/nexus/content/repositories/releases</url>
+       </repository>
+       <snapshotRepository>
+           <id>c24-snapshot</id>
+           <name>C24 Maven Snapshot Repository</name>
+           <url>http://repo.c24io.net:8081/nexus/content/repositories/snapshots</url>
+           <uniqueVersion>false</uniqueVersion>
+       </snapshotRepository>
+   </distributionManagement>
 
 	<repositories>
 		<repository>
