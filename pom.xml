@@ -15,7 +15,7 @@
 	<modules>
 		<module>c24-spring-core</module>
 		<module>c24-spring-integration</module>
-		<module>c24-spring-integration-samples</module>
+		<!--<module>c24-spring-integration-samples</module>-->
 	</modules>
 	
 	<licenses>
