@@ -5,7 +5,7 @@
   <bookinfo>
     <title>C24 IO Spring Reference Manual</title>
 
-    <releaseinfo>version;</releaseinfo>
+    <releaseinfo>&version;</releaseinfo>
 
     <authorgroup>
       <author>

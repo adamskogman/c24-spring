@@ -13,7 +13,7 @@
     REST/HTTP.</para>
   </abstract>
 
-  <section>
+  <section id="core.model">
     <title>C24 model</title>
 
     <para>The very core of the C24 Spring integration is integrating a C24
@@ -40,7 +40,8 @@
       <programlisting language="xml">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
 &lt;beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns:c24="http://schema.c24.biz/spring-core"&gt;
+       xmlns:c24="http://schema.c24.biz/spring-core"
+       xsi:schemaLocation="…"&gt;
 
   &lt;c24:model base-package="com.acme.mypackage" /&gt;
 
@@ -58,10 +59,13 @@
     them via the model-ref attribute of other namespace element.</para>
   </section>
 
-  <section>
+  <section id="core.message-converters">
     <title>HttpMessageConverters</title>
 
-    <para></para>
+    <para>Building REST webservices with Spring MVC you might want to easily
+    marsha your C24 data structures defined into IO objects and vice versa. To
+    do so we ship a configurable
+    <classname>HttpMessageConverter</classname>:</para>
 
     <example>
       <title>Setting up HttpMessageconverters to bind request and response
@@ -70,31 +74,46 @@
       <programlisting language="xml">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
 &lt;beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns:c24="http://schema.c24.biz/spring-core"&gt;
-
-  &lt;c24:http-message-converter id="xml"&gt;
-    &lt;c24:format type="TEXT" /&gt;
-    &lt;c24:format type="XML" content-type="application/vnd.foo+xml" /&gt;
-  &lt;/c24:http-message-converter&gt;
+       xmlns:c24="http://schema.c24.biz/spring-core"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="…"&gt;
 
   &lt;c24:model base-package="com.acme.mypackage" /&gt;
 
+  &lt;mvc:annotation-driven&gt;
+    &lt;mvc:message-converters&gt;
+      &lt;c24:http-message-converter&gt;
+        &lt;c24:format type="TEXT" /&gt;
+        &lt;c24:format type="XML" content-type="application/vnd.foo+xml" /&gt;
+      &lt;/c24:http-message-converter&gt;
+    &lt;/mvc:message-converters&gt;
+  &lt;/mvc:annotation-driven&gt;
+
 &lt;/beans&gt;</programlisting>
     </example>
+
+    <para>The <code>http-message-converter</code> gets a set of
+    <code>format</code> elements configured that define which representation
+    shall be supported and for which content type each of them shall be
+    returned. If you don't configure a content type we assume defaults like
+    <code>text-plain</code>, <code>application/xml</code> and so on.</para>
   </section>
 
-  <section>
+  <section id="core.oxm">
     <title>OXM integration</title>
 
-    <para></para>
+    <para>If you are using the Spring OXM module it's easy to set up a
+    <interfacename>Marshaller</interfacename>/<interfacename>Unmarshaller</interfacename>
+    instance capable of handling C24 IO data like this:</para>
 
     <example>
-      <title>Configuring an Spring C24 OXM marshaller </title>
+      <title>Configuring an Spring C24 OXM marshaller</title>
 
       <programlisting language="xml">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
 &lt;beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns:c24="http://schema.c24.biz/spring-core"&gt;
+       xmlns:c24="http://schema.c24.biz/spring-core"
+       xsi:schemaLocation="…"&gt;
 
   &lt;c24:marshaller id="marshaller" /&gt;
 
