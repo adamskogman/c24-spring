@@ -8,7 +8,7 @@
 	<parent>
 		<groupId>biz.c24.io.spring</groupId>
 		<artifactId>c24-spring</artifactId>
-		<version>1.0.0.M1</version>
+		<version>1.0.0.BUILD-SNAPSHOT</version>
 		<relativePath>../</relativePath>
 	</parent>
 	
