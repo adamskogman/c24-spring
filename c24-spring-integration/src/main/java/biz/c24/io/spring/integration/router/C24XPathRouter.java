@@ -20,7 +20,7 @@ import java.util.List;
 
 import org.springframework.integration.Message;
 import org.springframework.integration.MessagingException;
-import org.springframework.integration.router.AbstractMessageRouter;
+import org.springframework.integration.router.AbstractMappingMessageRouter;
 import org.springframework.util.Assert;
 
 import biz.c24.io.api.data.ComplexDataObject;
@@ -38,7 +38,7 @@ import biz.c24.io.api.data.XPathStatement;
  * @author askogman
  * 
  */
-public class C24XPathRouter extends AbstractMessageRouter {
+public class C24XPathRouter extends AbstractMappingMessageRouter {
 
 	private final XPathStatement statement;
 
@@ -80,7 +80,7 @@ public class C24XPathRouter extends AbstractMessageRouter {
 	}
 
 	@Override
-	protected List<Object> getChannelIdentifiers(Message<?> message) {
+	protected List<Object> getChannelKeys(Message<?> message) {
 
 		ComplexDataObject cdo;
 		try {
