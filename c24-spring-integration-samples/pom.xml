@@ -84,7 +84,7 @@
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-test</artifactId>
-			<version>${spring.version}</version>
+			<version>${spring.version}</version><!--$NO-MVN-MAN-VER$-->
 		</dependency>
 
 
